@@ -92,7 +92,42 @@ categories:
 
 ### 推荐::可重复构建
 
-<!-- TODO -->
+F-Droid官方的可重复构建文档有一些冗余, 这里主要解答一下 `什么是`, `为什么`, `怎么做` 这三个
+问题, 也可以参考 [官方文档][fdroid-rebuild-doc].
+
+大白话说就是, 任何人在他们的目标机器上使用相同的构建环境和步骤, 最终生成的二进制文件和你自己本
+地环境构建出来的二进制完全相同, 这样做的目的主要还是为了防止二进制被不法分子篡改并进行非法发布.
+
+F-Droid默认使用自己的key对构建的软件进行签名, 而安卓app升级的一个硬性要求便是需要保证签名来源
+是一致的, 否则会禁止安装. 因此默认情况下自己构建的出来的app除非使用从F-Droid中提取的key进行
+签名, 否则是无法和F-Droid商店内应用进行覆盖升级的.
+
+但实现可重构构建后, F-Droid就会直接将自签名(而不是fdroid签名)的APP发布到商店, 这样就可以进行
+升级.
+
+```text
+未接入可重复构建
+
+fdoird build --> 生成APK --> 上架 fdroid store
+
+接入可重复构建
+
+fdoird build --> 生成APK \
+--> 和自己构建的APK进行对比(需要在meta文件中配置`Binaries`来向fdroid告知需要对比APK的路径) \
+--> 对比二进制一致 --> 上架 froid store
+```
+
+对于 `FLutter` 应用来说, 主要需要保证
+
+1. 构建路径相同 (比如我是在 `/home/runner/foo` 目录下执行 `flutter build` 进行构建,
+   对方也必须保证目录一致, 否则生成的二进制会不一致)
+2. `JDK` 版本一致. F-Droid要求使用 `JDK17`.
+3. `NDK` 版本一致, Flutter内部默认托管 `NDK` 版本, 因此没有特殊原因不需要指定.
+4. 其他环境, 包括操作系统最好保持一致(windows/macos/linux), 不同发行版之间可能并不重要,
+   但也最好能够保持一致防止一些奇奇怪怪的问题.
+
+如果你要上架的应用和我一样(使用flutter, 使用vx.y.z+n的版本号. 并在 `Github Action` 构建),
+那不妨直接抄我的作业, 可以节省很多时间. 具体可以查阅 [`metadata` 如何填写](#3-metadata-如何填写)
 
 ## 2. 如何让自己的App可以被 `F-Droid` 收录
 
@@ -246,7 +281,8 @@ CurrentVersionCode: 10
 
 ## 4. 总结
 
-<!-- TODO -->
+以上就是本次接入 `F-Droid` 的一些个人经验, 如果有什么问题可以在 `issue` 中直接指出. 也希望
+能够帮助到同样开发自由软件但是没有接入商店相关经验的同僚么.
 
 [mhabit-github-url]: https://github.com/FriesI23/mhabit
 [mhabit-fdroid-url]: https://f-droid.org/en/packages/io.github.friesi23.mhabit
@@ -256,3 +292,4 @@ CurrentVersionCode: 10
 [fdroid-submitting-url]: https://f-droid.org/en/docs/Submitting_to_F-Droid_Quick_Start_Guide
 [fdroid-flutter-template]: https://gitlab.com/fdroid/fdroiddata/-/blob/master/templates/build-flutter.yml
 [fastlane-structure]: https://gitlab.com/-/snippets/1895688
+[fdroid-rebuild-doc]: https://f-droid.org/zh_Hans/docs/Reproducible_Builds/
