@@ -31,6 +31,8 @@ github_username: FriesI23
 theme: minima
 
 google_analytics: G-2T0DE4DLFQ
+gitment_client_id: 6312ebbac9e346953b76
+gitment_client_secret: 48e1f1f02f2539efc40ab6e3ec984be42d153202
 
 # whitelist:
 plugins:

@@ -7,8 +7,8 @@ var gitment = new Gitalk({
   owner: 'FriesI23',
   admin: ['FriesI23'],
   repo: 'friesi23.github.io',
-  clientID: '6312ebbac9e346953b76',
-  clientSecret: '48e1f1f02f2539efc40ab6e3ec984be42d153202',
+  clientID: '{{ site.gitment_client_id }}',
+  clientSecret: '{{ site.gitment_client_secret }}',
   distractionFreeMode: false,
 })
 gitment.render('container')
