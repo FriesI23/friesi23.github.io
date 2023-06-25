@@ -1,15 +1,15 @@
 <div id="container"></div>
-<link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
-<script src="https://jjeejj.github.io/js/gitment.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
 <script>
-var gitment = new Gitment({
+var gitment = new Gitalk({
   id: '{{ page.date }}',
   owner: 'FriesI23',
+  admin: ['FriesI23'],
   repo: 'friesi23.github.io',
-  oauth: {
-    client_id: '6312ebbac9e346953b76',
-    client_secret: '48e1f1f02f2539efc40ab6e3ec984be42d153202',
-  },
+  clientID: '6312ebbac9e346953b76',
+  clientSecret: '48e1f1f02f2539efc40ab6e3ec984be42d153202',
+  distractionFreeMode: false,
 })
 gitment.render('container')
 </script>
