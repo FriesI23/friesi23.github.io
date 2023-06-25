@@ -29,14 +29,13 @@ github_username: FriesI23
 
 # Build settings
 theme: minima
+
+# minima theme settings
+google_analytics: G-2T0DE4DLFQ
+
+# whitelist:
 plugins:
   - jekyll-feed
-  - jekyll-analytics
-
-jekyll_analytics:
-  GoogleAnalytics:
-    id: G-2T0DE4DLFQ
-    anonymizeIp: false
 
 # Exclude from processing.
 # The following items will not be processed, by default.
