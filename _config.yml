@@ -18,19 +18,25 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: WARN NEST FOR 123 AND FRIES
+title: WARM NEST FOR 123 AND FRIES
 email: FriesI23@outlook.com
 description: >- # this means to ignore newlines until "baseurl:"
   Just write something casual,
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://friesi23.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 # twitter_username: jekyllrb
-# github_username:  jekyll
+github_username: FriesI23
 
 # Build settings
 theme: minima
 plugins:
   - jekyll-feed
+  - jekyll-analytics
+
+jekyll_analytics:
+  GoogleAnalytics:
+    id: G-2T0DE4DLFQ
+    anonymizeIp: false
 
 # Exclude from processing.
 # The following items will not be processed, by default.
