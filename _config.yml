@@ -36,6 +36,7 @@ gitment_client_secret: 48e1f1f02f2539efc40ab6e3ec984be42d153202
 
 # whitelist:
 plugins:
+  - jekyll-sitemap
   - jekyll-feed
 
 # Exclude from processing.
