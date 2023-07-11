@@ -4,9 +4,7 @@ title:  "Flutter 中的是否应该使用 Functional Widgets"
 date:   2023-07-09 18:20:00 +0800
 categories:
     - flutter
-    - android
-    - fdroid
-    - appstore
+    - dart
 ---
 <!--
  friesi23.github.io (c) by FriesI23
