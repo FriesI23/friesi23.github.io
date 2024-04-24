@@ -1,11 +1,15 @@
 ---
 layout: post
-title:  "使用 Github Page 与 Jekyll 创建自己的博客"
-date:   2023-04-04 08:07:06 +0800
-categories:
-    - jekyll
-    - build-blog
+title: "使用 Github Page 与 Jekyll 创建自己的博客"
+date: 2023-04-04 08:07:06 +0800
+category: blog
+tags:
+  - build
+  - github-page
+  - jekyll
+  - blog
 ---
+
 <!--
  friesi23.github.io (c) by weooh
 
@@ -16,7 +20,7 @@ categories:
  work. If not, see <http://creativecommons.org/licenses/by-sa/4.0/>.
 -->
 
-## 为什么要写这一篇Blog
+## 为什么要写这一篇 Blog
 
 1. 作为该 Blog 的第一篇文章, 记录搭搭建博客的过程还是很有必要的.
 2. 现有的教程或多或少存在不完整或者过时的情况, 因此需要整合一下各方的资源.
@@ -24,7 +28,7 @@ categories:
 ## 技术选型
 
 由于不是专业的前段开发, 也不想自己费时费力造轮子; 但是又不想自己花钱租赁服务器, 因此排除了
-`wordpress`, `nextjs` 等方案, 最终选择最为简单(同时也是github官方推荐)的方案, 即:
+`wordpress`, `nextjs` 等方案, 最终选择最为简单(同时也是 github 官方推荐)的方案, 即:
 
 ```yaml
 - github page
@@ -32,14 +36,14 @@ categories:
 - jekyll
 ```
 
-## 1. 创建blog仓库
+## 1. 创建 blog 仓库
 
 可以跟随 Github 中的官方文档创建自己的 Blog Repo
 [Creating a repository for your site](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/creating-a-github-pages-site-with-jekyll#creating-a-repository-for-your-site)
 
 下面将简述一下简要的过程:
 
-1. 点击 `New repository` 进入创建repo的界面
+1. 点击 `New repository` 进入创建 repo 的界面
 2. `Repository name` 填写 `<yourname>.github.io`, 注意将 `<yourname>` 替换为用户名, 并注意以下几点
    1. 一定是用户名(而不是昵称)
    2. 用户名如果有大写的部分要转化为小写(e.g. username => `Foo`, reponame => `foo.github.io`)
@@ -48,13 +52,13 @@ categories:
 
 经过以上步骤, 我们已经创建了一个空的 Blog 仓库.
 
-## 2. 初始化Blog
+## 2. 初始化 Blog
 
 接下来需要在本地创建一个 `Jekyll` 项目.
 
 ### 2.1. Init Git
 
-首先在一个空文件夹下使用 `Git` 记性版本管理(什么, 不会用/没有安装Git, 戳[这里](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git))
+首先在一个空文件夹下使用 `Git` 记性版本管理(什么, 不会用/没有安装 Git, 戳[这里](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git))
 
 ```shell
 cd /path/to/your/blog/folder
@@ -109,7 +113,7 @@ git rm -rf .
 Jekyll new --skip-bundle .
 ```
 
-完后后打开 `Gemfile` (这个文件是刚刚Jekyll自动生成的), Template config 如下;
+完后后打开 `Gemfile` (这个文件是刚刚 Jekyll 自动生成的), Template config 如下;
 
 其中 `GITHUB-PAGES-VERSION` 需要替换的版本号可以在 [Dependency versions](https://pages.github.com/versions/)
 找到.

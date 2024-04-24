@@ -1,0 +1,8 @@
+{
+    "explorer.compactFolders": false,
+    "licenser.author": "FriesI23",
+    "licenser.license": "CC-BY-SA-4",
+    "markdownlint.config": {
+        "MD029": false
+    }
+}

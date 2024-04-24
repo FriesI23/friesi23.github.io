@@ -1,11 +1,15 @@
 ---
 layout: post
-title:  "Flutter 中的是否应该使用 Functional Widgets"
-date:   2023-07-09 18:20:00 +0800
-categories:
-    - flutter
-    - dart
+title: "Flutter 中的是否应该使用 Functional Widgets"
+date: 2023-07-09 18:20:00 +0800
+category: flutter
+tags:
+  - flutter
+  - dart
+  - widget
+  - code-style
 ---
+
 <!--
  friesi23.github.io (c) by FriesI23
 
@@ -62,8 +66,8 @@ class Widget0 extends StatelessWidget {
 }
 ```
 
-其实第一眼看到这两种代码，在不了解flutter机制的前提下本能进行选择，相信大多数人会
-不约而同选择方案二， 既新建一个 `Helper` 方法来分解自己的build方法。理由无外乎这几种：
+其实第一眼看到这两种代码，在不了解 flutter 机制的前提下本能进行选择，相信大多数人会
+不约而同选择方案二， 既新建一个 `Helper` 方法来分解自己的 build 方法。理由无外乎这几种：
 
 1. 使用函数的资源消耗比新建一个对象要低
 2. 参数调用更加方面
@@ -75,17 +79,18 @@ Github 上一个经典的讨论。或许可以解开大家很多这方面的疑�
 对于 `@rrousselGit` 对该问题的回应先翻译并列举在下面：
 
 - Class :
-    1. 具有热重载 (Hot reload) 功能
-    2. 可以集成到小部件检查器中（通过 `debugFillProperties` 方法）
-    3. 通过重写 `operator==` 可以减少重新构建的次数
-    4. 可以定义键 (Key) 来唯一标识小部件
-    5. 确保所有小部件 (Widget) 以相同的方式使用
-    6. 确保在两种不同布局之间切换时正确释放相关资源 (Resources)
-    7. 可以使用上下文（BuildContext）API
-    8. 可以是const（常量）
+
+  1. 具有热重载 (Hot reload) 功能
+  2. 可以集成到小部件检查器中（通过 `debugFillProperties` 方法）
+  3. 通过重写 `operator==` 可以减少重新构建的次数
+  4. 可以定义键 (Key) 来唯一标识小部件
+  5. 确保所有小部件 (Widget) 以相同的方式使用
+  6. 确保在两种不同布局之间切换时正确释放相关资源 (Resources)
+  7. 可以使用上下文（BuildContext）API
+  8. 可以是 const（常量）
 
 - Function:
-    1. 代码量较少 (可以使用 `functional_widget` Package)
+  1. 代码量较少 (可以使用 `functional_widget` Package)
 
 不出意外的话大家第一次看完这些对比后应该和我第一次看完的反应差不多：
 
@@ -168,21 +173,21 @@ class UnEquallyFunctionWidget extends StatlessWidget {
 这个例子很直观的展示了 `Class` 和 `Function` 方式创建 `Widget` 后的区别。`Builer`
 在这里既起到了创建一个匿名 `Widget` 的作用，也将 `context` 的范围限制到了他和他的
 子部件中。(可以注意到 `Builder` 有一个 `builder` 方法, 他的参数中有一个 `context`,
-这个便是 `Builder` 暴露自己的context)
+这个便是 `Builder` 暴露自己的 context)
 
 那么我们着重讲一下 `Class` 为什么会有这么多优点（或者说可取之处?），当然，如果可能
 的话我会给出对应的 `Functional` 实现等价功能的参考代码，一起对比时会更加直观。
 
-## 1. 可以已更简单的姿势优化 `rebuild` 的次数已提高UI性能，尤其是 `InheritedWidget` 的情况
+## 1. 可以已更简单的姿势优化 `rebuild` 的次数已提高 UI 性能，尤其是 `InheritedWidget` 的情况
 
-关于什么是 `InheritedWidget`，大家可以到 Flutter官网上查阅，这里就不赘述了。我这边
+关于什么是 `InheritedWidget`，大家可以到 Flutter 官网上查阅，这里就不赘述了。我这边
 直接上一个编写代码中最常用的例子:
 
 ```dart
 final theme = Theme.of(context);
 ```
 
-我们都知道这里会获得当前主题Data，但是具体是怎样获得的呢
+我们都知道这里会获得当前主题 Data，但是具体是怎样获得的呢
 
 ```dart
 // in flutter\lib\src\material\theme.dart
@@ -201,7 +206,7 @@ class _InheritedTheme extends InheritedTheme {}
 abstract class InheritedTheme extends InheritedWidget {}
 ```
 
-其实最关键的就是 `dependOnInheritedWidgetOfExactType`, 他用于在Widget树中依获取
+其实最关键的就是 `dependOnInheritedWidgetOfExactType`, 他用于在 Widget 树中依获取
 特定类型的 `InheritedWidget`
 
 > `InheritedWidget`是一种特殊类型的小部件，
@@ -257,7 +262,7 @@ class MyWidget extends StatelessWidget {
 也就是说 `Theme.of(context)` 并不需要刷新所有的子组件, 事实上，上面这个规则中，
 我们只需要刷新 `text = '999'` 的那个 `Widget`。那为什么会出现这种情况呢？
 
-首先要说明，Flutter中并不存在任何 `黑魔法`, 所有的一切都是按照规则来的。那么我们的这段
+首先要说明，Flutter 中并不存在任何 `黑魔法`, 所有的一切都是按照规则来的。那么我们的这段
 代码实际上便是将 `999` 个小部件都挂载在了 `MyWidget` 这个相对的 `root` 节点上。
 
 而触发 `rebuild` 是从绑定的 `Widget` 开始的，那么这一切就理所当然了，因为这些组件使用
@@ -317,17 +322,17 @@ class MyWidget extends StatelessWidget {
 }
 ```
 
-以后每次更新 `Theme` 后，只会更新 `_PrintWidget999` 和挂载在他下面的子widget。可以
+以后每次更新 `Theme` 后，只会更新 `_PrintWidget999` 和挂载在他下面的子 widget。可以
 注意到我们同时暴露了一个 `builder` 方法，这其实是一个比较良好的实践。如上所示，
 `text=1000, text=1001` 都通过这个方式挂载，此时 `XXXX` 如果有更新，也只会影响到
 `_PrintWidget999` 以及其子部件。
 
-总之，这种绑定方式之和 `context` 相关，和代码书写方式无关，Flutter中不存在黑魔法。
+总之，这种绑定方式之和 `context` 相关，和代码书写方式无关，Flutter 中不存在黑魔法。
 
 这里也附上 `Functional` 的解决方案，正如上文所言, `Class` 和 `Function` 是一种实践，
 两者都可以达到目的，但是 `Class` 更不容易犯错（比如使用错误的 `context`，
-这在代码嵌套深度比较高的时候很容易出现，因为context类型是一样且合法的，
-lint检查不出错误，只能依靠运行时测试）
+这在代码嵌套深度比较高的时候很容易出现，因为 context 类型是一样且合法的，
+lint 检查不出错误，只能依靠运行时测试）
 
 ```dart
 class MyWidget extends StatelessWidget {
@@ -363,7 +368,7 @@ class MyWidget extends StatelessWidget {
 相关 `class` 与 `function` 的比较
 
 - 具有热重载 (Hot reload) 功能
-  - 最起码在 `3.7.12` 这个版本，两个都用有 `hot reload` 功能，而release中又不存在热重载，所以这个区别不大
+  - 最起码在 `3.7.12` 这个版本，两个都用有 `hot reload` 功能，而 release 中又不存在热重载，所以这个区别不大
 - 可以定义键 (Key) 来唯一标识小部件
   - `Class` 中 `key` 是一个继承的属性，而 `Function` 中使用 `Builder` 创建的匿名小部件也可以使用 `key`。
 - 可以使用上下文（BuildContext）API
@@ -455,7 +460,7 @@ class MainPage extends StatelessWidget {
 每一个 `Class Widget` 都是自带命名，而我们在 `debug` 查找 `Widget Tree` 时，
 可以直接使用类名进行查找，而 `Function` 没法做到这一点（想象一下，
 查找 `MyXXXProfileListTile` 肯定比查找 `ListTile` 方便），
-这会在开发和找到bug的时候带来很多不必要的麻烦。
+这会在开发和找到 bug 的时候带来很多不必要的麻烦。
 
 话说回来，这种需要命名上的统一的编程风格在多人协作中也面临更多挑战，请看如下直观代码
 
@@ -495,7 +500,7 @@ class Func extends State<XXX> {
 }
 ```
 
-针对以上的各种隐含坑，Function就没用了么，其实不是的，请看下面代码
+针对以上的各种隐含坑，Function 就没用了么，其实不是的，请看下面代码
 
 ```dart
 class MyState extends State<XXX> {
@@ -547,12 +552,12 @@ class MyState extends State<XXX> {
 - 可以集成到小部件检查器中（通过 `debugFillProperties` 方法）
   - 这个是 `Class` 的优势，方法因为本身不被框架感知，无法达到这种效果
 - 通过重写 `operator==` 可以减少重新构建的次数
-  - 其实对于 `Functional Widget`, `Provider`也可以提供相同的局部刷新功能，不过这增加嵌套量，并且 `Provider` 本质不是为方法Widget服务的，这样使用多少会让其他人读代码的时候很费劲（Provider中控制的一般都是业务状态，很少会将其用作布局参数存储使用）。况且 `Class Widget` 一样可以使用，这样一比就更没优势了。
+  - 其实对于 `Functional Widget`, `Provider`也可以提供相同的局部刷新功能，不过这增加嵌套量，并且 `Provider` 本质不是为方法 Widget 服务的，这样使用多少会让其他人读代码的时候很费劲（Provider 中控制的一般都是业务状态，很少会将其用作布局参数存储使用）。况且 `Class Widget` 一样可以使用，这样一比就更没优势了。
 - 确保所有小部件 (Widget) 以相同的方式使用
   - `Function Widget`的方法参数可以做到和 `Class` 一致，但是需要更细心，因为在`Widget`定义存在一些问题的时候，lint 会检查`Class` 中的问题并提示，而方法内是不行的。比如 `StatelessWidget` 中使用 `final` 定义属性。
 - 确保在两种不同布局之间切换时正确释放相关资源 (Resources)
   - 一般也不会有人闲的蛋疼使用 `Function` 定义带有状态的 `Widget` 吧。属性释放一般不是问题。
-- 可以是const（常量）
+- 可以是 const（常量）
   - `Functional Widget`不能定义常量，不过 `Dart` 的 `const Widget` 在实践中除特定场景外能过获取的性能优势并不明显，所以这个更多是一种个人选择，毕竟 `MyText(child: const Text('hello'), ...)` 肯定是比 `MyText(str: 'hello') -> Text(str)` 这种实现是要更好的。
 
 ## 3. 不同的 Widget 会被识别为不同的 Widget
@@ -576,13 +581,13 @@ AnimatedSwitcher(
 );
 ```
 
-情况2失去了过度效果，但明明 `MyText1()` 里面就是 `return Text('1')`,
+情况 2 失去了过度效果，但明明 `MyText1()` 里面就是 `return Text('1')`,
 原因就在于 `AnimatedSwitcher` 识别两个 `Widget` 的方式为查看他们 `RuntimeType`，
-而情况1中 `RuntimeType` 是不同的，所以  `AnimatedSwitcher` 可以正确的识别这两个 `Widget`
+而情况 1 中 `RuntimeType` 是不同的，所以 `AnimatedSwitcher` 可以正确的识别这两个 `Widget`
 并查过过度动画。
 
-情况2就不一样了，它们的 `RuntimeType` 是相同的，此时  `AnimatedSwitcher`
-会尝试比较两个部件的 `key`。很遗憾，这个case中并没有设置key（key默认为null），
+情况 2 就不一样了，它们的 `RuntimeType` 是相同的，此时 `AnimatedSwitcher`
+会尝试比较两个部件的 `key`。很遗憾，这个 case 中并没有设置 key（key 默认为 null），
 此时 `AnimatedSwitcher` 根本没法区分两个小部件（认为他们是一个），
 因此也无法为其插入过度动画。
 

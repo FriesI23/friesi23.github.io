@@ -1,12 +1,16 @@
 ---
 layout: post
-title:  "Flutter调试日志报错 - waiting for observatory port"
-date:   2023-05-24 09:00:00 +0800
-categories:
-    - flutter
-    - miui
-    - android
+title: "Flutter调试日志报错 - waiting for observatory port"
+date: 2023-05-24 09:00:00 +0800
+category: android
+tags:
+  - flutter
+  - miui
+  - android
+  - debug
+  - logging
 ---
+
 <!--
  friesi23.github.io (c) by weooh
 
@@ -19,7 +23,7 @@ categories:
 
 ## 问题
 
-近期在真机上调试flutter应用时, 虽然app已经在机器上安装并且启动，但是始终无法连接调试服务器，
+近期在真机上调试 flutter 应用时, 虽然 app 已经在机器上安装并且启动，但是始终无法连接调试服务器，
 在模拟器上时缺是可以正常连接服务器的，具体日志如下:
 
 ```shell

@@ -1,13 +1,15 @@
 ---
 layout: post
-title:  "如何将 Flutter 应用上架到 F-Droid"
-date:   2023-06-08 18:00:00 +0800
-categories:
-    - flutter
-    - android
-    - fdroid
-    - appstore
+title: "如何将 Flutter 应用上架到 F-Droid"
+date: 2023-06-08 18:00:00 +0800
+category: fdroid
+tags:
+  - flutter
+  - android
+  - fdroid
+  - app-store
 ---
+
 <!--
  friesi23.github.io (c) by FriesI23
 
@@ -22,8 +24,8 @@ categories:
 遇到的一些问题, 一方面方便自己以后上架其他应用, 另一边放也希望大家遇到类似问题的时候能够有一个
 可行的 `workflow`, 如果想查看具体细节可以看 [这里][fdroid-mr-url] 的讨论.
 
-这里也允许推销一下自己这款习惯养成的app, [Table Habit][mhabit-fdroid-url] 是一款方便自己
-进行习惯追踪和记录的App, 交互适配最新的 `Material3` 并且完全开源免费.
+这里也允许推销一下自己这款习惯养成的 app, [Table Habit][mhabit-fdroid-url] 是一款方便自己
+进行习惯追踪和记录的 App, 交互适配最新的 `Material3` 并且完全开源免费.
 
 [![pic1][mhabit-pic-1]{:width="200"}][mhabit-pic-1]
 [![pic2][mhabit-pic-2]{:width="200"}][mhabit-pic-2]
@@ -40,24 +42,24 @@ categories:
 就是:
 
 - 在编码,构建中不要包含任何非自由的代码和工具 (e,g. googleAD, OracleSDK, etc.)
-- 不要提供应用内更新的功能 (应用更新应当由F-Droid接管)
-- 应用ID应该使用自己独一无二的ID (如果没有自己的域名或者不想使用自己的域名,
+- 不要提供应用内更新的功能 (应用更新应当由 F-Droid 接管)
+- 应用 ID 应该使用自己独一无二的 ID (如果没有自己的域名或者不想使用自己的域名,
   就使用托管仓库的域名把, 比如 `io.github.foo.bar` )
 - 依赖必须使用源码构建, 或者能够从 `Debian` 库中直接获得.
 
-### 必要::需要通知原app作者
+### 必要::需要通知原 app 作者
 
-当然, 如果自己就是app的作者 (比如我的 [Table Habit][mhabit-github-url]), 这条可以直接
+当然, 如果自己就是 app 的作者 (比如我的 [Table Habit][mhabit-github-url]), 这条可以直接
 略过.
 
 ### 必要::合并请求(MR)中已引用所有相关的 `fdroiddata` 和 `RFP` 问题
 
-对于新App, 一般不会存在这些 `issue`, 所以可以跳过.
+对于新 App, 一般不会存在这些 `issue`, 所以可以跳过.
 
 ### 必要::使用 `fdroid build` 构建
 
-由于F-Droid使用 `fdroid build` 命令构建 `repo` 下的所用应用, 因此必须可以通过执行
-`fdroid build io.github.foo.bar` 并成功构建app来保证最终服务器的构建流程可以顺利通过.
+由于 F-Droid 使用 `fdroid build` 命令构建 `repo` 下的所用应用, 因此必须可以通过执行
+`fdroid build io.github.foo.bar` 并成功构建 app 来保证最终服务器的构建流程可以顺利通过.
 
 我们通过配置正确的元数据(metadata)让 `fdroidserver` 可以正确的构建出自己的应用, 如使用过
 `Github Action` 在云端构建自己的应用, 那么恭喜, 他们本质上(几乎)是同一种东西.
@@ -69,40 +71,40 @@ categories:
 
 需要在项目的根目录建立一个 `fastlane` 目录结构, 可以参考 [这里][fastlane-structure]
 
-为什么需要`fastlane`, 比如对于我的应用, frdoird会在website构建时读取项目目录中的fastlane
+为什么需要`fastlane`, 比如对于我的应用, frdoird 会在 website 构建时读取项目目录中的 fastlane
 结构, 并根据其中的信息生成应用网页, 比如 [我的应用主页][mhabit-fdroid-url]
 
 按照官方给出的目录创建即可, 其中有几点需要注意(也包含一个我踩过的坑)
 
 - `en-US` 是必须的, 这个是默认目录, 如果其他语言的相关信息没有找到就会去这个目录寻找
-- locale是大小写敏感的 (e.g. 应该是 `en-US` 而不是 `en-us`), 这里需要特别注意.
-- 具体的locale值可以在 [这里](https://www.andiamo.co.uk/resources/iso-language-codes/)
+- locale 是大小写敏感的 (e.g. 应该是 `en-US` 而不是 `en-us`), 这里需要特别注意.
+- 具体的 locale 值可以在 [这里](https://www.andiamo.co.uk/resources/iso-language-codes/)
   找到, 还是要注意大小写 (`xx-YY`).
 
 ### 强烈推荐::Releases are tagged
 
-每个版本打上tag即可, 比如 `git tag v1.0.0+1`
+每个版本打上 tag 即可, 比如 `git tag v1.0.0+1`
 
 ### 推荐::外部仓库被添加为 `submodule` 而不是 `srclibs`
 
-使用 `submodule` 可以自行更新fdroid构建时使用的依赖(比如flutterSDK) 在更新依赖版本时只
-需要更新 `submodule`, 而不需要更新metadata并重新向fdroid/data提交一个MR (省事)
+使用 `submodule` 可以自行更新 fdroid 构建时使用的依赖(比如 flutterSDK) 在更新依赖版本时只
+需要更新 `submodule`, 而不需要更新 metadata 并重新向 fdroid/data 提交一个 MR (省事)
 
 可以查看 [3. `metadata` 如何填写](#3-metadata-如何填写) 了解更多 `submodule` 使用姿势
 
 ### 推荐::可重复构建
 
-F-Droid官方的可重复构建文档有一些冗余, 这里主要解答一下 `什么是`, `为什么`, `怎么做` 这三个
+F-Droid 官方的可重复构建文档有一些冗余, 这里主要解答一下 `什么是`, `为什么`, `怎么做` 这三个
 问题, 也可以参考 [官方文档][fdroid-rebuild-doc].
 
 大白话说就是, 任何人在他们的目标机器上使用相同的构建环境和步骤, 最终生成的二进制文件和你自己本
 地环境构建出来的二进制完全相同, 这样做的目的主要还是为了防止二进制被不法分子篡改并进行非法发布.
 
-F-Droid默认使用自己的key对构建的软件进行签名, 而安卓app升级的一个硬性要求便是需要保证签名来源
-是一致的, 否则会禁止安装. 因此默认情况下自己构建的出来的app除非使用从F-Droid中提取的key进行
-签名, 否则是无法和F-Droid商店内应用进行覆盖升级的.
+F-Droid 默认使用自己的 key 对构建的软件进行签名, 而安卓 app 升级的一个硬性要求便是需要保证签名来源
+是一致的, 否则会禁止安装. 因此默认情况下自己构建的出来的 app 除非使用从 F-Droid 中提取的 key 进行
+签名, 否则是无法和 F-Droid 商店内应用进行覆盖升级的.
 
-但实现可重构构建后, F-Droid就会直接将自签名(而不是fdroid签名)的APP发布到商店, 这样就可以进行
+但实现可重构构建后, F-Droid 就会直接将自签名(而不是 fdroid 签名)的 APP 发布到商店, 这样就可以进行
 升级.
 
 ```text
@@ -121,17 +123,17 @@ fdoird build --> 生成APK \
 
 1. 构建路径相同 (比如我是在 `/home/runner/foo` 目录下执行 `flutter build` 进行构建,
    对方也必须保证目录一致, 否则生成的二进制会不一致)
-2. `JDK` 版本一致. F-Droid要求使用 `JDK17`.
-3. `NDK` 版本一致, Flutter内部默认托管 `NDK` 版本, 因此没有特殊原因不需要指定.
+2. `JDK` 版本一致. F-Droid 要求使用 `JDK17`.
+3. `NDK` 版本一致, Flutter 内部默认托管 `NDK` 版本, 因此没有特殊原因不需要指定.
 4. 其他环境, 包括操作系统最好保持一致(windows/macos/linux), 不同发行版之间可能并不重要,
    但也最好能够保持一致防止一些奇奇怪怪的问题.
 
-如果你要上架的应用和我一样(使用flutter, 使用vx.y.z+n的版本号. 并在 `Github Action` 构建),
+如果你要上架的应用和我一样(使用 flutter, 使用 vx.y.z+n 的版本号. 并在 `Github Action` 构建),
 那不妨直接抄我的作业, 可以节省很多时间. 具体可以查阅 [`metadata` 如何填写](#3-metadata-如何填写)
 
-## 2. 如何让自己的App可以被 `F-Droid` 收录
+## 2. 如何让自己的 App 可以被 `F-Droid` 收录
 
-官方其实已经给出了比较详细的 [教程][fdroid-submitting-url], 我这边根据自己接入App的实际
+官方其实已经给出了比较详细的 [教程][fdroid-submitting-url], 我这边根据自己接入 App 的实际
 情况, 对这个教程做出一些补充:
 
 1. `fork` [Data](https://gitlab.com/fdroid/fdroiddata) 到自己的库中
@@ -139,7 +141,7 @@ fdoird build --> 生成APK \
 3. `cd /path/to/your/fdroiddata`
 4. `git checkout -b io.github.foo.bar`
 5. 将 `template` 中的 `yml` 选取一个复制到 `metadata/io.github.foo.bar.yml`
-   (不要复制哪一个? 当然选取和自己app最合适的, 比如我的应用是一个Flutter应用, 当然选择
+   (不要复制哪一个? 当然选取和自己 app 最合适的, 比如我的应用是一个 Flutter 应用, 当然选择
    [build-flutter.yml][fdroid-flutter-template] 作为模板构建)
 6. 补全`io.github.foo.bar.yml`, 这里涉及的问题最多, 我会在
    [3. `metadata` 如何填写](#3-metadata-如何填写) 中详细说明一些涉及的问题

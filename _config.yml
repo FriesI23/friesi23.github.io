@@ -18,26 +18,40 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: WARM NEST FOR 123 AND FRIES
+title: 薯条与123的温暖小窝
 email: FriesI23@outlook.com
-description: >- # this means to ignore newlines until "baseurl:"
-  Just write something casual,
-baseurl: "/blog" # the subpath of your site, e.g. /blog
-url: "https://friesi23.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+
+# this means to ignore newlines until "baseurl:"
+description: |
+  随便写写, 随便玩玩, 随便搞搞
+
+# the subpath of your site, e.g. /blog
+baseurl: "/blog"
+
+# the base hostname & protocol for your site, e.g. http://example.com
+url: "https://friesi23.github.io"
+
+# the generated path for posts, syntex can founded at:
+# https://jekyllrb.com/docs/permalinks/#global
+collections:
+  posts:
+    permalink: /post/:year:month/:slug
+
 # twitter_username: jekyllrb
 github_username: FriesI23
 
 # Build settings
 theme: minima
 
+# Google Analytics
 google_analytics: G-2T0DE4DLFQ
 gitment_client_id: 6312ebbac9e346953b76
 gitment_client_secret: 48e1f1f02f2539efc40ab6e3ec984be42d153202
 
-# whitelist:
 plugins:
   - jekyll-sitemap
   - jekyll-feed
+  - jekyll-seo-tag
 
 # Exclude from processing.
 # The following items will not be processed, by default.
@@ -47,14 +61,15 @@ plugins:
 # Excluded items can be processed by explicitly listing the directories or
 # their entries' file path in the `include:` list.
 #
-# exclude:
-#   - .sass-cache/
-#   - .jekyll-cache/
-#   - gemfiles/
-#   - Gemfile
-#   - Gemfile.lock
-#   - node_modules/
-#   - vendor/bundle/
-#   - vendor/cache/
-#   - vendor/gems/
-#   - vendor/ruby/
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - ci/
