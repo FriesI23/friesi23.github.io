@@ -4,5 +4,8 @@
     "licenser.license": "CC-BY-SA-4",
     "markdownlint.config": {
         "MD029": false
+    },
+    "[liquid]": {
+        "editor.formatOnSave": true
     }
 }

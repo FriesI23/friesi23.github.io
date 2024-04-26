@@ -1,0 +1,15 @@
+<div id="container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css" />
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+  var gitment = new Gitalk({
+    id: "{{ page.date }}",
+    owner: "{{ site.gitment.owner }}",
+    admin: "{{ site.gitment.admin }}",
+    repo: "{{ site.gitment.repo }}",
+    clientID: "{{ site.gitment.client_id }}",
+    clientSecret: "{{ site.gitment.client_secret }}",
+    distractionFreeMode: "{{ site.gitment.distraction_freemode }}",
+  });
+  gitment.render("container");
+</script>

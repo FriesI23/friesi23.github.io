@@ -1,22 +1,19 @@
 ---
-layout: post
+#  friesi23.github.io (c) by FriesI23
+#
+#  friesi23.github.io is licensed under a
+#  Creative Commons Attribution-ShareAlike 4.0 International License.
+#
+#  You should have received a copy of the license along with this
+#  work. If not, see <http://creativecommons.org/licenses/by-sa/4.0/>.
 title: "Berrier KVM使用中出现的一些问题"
+author: FriesI23
 date: 2023-04-21 14:22:00 +0800
 category: kvm
 tags:
   - kvm
   - barrier
 ---
-
-<!--
- friesi23.github.io (c) by weooh
-
- friesi23.github.io is licensed under a
- Creative Commons Attribution-ShareAlike 4.0 International License.
-
- You should have received a copy of the license along with this
- work. If not, see <http://creativecommons.org/licenses/by-sa/4.0/>.
--->
 
 ## 1. 启动`Barrier`时出现 `ipc connection error, connection refuse` 日志
 

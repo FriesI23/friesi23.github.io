@@ -1,6 +1,13 @@
 ---
-layout: post
+#  friesi23.github.io (c) by FriesI23
+#
+#  friesi23.github.io is licensed under a
+#  Creative Commons Attribution-ShareAlike 4.0 International License.
+#
+#  You should have received a copy of the license along with this
+#  work. If not, see <http://creativecommons.org/licenses/by-sa/4.0/>.
 title: "Flutter 中的是否应该使用 Functional Widgets"
+author: FriesI23
 date: 2023-07-09 18:20:00 +0800
 category: flutter
 tags:
@@ -9,16 +16,6 @@ tags:
   - widget
   - code-style
 ---
-
-<!--
- friesi23.github.io (c) by FriesI23
-
- friesi23.github.io is licensed under a
- Creative Commons Attribution-ShareAlike 4.0 International License.
-
- You should have received a copy of the license along with this
- work. If not, see <http://creativecommons.org/licenses/by-sa/4.0/>.
--->
 
 在刚开始写 `Flutter` 应用没多久的时候，相信大家（包括我自己）都会有这样一个疑问：
 为什么 `Flutter` 官方教程推荐将子组件包装为一个`StatelessWidget`，

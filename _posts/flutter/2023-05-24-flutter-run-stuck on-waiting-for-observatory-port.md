@@ -1,6 +1,13 @@
 ---
-layout: post
+#  friesi23.github.io (c) by FriesI23
+#
+#  friesi23.github.io is licensed under a
+#  Creative Commons Attribution-ShareAlike 4.0 International License.
+#
+#  You should have received a copy of the license along with this
+#  work. If not, see <http://creativecommons.org/licenses/by-sa/4.0/>.
 title: "Flutter调试日志报错 - waiting for observatory port"
+author: FriesI23
 date: 2023-05-24 09:00:00 +0800
 category: android
 tags:
@@ -10,16 +17,6 @@ tags:
   - debug
   - logging
 ---
-
-<!--
- friesi23.github.io (c) by weooh
-
- friesi23.github.io is licensed under a
- Creative Commons Attribution-ShareAlike 4.0 International License.
-
- You should have received a copy of the license along with this
- work. If not, see <http://creativecommons.org/licenses/by-sa/4.0/>.
--->
 
 ## 问题
 

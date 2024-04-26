@@ -1,0 +1,13 @@
+# Tutorial: https://github.com/mmistakes/minimal-mistakes/blob/4.25.0/docs/_docs/09-authors.md
+# icon: https://fontawesome.com/icons
+FriesI23:
+  name: "Fries_I23"
+  bio: "🎮Gaming, 🎬Movies, 💻Coding, and so on✨✨✨"
+  avatar: "/assets/images/f1-photo.jpg"
+  links:
+    - label: "Email"
+      icon: "fa fa-envelope"
+      url: "mailto:FriesI23@outlook.com"
+    - label: "Github"
+      icon: "fa-brands fa-github"
+      url: "https://github.com/FriesI23"

@@ -1,6 +1,13 @@
 ---
-layout: post
+#  friesi23.github.io (c) by FriesI23
+#
+#  friesi23.github.io is licensed under a
+#  Creative Commons Attribution-ShareAlike 4.0 International License.
+#
+#  You should have received a copy of the license along with this
+#  work. If not, see <http://creativecommons.org/licenses/by-sa/4.0/>.
 title: "如何将 Flutter 应用上架到 F-Droid"
+author: FriesI23
 date: 2023-06-08 18:00:00 +0800
 category: fdroid
 tags:
@@ -9,16 +16,6 @@ tags:
   - fdroid
   - app-store
 ---
-
-<!--
- friesi23.github.io (c) by FriesI23
-
- friesi23.github.io is licensed under a
- Creative Commons Attribution-ShareAlike 4.0 International License.
-
- You should have received a copy of the license along with this
- work. If not, see <http://creativecommons.org/licenses/by-sa/4.0/>.
--->
 
 最近在 `F-Droid` 上架了自己的第一款开源应用 `Table Habit`, 在这里记录一下上架的大概流程和
 遇到的一些问题, 一方面方便自己以后上架其他应用, 另一边放也希望大家遇到类似问题的时候能够有一个

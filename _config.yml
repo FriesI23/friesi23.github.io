@@ -18,40 +18,127 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: 薯条与123的温暖小窝
+# Configs
+locale: "zh-CN"
+title: 薯条与123
+title_separator: "-"
+subtitle: 温暖的小窝
+name: Fries_I23
 email: FriesI23@outlook.com
-
-# this means to ignore newlines until "baseurl:"
 description: |
   随便写写, 随便玩玩, 随便搞搞
 
-# the subpath of your site, e.g. /blog
+# Structures
+# Archives: https://github.com/jekyll/jekyll-archives
+url: https://friesi23.github.io
 baseurl: "/blog"
-
-# the base hostname & protocol for your site, e.g. http://example.com
-url: "https://friesi23.github.io"
-
-# the generated path for posts, syntex can founded at:
-# https://jekyllrb.com/docs/permalinks/#global
 collections:
   posts:
     permalink: /post/:year:month/:slug
 
-# twitter_username: jekyllrb
-github_username: FriesI23
+# Plugin: Archives
+jekyll-archives:
+  enabled:
+    - categories
+    - tags
+  layouts:
+    category: archive-taxonomy
+    tag: archive-taxonomy
+  permalinks:
+    category: /categories/:name/
+    tag: /tags/:name/
 
-# Build settings
-theme: minima
+# Theme: minima
+# theme: minima
+# github_username: FriesI23
 
-# Google Analytics
-google_analytics: G-2T0DE4DLFQ
-gitment_client_id: 6312ebbac9e346953b76
-gitment_client_secret: 48e1f1f02f2539efc40ab6e3ec984be42d153202
+# Theme: minimal-mistakes:4.25.0
+# Layout: https://mmistakes.github.io/minimal-mistakes/docs/layouts/
+# Config: https://mmistakes.github.io/minimal-mistakes/docs/configuration/
+# Exmaple: https://github.com/mmistakes/minimal-mistakes/blob/4.25.0/_config.yml
+remote_theme: mmistakes/minimal-mistakes@4.25.0
+minimal_mistakes_skin: "dirt"
+repository: FriesI23/blog
+google_site_verification: RY3mdgt-hVa17vDvoNX0dXcy-V0xpEj8gzRXbtQk7Rw
+comments:
+  provider: custom
+analytics:
+  provider: google-gtag
+  google:
+    tracking_id: G-2T0DE4DLFQ
+category_archive:
+  type: liquid
+  path: /categories/
+tag_archive:
+  type: liquid
+  path: /tags/
+paginate: 16
+paginate_path: /page:num/
+search: true
+defaults:
+  # Tutorial: https://jekyllrb.com/docs/configuration/front-matter-defaults/
+  - scope:
+      path: ""
+      type: tag
+    values:
+      author_profile: true
+  - scope:
+      path: ""
+      type: category
+    values:
+      comments: false
+  # _pages
+  - scope:
+      path: "_pages"
+      type: pages
+    values:
+      layout: single
+      author_profile: false
+  # _posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      classes: wide
+      author_profile: true
+      breadcrumbs: true
+      show_date: true
+      read_time: true
+      comments: true
+      share: true
+      related: false
+      toc: true
+      toc_sticky: false
+      toc_icon: bars
+      toc_label: 目录
 
+# Plugin: Gitment
+gitment:
+  client_id: 6312ebbac9e346953b76
+  client_secret: 48e1f1f02f2539efc40ab6e3ec984be42d153202
+  owner: FriesI23
+  repo: blog-comment
+  admin:
+    - FriesI23
+  distraction_freemode: true
+
+# Plugins
 plugins:
+  - jekyll-include-cache
+  - jekyll-remote-theme
   - jekyll-sitemap
+  - jekyll-gist
   - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-paginate
+  - jekyll-archives
+whitelist:
+  - jekyll-include-cache
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jekyll-paginate
 
 # Exclude from processing.
 # The following items will not be processed, by default.
@@ -61,6 +148,8 @@ plugins:
 # Excluded items can be processed by explicitly listing the directories or
 # their entries' file path in the `include:` list.
 #
+include:
+  - _pages
 exclude:
   - .sass-cache/
   - .jekyll-cache/

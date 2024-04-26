@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: single
 title: 关于
 permalink: /about/
 ---
@@ -18,7 +18,8 @@ Hi, 欢迎光临我的小窝, 这里只会有一些个人/家庭随笔和对于�
 
 ![1713950902](https://github.com/FriesI23/blog-comment/assets/20661034/5e0a2141-24da-4663-8f95-48af585a8ec1){: width="250" }
 
-感谢 [minima](https://github.com/jekyll/minima),
+感谢 ~~[minima](https://github.com/jekyll/minima)(曾经)~~,
+[minimal-mistakes](https://github.com/mmistakes/minimal-mistakes),
 [jekyll](https://github.com/jekyll/jekyll) 与
 [github-page](https://pages.github.com/), 为这个博客提供强力驱动!
 

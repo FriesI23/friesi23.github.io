@@ -1,6 +1,13 @@
 ---
-layout: post
+#  friesi23.github.io (c) by FriesI23
+#
+#  friesi23.github.io is licensed under a
+#  Creative Commons Attribution-ShareAlike 4.0 International License.
+#
+#  You should have received a copy of the license along with this
+#  work. If not, see <http://creativecommons.org/licenses/by-sa/4.0/>.
 title: "使用 Github Page 与 Jekyll 创建自己的博客"
+author: FriesI23
 date: 2023-04-04 08:07:06 +0800
 category: blog
 tags:
@@ -9,16 +16,6 @@ tags:
   - jekyll
   - blog
 ---
-
-<!--
- friesi23.github.io (c) by weooh
-
- friesi23.github.io is licensed under a
- Creative Commons Attribution-ShareAlike 4.0 International License.
-
- You should have received a copy of the license along with this
- work. If not, see <http://creativecommons.org/licenses/by-sa/4.0/>.
--->
 
 ## 为什么要写这一篇 Blog
 
