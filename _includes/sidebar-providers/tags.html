@@ -1,0 +1,24 @@
+{% case site.tag_archive.type %}
+  {% when "liquid" %}
+    {% assign path_type = "#" %}
+  {% when "jekyll-archives" %}
+    {% assign path_type = nil %}
+{% endcase %}
+
+{% if site.tag_archive.path %}
+  <strong class="taxonomy__title">
+    <i class="fas fa-fw fa-tags" aria-hidden="true"></i>
+    {{ site.data.ui-text[site.locale].tags_label | default: "Tags:" }}
+  </strong>
+  <ul class="taxonomy__index">
+    {% for tag in site.tags %}
+      <li>
+        <a href="{{ tag[0] | slugify | prepend: path_type | prepend: site.tag_archive.path | relative_url }}">
+          <strong>{{ tag[0] }}</strong>
+          <span class="taxonomy__count">{{ tag[1].size }}</span>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+
+{% endif %}

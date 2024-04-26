@@ -112,6 +112,8 @@ defaults:
       toc_sticky: false
       toc_icon: bars
       toc_label: 目录
+      sidebar-op:
+        show_categories: true
 
 # Plugin: Gitment
 gitment:
