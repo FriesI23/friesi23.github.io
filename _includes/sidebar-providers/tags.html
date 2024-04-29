@@ -6,11 +6,11 @@
 {% endcase %}
 
 {% if site.tag_archive.path %}
-  <strong class="taxonomy__title">
+  <strong class="taxonomy__title_tagcat">
     <i class="fas fa-fw fa-tags" aria-hidden="true"></i>
     {{ site.data.ui-text[site.locale].tags_label | default: "Tags:" }}
   </strong>
-  <ul class="taxonomy__index">
+  <ul class="taxonomy__index_tagcat">
     {% for tag in site.tags %}
       <li>
         <a href="{{ tag[0] | slugify | prepend: path_type | prepend: site.tag_archive.path | relative_url }}">

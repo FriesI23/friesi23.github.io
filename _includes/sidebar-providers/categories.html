@@ -6,11 +6,11 @@
 {% endcase %}
 
 {% if site.category_archive.path %}
-  <strong class="taxonomy__title">
+  <strong class="taxonomy__title_tagcat">
     <i class="fas fa-fw fa-folder-open" aria-hidden="true"></i>
     {{ site.data.ui-text[site.locale].categories_label | default: "Categories:" }}
   </strong>
-  <ul class="taxonomy__index">
+  <ul class="taxonomy__index_tagcat">
     {% for category in site.categories %}
       <li>
         <a href="{{ category[0] | slugify | prepend: path_type | prepend: site.category_archive.path | relative_url }}">
