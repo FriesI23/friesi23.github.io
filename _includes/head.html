@@ -32,21 +32,7 @@
     rel="stylesheet alternate"
     href="{{ '/assets/css/main_dark.css' | relative_url }}"
     id="theme_source_dark">
-  <script>
-      let theme = sessionStorage.getItem('theme');
-      if (theme === 'dark' || window.matchMedia('(prefers-color-scheme: dark)').matches)
-      {
-        sessionStorage.setItem('theme', 'dark');
-        node1 = document.getElementById('theme_source');
-        node2 = document.getElementById('theme_source_dark');
-        node1.setAttribute('rel', 'stylesheet alternate');
-        node2.setAttribute('rel', 'stylesheet');
-      }
-      else
-      {
-        sessionStorage.setItem('theme', 'light');
-      }
-  </script>
+  <script src="{{ '/assets/js/init-theme.js' | relative_url }}"></script>
 {% endif %}
 
 <!-- For all browsers -->
