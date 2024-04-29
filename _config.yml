@@ -58,6 +58,7 @@ jekyll-archives:
 # Exmaple: https://github.com/mmistakes/minimal-mistakes/blob/4.25.0/_config.yml
 remote_theme: mmistakes/minimal-mistakes@4.25.0
 minimal_mistakes_skin: "dirt"
+minimal_mistakes_skin_dark: "dark"
 repository: FriesI23/blog
 google_site_verification: RY3mdgt-hVa17vDvoNX0dXcy-V0xpEj8gzRXbtQk7Rw
 comments:
@@ -114,6 +115,9 @@ defaults:
       toc_label: 目录
       sidebar-op:
         show_categories: true
+head_scripts:
+  - /assets/js/vendor/jquery/jquery-3.6.0.js
+  - /assets/js/custom-head.js
 
 # Plugin: Gitment
 gitment:
