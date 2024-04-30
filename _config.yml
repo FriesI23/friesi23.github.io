@@ -41,12 +41,15 @@ jekyll-archives:
   enabled:
     - categories
     - tags
+    - month
   layouts:
     category: archive-taxonomy
     tag: archive-taxonomy
+    month: archive-taxonomy
   permalinks:
     category: /categories/:name/
     tag: /tags/:name/
+    month: /post/:year:month/
 
 # Theme: minima
 # theme: minima
@@ -78,17 +81,26 @@ tag_archive:
 paginate: 16
 paginate_path: /page:num/
 search: true
+# Tutorial: https://jekyllrb.com/docs/configuration/front-matter-defaults/
 defaults:
-  # Tutorial: https://jekyllrb.com/docs/configuration/front-matter-defaults/
+  # tag & category child pages
   - scope:
       path: ""
       type: tag
     values:
-      author_profile: true
+      breadcrumbs: true
+      comments: false
   - scope:
       path: ""
       type: category
     values:
+      breadcrumbs: true
+      comments: false
+  - scope:
+      path: ""
+      type: month
+    values:
+      breadcrumbs: true
       comments: false
   # _pages
   - scope:
@@ -107,7 +119,7 @@ defaults:
       author_profile: true
       breadcrumbs: true
       show_date: true
-      read_time: true
+      read_time: false
       comments: true
       share: true
       related: false
@@ -170,6 +182,8 @@ exclude:
   - .sass-cache/
   - .jekyll-cache/
   - gemfiles/
+  - LICENSE
+  - README
   - Gemfile
   - Gemfile.lock
   - node_modules/
