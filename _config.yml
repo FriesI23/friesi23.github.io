@@ -192,3 +192,4 @@ exclude:
   - vendor/gems/
   - vendor/ruby/
   - ci/
+  - templates/
