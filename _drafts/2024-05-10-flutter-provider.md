@@ -1,0 +1,118 @@
+---
+#  friesi23.github.io (c) by FriesI23
+#
+#  friesi23.github.io is licensed under a
+#  Creative Commons Attribution-ShareAlike 4.0 International License.
+#
+#  You should have received a copy of the license along with this
+#  work. If not, see <http://creativecommons.org/licenses/by-sa/4.0/>.
+#
+# File name format: yyyy-mm-dd-tilte.md
+title: Flutter Provider 使用介绍
+author: FriesI23
+date: 2024-05-10 15:15:00 +0800
+category: flutter
+tags:
+  - flutter
+  - provider
+  - mvvm
+dartpad:
+  - id: e32f9e3da45e0ec1ede6006ec4859288
+    mode: flutter
+---
+
+作为 `flutter` 官方推荐的状态管理工具 (详见[这里][flutter-rcmd]),
+`Provider` 相比于一些状态管理框架 `BloC` 更加轻量, 可以在 app 开发中提供更高的灵活性.
+下面将先简单介绍一下 `Provider`, 然后将给出一些简单的使用示例, 最后将简单分析源码.
+
+## Provider
+
+> [源码](https://github.com/rrousselGit/provider/blob/master/packages/provider/lib/src/provider.dart)
+
+`Provider` 作为包中基础的一个 `Widget`, 主要作用为: 向该 `Widget` 树上的所有子孙暴露一个公共的值.
+
+想象一下一个 `Widget` 树中, 有多个 `Widget` 需要共享获取一个变量, 并能够进行更新
+(注意, 这里不涉及监听, 监听需要使用 `ListenableProvider` 以及其继承 `Widget`, 比如 `ChangeNotifierProvider`).
+此时有几个基础的解决方案:
+
+1. 使用全局变量或者单例, 但是不管哪一种都存在管理数据生命周期的问题.
+   过多的全局变量或者单例会是使得代码复杂度快速增长, 最后不得不手动创建一个管理生命周期的模块.
+   最后很可能是重复造轮子, 实现了一遍 `bloC` (一点私货, 我个人很不喜欢重复造轮子).
+2. 通过 `Widget` 构造参数将数据一路传下去. 很明显, 这一方面会导致 `Widget` 参数快速增长且包含了一堆自身不需要的参数;
+   同时随着代码复杂度增加, 增加参数会变得越来越**重**, 可能增加一个参数需要修改十几个 `Widget` 的构造函数,
+   但仅仅是为了偷穿参数.
+3. 自己实现一个 `InheritedWidget`, 然后在 `Widget` 中使用 `<Your InheritedWidget>.of(context)` 获取.
+   这个相比上面两种方法已具备一定可行性, 但是 `Provider Package` 本身就是针对 `InheritedWidget` 的封装;
+   So, 不要重复造轮子!
+   > A wrapper around InheritedWidget to make them easier to use and more reusable.
+
+有了 `Provider`, 我们便可以写出以下代码:
+
+```dart
+/// 这里先创建一个简单对象, 假设该对象有很多 Widget 需要使用其中的值.
+class InfoModel {
+    final String name;
+    final String addr;
+    int age;
+
+    YourModel(this.name, this.addr, this.age);
+}
+```
+
+```dart
+/// 这里 Provider Widget 对数据进行初始化
+Provider<InfoModel>(
+    create: (context) => InfoModel("John", "Earth", 10),
+    child: // 这里传入子 Widget
+),
+```
+
+```dart
+/// 使用以下两种方法都可以获取数据, 两者是等级的, 事实上第一行代码就是对第二行代码的包装
+final info = context.read<InfoModel>();
+final info = Provider.of<InfoModel>(context, listen: false);
+info.age += 1; //将 age + 1
+```
+
+### 完整示例
+
+{% include dartpad.html index=0 width="100%" height="600" %}
+
+### 需要注意
+
+`Provider` 生效的范围, 也就是 `context` 的位置. 只有 `Provider` 下面的 `context` 才能获取导数据.
+且 `Navigator` 导航到新页面后, 需要使用 `Provider.value` 将对象传递过去.
+
+```dart
+/// e.g.1 在 Widget Tree 中
+Widget1(
+    data: context.read<InfoModel>();    // throw ProviderNotFoundException
+    child: Provider<InfoModel>(
+        create: (context) => InfoModel("John", "Earth", 10),
+        child: Widget2(
+            data: context.read<InfoModel>();    // ok
+        ),
+    ),
+);
+
+/// e.g.2 在导航到新界面中, 假设方法是一个StatefulWidget中定一个callback
+void _onPressed() async {
+    final info = context.read<InfoModel>(); // 注意context, 必须在导航前获取
+    final result = Navigator.of(context).push(
+        MaterialPageRoute(
+            // builder内部已经切换到新的 Widget Tree, 这里使用 `context.read<InfoModel>()` 将会报错
+            builder: (context) => Provider.value(
+                // 没有 Provider 内部使用时会报错(ProviderNotFoundException)
+                value: info,
+                child: const NewPage(),
+            ),
+        ),
+    );
+}
+```
+
+## ChangeNotifierProvider
+
+> [源码](https://github.com/rrousselGit/provider/blob/master/packages/provider/lib/src/change_notifier_provider.dart)
+
+[flutter-rcmd]: https://docs.flutter.dev/data-and-backend/state-mgmt/simple#accessing-the-state
