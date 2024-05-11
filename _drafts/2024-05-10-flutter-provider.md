@@ -17,12 +17,15 @@ tags:
   - provider
   - mvvm
 dartpad:
-  - id: e32f9e3da45e0ec1ede6006ec4859288
+  - comment: Provider 示例
+    id: e32f9e3da45e0ec1ede6006ec4859288
     mode: flutter
-    comment: Provider 示例
-  - id: 80b552313b127a54563a1658f9c88ee1
+  - comment: ChangeNotifierProvider 示例
+    id: 80b552313b127a54563a1658f9c88ee1
     mode: flutter
-    comment: ChangeNotifierProvider 示例
+  - comment: FutureProvider/SteamProvider 示例
+    id: 895c6fb58ce375548e95bbeed6fe2f3e
+    mode: flutter
 ---
 
 作为 `flutter` 官方推荐的状态管理工具 (详见[这里][flutter-rcmd]),
@@ -194,6 +197,59 @@ void _onPressed() async {
   vm.confirmed = result;
 }
 ```
+
+## 3. FutureProvider / StreamProvider
+
+顾名思义, 这两个就是 [`Provider`](#1-provider) 的 `Future` 和 `Stream` 版本, 使用方法也大差不差,
+因此这里就以 `FutureProvider` 为例:
+
+```dart
+class InfoModel {
+  late final String name;
+  late final String addr;
+  late int age;
+  late final Future<bool> _init;
+
+  InfoModel() {
+    Future<bool> init() async {
+      name = "John";
+      addr = "Earth";
+      age = 10;
+      return true;
+    }
+
+    _init = init();
+  }
+
+  Future<bool> get init => _init;
+}
+```
+
+```dart
+FutureProvider<InfoModel?>(
+  create: (context) async {
+    final info = InfoModel();
+    await info.init;
+    return info;
+  },
+  initialData: null,
+  child: // 这里传入子 Widget
+),
+```
+
+```dart
+final info = context.read<InfoModel?>();
+```
+
+### 3.1. 完整代码
+
+{% include dartpad.html index=2 width="100%" height="600" %}
+
+### 3.2. 需要注意
+
+`FutureProvider` / `SteamProvider` 和 `Provider` 一样只会构建一次数据, 除非这些 `Provider` 被重新构建.
+
+## 关于各种 `Provider` 中的 `lazy` 参数
 
 [flutter-rcmd]: https://docs.flutter.dev/data-and-backend/state-mgmt/simple#accessing-the-state
 [mvvm]: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel
