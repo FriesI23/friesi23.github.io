@@ -249,7 +249,153 @@ final info = context.read<InfoModel?>();
 
 `FutureProvider` / `SteamProvider` 和 `Provider` 一样只会构建一次数据, 除非这些 `Provider` 被重新构建.
 
-## 关于各种 `Provider` 中的 `lazy` 参数
+## 4. ProxyProvider / ChangeNotifierProxyProvider
+
+上面介绍的各类 `Provider` 都可以用于创建一个数据结构, 但是如果我们的应用中存在多个数据结构且存在依赖关系的时候,
+这两个 `Proxy` 就可以发挥他们的作用.
+
+`Proxy` 将一个多个多个 `Provider` 传递到一个的 `Provider/ChangeNotifierProvider` 中, 使其聚合为一个新的对象.
+假设现在有一个玩家的对象 `PlayerInfo`, 但是玩家的不同属性需要从不同地方获取
+(可能是一个 id 到 name 的对应, 也可能是一个账户信息 `AcccountInfo`). 完整代码如下:
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+class PlayerInfo with ChangeNotifier {
+  String? accountName;
+  int id;
+  String name;
+  int level;
+
+  PlayerInfo({
+    this.accountName,
+    required this.id,
+    this.name = '',
+    this.level = 0,
+  });
+
+  void updateFrom(AccountManager accountMgr, PlayerManager playerMgr) {
+    accountName = accountMgr.getName(id);
+    final data = playerMgr.getInfoById(id);
+    name = data?.$1 ?? '';
+    level = data?.$2 ?? 0;
+    notifyListeners();
+  }
+}
+
+class AccountManager with ChangeNotifier {
+  final Map<String, List<int>> _infoMap;
+
+  AccountManager(Map<String, List<int>> infoMap) : _infoMap = infoMap;
+
+  List<int> getIds(String name) => _infoMap[name] ?? const [];
+
+  String? getName(int id) {
+    for (var e in _infoMap.entries) {
+      if (e.value.contains(id)) return e.key;
+    }
+    return null;
+  }
+}
+
+class PlayerManager with ChangeNotifier {
+  final Map<int, (String, int)> _infoMap;
+
+  PlayerManager(Map<int, (String, int)> infoMap) : _infoMap = infoMap;
+
+  (String, int)? getInfoById(int id) => _infoMap[id];
+
+  void levelPlusOne() {
+    for (var id in _infoMap.keys) {
+      _infoMap[id] = (_infoMap[id]!.$1, _infoMap[id]!.$2 + 1);
+    }
+    notifyListeners();
+  }
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => AccountManager({
+              "user1": [1, 2],
+              "user2": [3],
+            }),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => PlayerManager({
+              1: ("foo", 10),
+              2: ("bar", 20),
+              3: ("xxx", 100),
+            }),
+          ),
+        ],
+        child: const MyHomePage(),
+      ),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Example'),
+      ),
+      body: ListView.builder(
+        itemCount: 30,
+        itemBuilder: (context, id) => ChangeNotifierProxyProvider2<
+            AccountManager, PlayerManager, PlayerInfo>(
+          create: (context) => PlayerInfo(id: id),
+          update: (context, accountMgr, playerMgr, previous) =>
+              previous!..updateFrom(accountMgr, playerMgr),
+          builder: (context, child) {
+            final pinfo = context.watch<PlayerInfo>();
+            return ListTile(
+              title: Text(pinfo.accountName ?? "<<account not found>>"),
+              subtitle:
+                  Text("${pinfo.name}[${pinfo.id}], level=${pinfo.level}"),
+            );
+          },
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          if (!mounted) return;
+          this.context.read<PlayerManager>().levelPlusOne();
+        },
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+void main() {
+  runApp(const MyApp());
+}
+```
+
+## a. 关于各种 `Provider` 中的 `lazy` 参数
+
+## b. 各种 `Provider` 的 `.value` 构造函数
 
 [flutter-rcmd]: https://docs.flutter.dev/data-and-backend/state-mgmt/simple#accessing-the-state
 [mvvm]: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel
