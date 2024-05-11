@@ -1,0 +1,19 @@
+{% assign dartpad_url = "https://dartpad.dev/?id=" | append: page.dartpad[include.index].id | append: "&ga_id=" | append: site.analytics.google.tracking_id %}
+
+{% if page.theme %}
+  {% assign dartpad_url = dartpad_url | append: "&theme=" | append: page.dartpad[include.index].theme %}
+{% endif %}
+{% if page.mode %}
+  {% assign dartpad_url = dartpad_url | append: "&mode=" | append: page.dartpad[include.index].mode %}
+{% endif %}
+
+{% if page.dartpad %}
+  <iframe
+    src="{{ dartpad_url }}"
+    {% if include.width %}
+    width="{{ include.width }}"
+    {% endif %}
+    {% if include.height %}
+    height="{{ include.height }}"
+    {% endif %}></iframe>
+{% endif %}
