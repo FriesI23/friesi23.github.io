@@ -16,16 +16,6 @@ tags:
   - flutter
   - provider
   - mvvm
-dartpad:
-  - comment: Provider 示例
-    id: e32f9e3da45e0ec1ede6006ec4859288
-    mode: flutter
-  - comment: ChangeNotifierProvider 示例
-    id: 80b552313b127a54563a1658f9c88ee1
-    mode: flutter
-  - comment: FutureProvider/SteamProvider 示例
-    id: 895c6fb58ce375548e95bbeed6fe2f3e
-    mode: flutter
 ---
 
 作为 `flutter` 官方推荐的状态管理工具 (详见[这里][flutter-rcmd]),
@@ -83,7 +73,9 @@ info.age += 1; //将 age + 1
 
 ### 1.1. 完整示例
 
-{% include dartpad.html index=0 width="100%" height="600" %}
+[点击运行](https://dartpad.dev/?id=e32f9e3da45e0ec1ede6006ec4859288)
+
+{% include github_gist.html id="e32f9e3da45e0ec1ede6006ec4859288" %}
 
 ### 1.2. 需要注意
 
@@ -177,7 +169,9 @@ Widget build(BuildContext context) {
 
 ### 2.1. 完整示例
 
-{% include dartpad.html index=1 width="100%" height="600" %}
+[点击运行](https://dartpad.dev/?id=80b552313b127a54563a1658f9c88ee1)
+
+{% include github_gist.html id="80b552313b127a54563a1658f9c88ee1" %}
 
 ### 2.2. 需要注意
 
@@ -243,7 +237,9 @@ final info = context.read<InfoModel?>();
 
 ### 3.1. 完整代码
 
-{% include dartpad.html index=2 width="100%" height="600" %}
+[点击运行](https://dartpad.dev/?id=895c6fb58ce375548e95bbeed6fe2f3e)
+
+{% include github_gist.html id="895c6fb58ce375548e95bbeed6fe2f3e" %}
 
 ### 3.2. 需要注意
 
@@ -260,140 +256,7 @@ final info = context.read<InfoModel?>();
 
 [点击运行](https://dartpad.dev/?id=0f9a3cfb4f4364e86e6d8ff7cbd6f301)
 
-```dart
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-class PlayerInfo with ChangeNotifier {
-  String? accountName;
-  int id;
-  String name;
-  int level;
-
-  PlayerInfo({
-    this.accountName,
-    required this.id,
-    this.name = '',
-    this.level = 0,
-  });
-
-  void updateFrom(AccountManager accountMgr, PlayerManager playerMgr) {
-    accountName = accountMgr.getName(id);
-    final data = playerMgr.getInfoById(id);
-    name = data?.$1 ?? '';
-    level = data?.$2 ?? 0;
-    notifyListeners();
-  }
-}
-
-class AccountManager with ChangeNotifier {
-  final Map<String, List<int>> _infoMap;
-
-  AccountManager(Map<String, List<int>> infoMap) : _infoMap = infoMap;
-
-  List<int> getIds(String name) => _infoMap[name] ?? const [];
-
-  String? getName(int id) {
-    for (var e in _infoMap.entries) {
-      if (e.value.contains(id)) return e.key;
-    }
-    return null;
-  }
-}
-
-class PlayerManager with ChangeNotifier {
-  final Map<int, (String, int)> _infoMap;
-
-  PlayerManager(Map<int, (String, int)> infoMap) : _infoMap = infoMap;
-
-  (String, int)? getInfoById(int id) => _infoMap[id];
-
-  void levelPlusOne() {
-    for (var id in _infoMap.keys) {
-      _infoMap[id] = (_infoMap[id]!.$1, _infoMap[id]!.$2 + 1);
-    }
-    notifyListeners();
-  }
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (context) => AccountManager({
-              "user1": [1, 2],
-              "user2": [3],
-            }),
-          ),
-          ChangeNotifierProvider(
-            create: (context) => PlayerManager({
-              1: ("foo", 10),
-              2: ("bar", 20),
-              3: ("xxx", 100),
-            }),
-          ),
-        ],
-        child: const MyHomePage(),
-      ),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Example'),
-      ),
-      body: ListView.builder(
-        itemCount: 30,
-        itemBuilder: (context, id) => ChangeNotifierProxyProvider2<
-            AccountManager, PlayerManager, PlayerInfo>(
-          create: (context) => PlayerInfo(id: id),
-          update: (context, accountMgr, playerMgr, previous) =>
-              previous!..updateFrom(accountMgr, playerMgr),
-          builder: (context, child) {
-            final pinfo = context.watch<PlayerInfo>();
-            return ListTile(
-              title: Text(pinfo.accountName ?? "<<account not found>>"),
-              subtitle:
-                  Text("${pinfo.name}[${pinfo.id}], level=${pinfo.level}"),
-            );
-          },
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          if (!mounted) return;
-          this.context.read<PlayerManager>().levelPlusOne();
-        },
-        child: const Icon(Icons.add),
-      ),
-    );
-  }
-}
-
-void main() {
-  runApp(const MyApp());
-}
-```
+{% include github_gist.html id="0f9a3cfb4f4364e86e6d8ff7cbd6f301" %}
 
 ## 5. Consumer / Selector
 
