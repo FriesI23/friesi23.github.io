@@ -258,6 +258,8 @@ final info = context.read<InfoModel?>();
 假设现在有一个玩家的对象 `PlayerInfo`, 但是玩家的不同属性需要从不同地方获取
 (可能是一个 id 到 name 的对应, 也可能是一个账户信息 `AcccountInfo`). 完整代码如下:
 
+[点击运行](https://dartpad.dev/?id=0f9a3cfb4f4364e86e6d8ff7cbd6f301)
+
 ```dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -391,6 +393,94 @@ class _MyHomePageState extends State<MyHomePage> {
 void main() {
   runApp(const MyApp());
 }
+```
+
+## 5. Consumer / Selector
+
+前文介绍了 `context.read / context.watch / context.select`, 这一节将介绍 后两者的代替品;
+他们相较于前者主要有以下优点:
+
+1. 使用更加方便.
+2. 更符合 `Flutter` 设计思想 (万物皆 Widget).
+
+下面会给出相互等价的代码, 可以观察他们的区别:
+
+```dart
+/// [context.watch)]
+Widget buld(BuildContext context) {
+  return ListTile(
+    title: Builder(
+      builder: (context) => Text(context.watch<Model>().title),
+    ),
+    subTitle: "subtitle",
+  );
+}
+/// [Consumer]
+Widget buld(BuildContext context) {
+  return ListTile(
+    title: Consumer<Model>(
+      builder: (_, model, __) => Text(model.title),
+    ),
+    subTitle: "subtitle",
+  );
+}
+```
+
+```dart
+/// [context.select]
+Widget buld(BuildContext context) {
+  return ListTile(
+    title: Text(context.select<Model>((m) => m.title)),
+    subTitle: Text(context.select<Model>((m) => m.subtitle)),
+    leading: context.read<Model>.buildLeading(),
+  );
+}
+
+/// [Selector]
+Widget buld(BuildContext context) {
+  return Selector<Model, (String, String)>(
+    selector: (context, m) => (m.title, m.subtitle),
+    builder: (context, value, child) => ListTile(
+      title: value.$1,
+      subtitle: value.$2,
+      leading: context.read<Model>.buildLeading(),
+    ),
+  );
+}
+```
+
+具体使用那种方式看使用的位置和个人喜好, 不过我个人倾向于使用 `Selector` 与 `Consumer`,
+这种方式可以更直观体现出 `Widget` 刷新间的层级关系. 而 `context.watch` 与 `context.select`
+则更适用于框架代码或者一些很小的 `Widget`.
+
+必须再次强调, 两种代码之间并无区别, 需要根据代码整体风格进行选取或混用.
+
+### 5.1. 关于 `Consumer2` ,`Selector2` 等类似结尾含有 `2/3/4/5/6` 的方法
+
+带有 `ConsumerX` 的 `Widget` 可以同时监听多个 `ChangeNotifier` 的变更, 只要其中一个通知后便会重构子树.
+
+带有 `SelectorX` 的 `Widget` 和 `ConsumerX` 类似, 只不过可以选择向子 `Widget` 暴露一个值.
+`Dart3` 之前由于缺乏对 `Tuple` 类型的支持, 必须引入 `Tuple` 的第三方 package,
+但如果使用 `Dart3` 以及以后的版本, 语言内部已经原生实现了对 `Tuple` 的支持, 代码如下:
+
+```dart
+/// Compatible with dart2, bad for new code after dart3
+import 'package:tuple/tuple.dart';
+Selector<Model, Tuple2<int, String>>(
+    selector: (context, m) => Tuple2(m.level, m.name),
+    builder: (context, value, child) => Text("${value.item1}, ${value.item2}");
+)
+
+/// Good for dart3, But not compatible with dart2,,
+Selector<Model, ({String name, int level})>(
+    selector: (context, m) => (name: m.name, level: m.level),
+    builder: (context, value, child) => Text("${value.name}, ${value.level}"),
+);
+// or
+Selector<Model, (String name, int level)>(
+    selector: (context, m) => (m.name, m.level),
+    builder: (context, value, child) => Text("${value.$1}, ${value.$2}"),
+);
 ```
 
 ## a. 关于各种 `Provider` 中的 `lazy` 参数
