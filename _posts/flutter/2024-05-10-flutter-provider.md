@@ -73,7 +73,7 @@ info.age += 1; //将 age + 1
 
 ### 1.1. 完整示例
 
-[点击运行](https://dartpad.dev/?id=e32f9e3da45e0ec1ede6006ec4859288)
+[点击运行](https://dartpad.dev/?id=e32f9e3da45e0ec1ede6006ec4859288&run=true)
 
 {% include github_gist.html id="e32f9e3da45e0ec1ede6006ec4859288" %}
 
@@ -169,7 +169,7 @@ Widget build(BuildContext context) {
 
 ### 2.1. 完整示例
 
-[点击运行](https://dartpad.dev/?id=80b552313b127a54563a1658f9c88ee1)
+[点击运行](https://dartpad.dev/?id=80b552313b127a54563a1658f9c88ee1&run=true)
 
 {% include github_gist.html id="80b552313b127a54563a1658f9c88ee1" %}
 
@@ -237,7 +237,7 @@ final info = context.read<InfoModel?>();
 
 ### 3.1. 完整代码
 
-[点击运行](https://dartpad.dev/?id=895c6fb58ce375548e95bbeed6fe2f3e)
+[点击运行](https://dartpad.dev/?id=895c6fb58ce375548e95bbeed6fe2f3e&run=true)
 
 {% include github_gist.html id="895c6fb58ce375548e95bbeed6fe2f3e" %}
 
@@ -254,7 +254,7 @@ final info = context.read<InfoModel?>();
 假设现在有一个玩家的对象 `PlayerInfo`, 但是玩家的不同属性需要从不同地方获取
 (可能是一个 id 到 name 的对应, 也可能是一个账户信息 `AcccountInfo`). 完整代码如下:
 
-[点击运行](https://dartpad.dev/?id=0f9a3cfb4f4364e86e6d8ff7cbd6f301)
+[点击运行](https://dartpad.dev/?id=0f9a3cfb4f4364e86e6d8ff7cbd6f301&run=true)
 
 {% include github_gist.html id="0f9a3cfb4f4364e86e6d8ff7cbd6f301" %}
 
