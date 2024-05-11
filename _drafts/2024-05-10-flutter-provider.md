@@ -19,15 +19,19 @@ tags:
 dartpad:
   - id: e32f9e3da45e0ec1ede6006ec4859288
     mode: flutter
+    comment: Provider 示例
+  - id: 80b552313b127a54563a1658f9c88ee1
+    mode: flutter
+    comment: ChangeNotifierProvider 示例
 ---
 
 作为 `flutter` 官方推荐的状态管理工具 (详见[这里][flutter-rcmd]),
 `Provider` 相比于一些状态管理框架 `BloC` 更加轻量, 可以在 app 开发中提供更高的灵活性.
 下面将先简单介绍一下 `Provider`, 然后将给出一些简单的使用示例, 最后将简单分析源码.
 
-## Provider
+## 1. Provider
 
-> [源码](https://github.com/rrousselGit/provider/blob/master/packages/provider/lib/src/provider.dart)
+> - [Provider][provider-provider]
 
 `Provider` 作为包中基础的一个 `Widget`, 主要作用为: 向该 `Widget` 树上的所有子孙暴露一个公共的值.
 
@@ -74,11 +78,11 @@ final info = Provider.of<InfoModel>(context, listen: false);
 info.age += 1; //将 age + 1
 ```
 
-### 完整示例
+### 1.1. 完整示例
 
 {% include dartpad.html index=0 width="100%" height="600" %}
 
-### 需要注意
+### 1.2. 需要注意
 
 `Provider` 生效的范围, 也就是 `context` 的位置. 只有 `Provider` 下面的 `context` 才能获取导数据.
 且 `Navigator` 导航到新页面后, 需要使用 `Provider.value` 将对象传递过去.
@@ -111,8 +115,88 @@ void _onPressed() async {
 }
 ```
 
-## ChangeNotifierProvider
+## 2. ChangeNotifierProvider
 
-> [源码](https://github.com/rrousselGit/provider/blob/master/packages/provider/lib/src/change_notifier_provider.dart)
+> - [ChangeNotifierProvider][provider-changenotifierprovider]
+> - [ChangeNotifier][flutter-changenotifier]
+
+相对于 [`Provider`](#1-provider), `ChangeNotifierProvider` 提供了监听与通知的功能,
+`Widget` 可以监听数据行为并进行刷新. 这种行为使得 `ChangeNotifierProvider`
+很适合作为 [MVVM][mvvm] 模式中 `ViewModel` 部分.
+
+首先, 我们和 `Provider` 的示例一样创建一个对象, 但是不同在于这次我们引入一个新类 `ChangeNotifier`.
+
+```dart
+// or: class InfoModel extends ChangeNotifier {
+class InfoModel with ChangeNotifier {
+  final String name;
+  final String addr;
+  int _age;
+
+  YourModel(this.name, this.addr, int age): _age = age;
+
+  int get age => _age;
+
+  set age(int newAge) {
+    _age = newAge;
+    // 炸裂我们通知所有监听组件变化行为
+    notifyListeners();
+  }
+}
+```
+
+```dart
+/// 使用 ChangeNotifierProvider Widget 对数据进行初始化
+ChangeNotifierProvider<InfoModel>(
+    create: (context) => InfoModel("John", "Earth", 10),
+    child: // 这里传入子 Widget
+),
+```
+
+对于如何使用这个 `Provider`, 最简单的方式就是使用 `context.read<InfoModel>()` 获取数据,
+`context.watch<InfoModel>()` 对 `context` 对应的 `Widget` 进行绑定, 或者使用
+`context.select<InfoModel，int>(callback)` 对单独的数据进行监听. 不过一般情况下针对后两者,
+更推荐使用 `Consumer` 与 `Selector` 这两个 `Widget`, 这会在后面介绍, 这里先列举最简单的使用方法:
+
+```dart
+Widget build(BuildContext context) {
+  // 只要 InfoModel 内调用了 notifyListeners, 该 build 对应的 Widget 就会被重建.
+  final vm = context.watch<InfoModel>();
+  return TextButton(onPressed: () => context.read<InfoModel>.age += 1, child: Text(vm.toString()));
+}
+
+Widget build(BuildContext context) {
+  // 只有 select 中的值发生变化, 该 build 对应的 Widget 才会被重建.
+  final age = context.select<InfoModel>((vm) => vm.age);
+  return TextButton(onPressed: () => context.read<InfoModel>.age += 1, child: Text(age));
+}
+```
+
+### 2.1. 完整示例
+
+{% include dartpad.html index=1 width="100%" height="600" %}
+
+### 2.2. 需要注意
+
+`context.watch<T>()`, `context.select<T,R>(cb)`, `Provider.of<T>(context)` 都只能在 `build` 中使用;
+如果需要在构建树外或只获取数据结构, 永远使用 `context.read<T>()`, 这些获取函数都是 `O(1)` 的, 不用担心性能问题.
+
+获取和绑定 `Provider` 的时候请务必注意 `context` 的范围, 只有在清楚自己在干什么的时候使用变量引用 `Provider`,
+否则请直接使用 `context.read<T>()` 进行获取. 这里留一个问题, 你能看出这段代码片段可能会导致的问题么:
+
+```dart
+// 假设方法在一个 StatefulWidget 的 State 中
+void _onPressed() async {
+  if (!mount) return;
+  final Model vm = context.read<Model>();
+  final bool result = await openDialog();
+  if (!mount || !result) return;
+  vm.confirmed = result;
+}
+```
 
 [flutter-rcmd]: https://docs.flutter.dev/data-and-backend/state-mgmt/simple#accessing-the-state
+[mvvm]: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel
+[provider-provider]: https://pub.dev/documentation/provider/latest/provider/Provider-class.html
+[provider-changenotifierprovider]: https://pub.dev/documentation/provider/latest/provider/ChangeNotifierProvider-class.html
+[flutter-changenotifier]: https://api.flutter.dev/flutter/foundation/ChangeNotifier-class.html
