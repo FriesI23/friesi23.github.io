@@ -30,7 +30,7 @@ dartpad:
 
 作为 `flutter` 官方推荐的状态管理工具 (详见[这里][flutter-rcmd]),
 `Provider` 相比于一些状态管理框架 `BloC` 更加轻量, 可以在 app 开发中提供更高的灵活性.
-下面将先简单介绍一下 `Provider`, 然后将给出一些简单的使用示例, 最后将简单分析源码.
+下面将先简单介绍一下 `Provider`, 然后将给出一些简单的使用示例.
 
 ## 1. Provider
 
@@ -190,10 +190,10 @@ Widget build(BuildContext context) {
 ```dart
 // 假设方法在一个 StatefulWidget 的 State 中
 void _onPressed() async {
-  if (!mount) return;
+  if (!mounted) return;
   final Model vm = context.read<Model>();
   final bool result = await openDialog();
-  if (!mount || !result) return;
+  if (!mounted || !result) return;
   vm.confirmed = result;
 }
 ```
@@ -483,9 +483,83 @@ Selector<Model, (String name, int level)>(
 );
 ```
 
+## 6. 总结
+
+以上便是个人在学习并使用 `Provider` 时的一些总结. 本文只是简单介绍 `Provider` 的一些优势和使用姿势.
+后续有机会会另起一篇博客粗浅讲解一下 `Provider` 的源码, 以及如何通过 `InheritedNotifier`
+自定义一个 `Provider`.
+
 ## a. 关于各种 `Provider` 中的 `lazy` 参数
 
+`Provider` 默认是 "懒加载" 的, 如果我们需要立刻执行 `create` 或者 `update` 方法, 则必须将 `lazy` 置为 `false`.
+一般情况下按需加载能够起到优化性能的目的, 但是如果有些对象必须尽快完成初始化(比如 `db`, 或者读取本地配置),
+则将其行为改变为立刻加载是有必要的, 否则可能会存在一些意想不到的情况 (e.g. 漏写本地日志, 关键配置没有及时读取等).
+
 ## b. 各种 `Provider` 的 `.value` 构造函数
+
+`Provider` 官方建议, 如果是在 `Provider` 内部初始化对象, 则使用 `Provider()`, 而如果对象已经在外部初始化完毕,
+则使用 `Provider.value`.
+
+```dart
+// bad
+final model = Model();
+Provider(create: (context) => model);
+Provider.value(value: Model());
+// good
+final model = Model();
+Provider.value(value: model);
+Provider(create: (context) => Model());
+```
+
+`Provider.value` 在界面跳转时很有用, 因为新的界面是一个新的树, 而新树中不包含当前界面中已经初始化完毕的数据对象.
+而我们可以通过以下代码完成不同界面之间数据对象的传递.
+
+```dart
+// .... in StatefulWidget
+void _onPress() {
+  if (!mounted) return;
+  final model = context.read<Model>();
+  final result = Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (context) => MultiProvider(
+        providers: [
+          ChangeNotifierProvider.value(value: model),
+          // 注意: 这样获取是不行的, 因为context是 builder(新界面)的,
+          // 一定要在这里获取的话只能使用 this.context,
+          // 总之需要使用当前界面而不是跳转后界面的 context 来获取.
+          // ChangeNotifierProvider.value(value: context.read<Model>()),
+        ],
+        child: ChildPage(),
+      ),
+    ),
+  )
+}
+```
+
+需要要注意的是: 最好在数据结构内部使用 mounted 检查, 否则过深的传递数据对象可能会导致子界面持有一个已经失效的 `Provider`.
+最好**只**在一些简单的二级页面(比如一些依赖当前界面的 dialog 或者子节面)中使用这种传递方式.
+
+```dart
+class Model with ChangeNotifier {
+    _mounted = true;
+
+    bool get mounted => _mounted;
+
+    @override
+    void dispose() {
+        _mounted = false;
+        super.dispose();
+    }
+}
+
+// .... in StatefulWidget
+void onAction() {
+    if (!mounted) return;
+    final vm = context.read<Model>();
+    if (!vm.mounted) return;
+    // do something here
+}
+```
 
 [flutter-rcmd]: https://docs.flutter.dev/data-and-backend/state-mgmt/simple#accessing-the-state
 [mvvm]: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel
