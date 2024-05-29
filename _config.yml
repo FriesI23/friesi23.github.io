@@ -30,7 +30,7 @@ description: |
 
 # Structures
 # Archives: https://github.com/jekyll/jekyll-archives
-url: https://friesi23.github.io
+url: https://blog.friesi23.cn
 collections:
   posts:
     permalink: /post/:year:month/:slug
