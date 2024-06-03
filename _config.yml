@@ -30,7 +30,8 @@ description: |
 
 # Structures
 # Archives: https://github.com/jekyll/jekyll-archives
-url: https://friesi23.github.io
+# url: https://friesi23.github.io
+url: https://play4fun.friesi23.cn
 collections:
   posts:
     permalink: /post/:year:month/:slug
@@ -64,7 +65,9 @@ minimal_mistakes_skin_dark: "dark"
 repository: FriesI23/friesi23.github.io
 copyright: FriesI23
 copyright_url: https://creativecommons.org/licenses/by-sa/4.0/
-google_site_verification: RY3mdgt-hVa17vDvoNX0dXcy-V0xpEj8gzRXbtQk7Rw
+google_site_verifications:
+  - RY3mdgt-hVa17vDvoNX0dXcy-V0xpEj8gzRXbtQk7Rw # https://friesi23.github.io
+  - uHjDL019v87su5npUUQg7tswRAFU_YVumsmvmwkOl6A # https://play4fun.friesi23.cn
 bing_site_verification: 0DF1AC6A81C62171FD53F59652680877
 comments:
   provider: custom

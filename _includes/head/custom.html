@@ -7,3 +7,8 @@
   rel="icon"
   type="image/png"
   href="{{ site.baseurl }}/assets/images/favicon.png">
+
+<!-- custom seo -->
+{% for verification in site.google_site_verifications %}
+  <meta name="google-site-verification" content="{{ verification }}" />
+{% endfor %}
