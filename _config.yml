@@ -153,6 +153,7 @@ gitment:
   admin:
     - FriesI23
   distraction_freemode: true
+  language: zh-CN
 
 # Plugins
 plugins:
