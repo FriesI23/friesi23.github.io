@@ -134,15 +134,28 @@ defaults:
         show_categories: true
 footer:
   links:
-    - label: "Github"
-      icon: "fab fa-fw fa-github"
+    - label: Github
+      icon: fab fa-fw fa-github
       url: https://github.com/FriesI23
+  bottom_links:
+    - label: 浙ICP备2024100574号
+      url: https://beian.miit.gov.cn
+      id: sid-cn-record-info
+    - label: 网站地图
+      path: sitemap.xml
 head_scripts:
   - /assets/js/vendor/jquery/jquery-3.6.0.js
   - /assets/js/custom-head.js
 after_footer_scripts:
   - https://unpkg.com/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js
   - /assets/js/custom-footer.js
+
+# Extra: Id show-only
+show_only:
+  - id: sid-cn-record-info
+    only:
+      - friesi23.cn
+      - www.friesi23.cn
 
 # Plugin: Gitment
 gitment:

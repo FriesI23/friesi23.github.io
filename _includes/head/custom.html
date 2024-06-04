@@ -12,3 +12,17 @@
 {% for verification in site.google_site_verifications %}
   <meta name="google-site-verification" content="{{ verification }}" />
 {% endfor %}
+
+<!-- only show -->
+<script>
+  $(function () {
+    let hosturl = new URL(document.URL);
+    let showOnly = {{ site.show_only | jsonify }};
+    showOnly.forEach(item => {
+      let isHostUrlInList = item.only.includes(hosturl.hostname);
+      if (!isHostUrlInList) {
+        document.getElementById(item.id).style.display = "none";
+      }
+    });
+  });
+</script>

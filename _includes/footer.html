@@ -1,0 +1,61 @@
+{% comment %}
+  Forked from:
+  https://github.com/mmistakes/minimal-mistakes/blob/4.25.0/_includes/footer.html
+{% endcomment %}
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    {% if site.data.ui-text[site.locale].follow_label %}
+      <li>
+        <strong>{{ site.data.ui-text[site.locale].follow_label }}</strong>
+      </li>
+    {% endif %}
+
+    {% if site.footer.links %}
+      {% for link in site.footer.links %}
+        {% if link.label and link.url %}
+          <li>
+            <a href="{{ link.url }}" rel="nofollow noopener noreferrer">
+              <i class="{{ link.icon | default: 'fas fa-link' }}" aria-hidden="true"></i>
+              {{ link.label }}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+    {% unless site.atom_feed.hide %}
+      <li>
+        <a href="{% if site.atom_feed.path %}{{ site.atom_feed.path }}{% else %}{{ '/feed.xml' | relative_url }}{% endif %}">
+          <i class="fas fa-fw fa-rss-square" aria-hidden="true"></i>
+          {{ site.data.ui-text[site.locale].feed_label | default: "Feed" }}</a>
+      </li>
+    {% endunless %}
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; {{ site.time | date: '%Y' }}
+  <a href="{{ site.copyright_url | default: site.url }}">{{ site.copyright | default: site.title }}</a>
+  .
+  {{ site.data.ui-text[site.locale].powered_by | default: "Powered by" }}
+  <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a>
+  &amp;
+  <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>
+  .
+</div>
+
+<div class="page__footer-bottomlinks">
+  {% if site.footer.bottom_links %}
+    {% for link in site.footer.bottom_links %}
+      {% if link.label and (link.url or link.path) %}
+        <li id="{{ link.id }}">
+          <a href="{% if link.url %}{{ link.url }}{% else %}{{ link.path | relative_url }}{% endif %}" rel="nofollow noopener noreferrer">
+            {% if link.icon %}
+              <i class="{{ link.icon | default: 'fas fa-link' }}" aria-hidden="true"></i>
+            {% endif %}
+            {{ link.label }}
+          </a>
+        </li>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+</div>
