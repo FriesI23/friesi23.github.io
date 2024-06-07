@@ -3,3 +3,12 @@ main:
     url: /tags/
   - title: "关于"
     url: /about/
+
+projects:
+  - title: 🌟 主要项目
+    url: https://github.com/FriesI23?tab=repositories&q=&type=source&language=&sort=stargazers
+    children:
+      - title: 1️⃣ 桌上习惯 / Table Habit - 简单的习惯记录app
+        url: https://github.com/FriesI23/mhabit
+      - title: 2️⃣ RFC4918 中文翻译
+        url: /rfc4918-cn/
