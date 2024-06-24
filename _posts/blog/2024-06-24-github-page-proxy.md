@@ -315,7 +315,7 @@ proxy_cache_valid  any 1d;
 
 以上配置可以减轻服务器向 github 请求的压力, 如果不需要可以注释这些块. 如启用后可以在请求时查看是否有命中缓存:
 
-![proxy](https://github.com/FriesI23/friesi23.github.io/assets/20661034/b548274e-3f62-40f3-801d-d9dcb3534f46) {: width="800" }
+![proxy](https://github.com/FriesI23/friesi23.github.io/assets/20661034/b548274e-3f62-40f3-801d-d9dcb3534f46){: width="800" }
 
 ### 4.3. host 相关
 
