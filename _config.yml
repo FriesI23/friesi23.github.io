@@ -119,7 +119,6 @@ defaults:
       type: posts
     values:
       layout: single
-      classes: wide
       author_profile: true
       breadcrumbs: true
       show_date: true
@@ -128,7 +127,7 @@ defaults:
       share: true
       related: false
       toc: true
-      toc_sticky: false
+      toc_sticky: true
       toc_icon: bars
       toc_label: 目录
       sidebar:
