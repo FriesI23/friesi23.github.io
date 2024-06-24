@@ -7,9 +7,9 @@
 #  You should have received a copy of the license along with this
 #  work. If not, see <http://creativecommons.org/licenses/by-sa/4.0/>.
 title: 使用 Nginx 代理 Github Page 并实现 HTTPS 访问
-description: |
-    由于国内访问 Github Pages 的不稳定性以及 Github 对百度爬虫的屏蔽, 导致博客在国内的访问体验不佳.
-    本文介绍如何使用 Nginx 反向代理 Github Pages, 并配置 Let's Encrypt 证书，以解决这些问题.
+excerpt: |
+    由于国内访问 Github Pages 的不稳定性以及 Github 对百度爬虫的屏蔽, 导致博客访问体验不佳.
+    本文介绍如何使用 Nginx 反向代理 Github Pages, 并配置 Let's Encrypt 证书, 以解决上述问题.
 author: FriesI23
 date: 2024-06-24 09:00:00 +0800
 category: blog
