@@ -14,12 +14,12 @@ $(function () {
       node1.setAttribute("rel", "stylesheet alternate");
       node2.setAttribute("rel", "stylesheet");
       sessionStorage.setItem("theme", "dark");
-      setBackToTopOptions("dark");
+      onThemeChanged("dark");
     } else {
       node2.setAttribute("rel", "stylesheet alternate");
       node1.setAttribute("rel", "stylesheet");
       sessionStorage.setItem("theme", "light");
-      setBackToTopOptions("light");
+      onThemeChanged("light");
     }
     return false;
   });

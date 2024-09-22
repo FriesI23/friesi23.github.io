@@ -30,8 +30,13 @@
           {{ site.data.ui-text[site.locale].feed_label | default: "Feed" }}</a>
       </li>
     {% endunless %}
+
+    {% if page.show_gh_btn or layout.show_gh_btn %}
+      {% include /other-providers/github.html %}
+    {% endif %}
   </ul>
 </div>
+
 
 <div class="page__footer-copyright">&copy; {{ site.time | date: '%Y' }}
   <a href="{{ site.copyright_url | default: site.url }}">{{ site.copyright | default: site.title }}</a>

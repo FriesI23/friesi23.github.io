@@ -113,6 +113,7 @@ defaults:
     values:
       layout: single
       author_profile: false
+      show_gh_btn: true
   # _posts
   - scope:
       path: ""
@@ -130,6 +131,7 @@ defaults:
       toc_sticky: true
       toc_icon: bars
       toc_label: 目录
+      show_gh_btn: true
       sidebar:
         nav: projects
       sidebar-op:
