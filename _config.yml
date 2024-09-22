@@ -148,6 +148,7 @@ footer:
     - label: 网站地图
       path: sitemap.xml
 head_scripts:
+  - https://buttons.github.io/buttons.js
   - /assets/js/vendor/jquery/jquery-3.6.0.js
   - /assets/js/custom-head.js
 after_footer_scripts:

@@ -31,36 +31,21 @@ function setBackToTopOptions(theme) {
 }
 
 function setGithubButton(theme) {
-  var colorScheme = "";
   if (theme === "light") {
-    colorScheme = "no-preference: light; light: light; dark: light;";
+    var showId = "gh-button-container-light";
+    var hideId = "gh-button-container-dark";
   } else {
-    colorScheme = "no-preference: dark; light: dark; dark: dark;";
+    var showId = "gh-button-container-dark";
+    var hideId = "gh-button-container-light";
   }
-
-  let elements = document.getElementsByClassName("github-button");
-  for (var i = 0; i < elements.length; i++) {
-    let e = elements[i];
-    e.setAttribute("data-color-scheme", colorScheme);
+  var showElement = document.getElementById(showId);
+  var hideElement = document.getElementById(hideId);
+  if (showElement) {
+    showElement.style.display = "flex";
   }
-
-  function reloadGitHubButtonsScript() {
-    let script = document.createElement("script");
-    script.src = "https://buttons.github.io/buttons.js";
-    script.async = true;
-    script.defer = true;
-
-    let existingScript = document.querySelector(
-      'script[src="https://buttons.github.io/buttons.js"]'
-    );
-    if (existingScript) {
-      existingScript.parentNode.replaceChild(script, existingScript);
-    } else {
-      document.body.appendChild(script);
-    }
+  if (hideElement) {
+    hideElement.style.display = "none";
   }
-
-  reloadGitHubButtonsScript();
 }
 
 $(function () {

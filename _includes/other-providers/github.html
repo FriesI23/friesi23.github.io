@@ -1,10 +1,10 @@
-<div class="gh-button-container">
+<div class="gh-button-container" id="gh-button-container-light">
   <!-- star -->
   <li>
     <a
       class="github-button"
       href="https://github.com/{{ site.repository }}"
-      data-color-scheme="no-preference: light; light: light; dark: dark;"
+      data-color-scheme="no-preference: light; light: light; dark: light;"
       data-icon="octicon-star"
       {% comment %}
       data-size="large"
@@ -17,7 +17,7 @@
     <a
       class="github-button"
       href="https://github.com/{{ site.repository }}/fork"
-      data-color-scheme="no-preference: light; light: light; dark: dark;"
+      data-color-scheme="no-preference: light; light: light; dark: light;"
       data-icon="octicon-repo-forked"
       {% comment %}
       data-size="large"
@@ -30,7 +30,47 @@
     <a
       class="github-button"
       href="https://github.com/{{ site.repository }}/generate"
-      data-color-scheme="no-preference: light; light: light; dark: dark;"
+      data-color-scheme="no-preference: light; light: light; dark: light;"
+      data-icon="octicon-repo-template"
+      {% comment %}
+      data-size="large"
+      {% endcomment %}
+      aria-label="Use this template {{ site.repository }} on GitHub">Use this template</a>
+  </li>
+</div>
+<div class="gh-button-container" id="gh-button-container-dark">
+  <!-- star -->
+  <li>
+    <a
+      class="github-button"
+      href="https://github.com/{{ site.repository }}"
+      data-color-scheme="no-preference: dark; light: dark; dark: dark;"
+      data-icon="octicon-star"
+      {% comment %}
+      data-size="large"
+      {% endcomment %}
+      data-show-count="true"
+      aria-label="Star {{ site.repository }} on GitHub">Star</a>
+  </li>
+  <!-- fork -->
+  <li>
+    <a
+      class="github-button"
+      href="https://github.com/{{ site.repository }}/fork"
+      data-color-scheme="no-preference: dark; light: dark; dark: dark;"
+      data-icon="octicon-repo-forked"
+      {% comment %}
+      data-size="large"
+      {% endcomment %}
+      data-show-count="true"
+      aria-label="Fork {{ site.repository }} on GitHub">Fork</a>
+  </li>
+  <!-- template -->
+  <li>
+    <a
+      class="github-button"
+      href="https://github.com/{{ site.repository }}/generate"
+      data-color-scheme="no-preference: dark; light: dark; dark: dark;"
       data-icon="octicon-repo-template"
       {% comment %}
       data-size="large"
