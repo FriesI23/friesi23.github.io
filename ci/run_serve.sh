@@ -1,3 +1,4 @@
+#!/bin/bash
 # blog (c) by FriesI23
 #
 # blog is licensed under a
