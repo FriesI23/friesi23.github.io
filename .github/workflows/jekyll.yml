@@ -63,3 +63,17 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  sumbit-baidu:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+      - name: Install Dependencies
+        run: pip install requests lxml
+      - name: Submit
+        run: python3 ci/sumbit_sitemap_to_baidu.py ./_site/sitemaps/www.friesi23.cn.xml "${{ secrets.BAIDU_SITEMAP_SUMBIT_APIURL }}"
