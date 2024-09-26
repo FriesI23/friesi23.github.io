@@ -6,6 +6,6 @@
         "MD029": false
     },
     "[liquid]": {
-        "editor.formatOnSave": true
+        "editor.formatOnSave": false
     }
 }

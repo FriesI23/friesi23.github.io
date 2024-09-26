@@ -94,18 +94,21 @@ defaults:
     values:
       breadcrumbs: true
       comments: false
+      sitemap: false
   - scope:
       path: ""
       type: category
     values:
       breadcrumbs: true
       comments: false
+      sitemap: false
   - scope:
       path: ""
       type: month
     values:
       breadcrumbs: true
       comments: false
+      sitemap: false
   # _pages
   - scope:
       path: "_pages"

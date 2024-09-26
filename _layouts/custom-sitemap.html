@@ -1,0 +1,18 @@
+---
+# input: site_url
+layout: null
+sitemap: false
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  {% for post in site.posts %}
+    <url><loc>{{ page.site_url }}{{ post.url | remove: 'index.html' }}</loc></url>
+  {% endfor %}
+  {% for page in site.pages %}
+    {% if page.layout != nil and page.layout != 'feed' and page.sitemap != false %}
+      {% unless page.url contains '/assets/' %}
+        <url><loc>{{ page.site_url }}{{ page.url | remove: 'index.html' }}</loc></url>
+      {% endunless %}
+    {% endif %}
+  {% endfor %}
+</urlset>
