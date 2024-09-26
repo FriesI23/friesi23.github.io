@@ -55,10 +55,16 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: "3.12"
       - run: pip install requests lxml
       - name: Submit to Baidu
         run: python3 ci/sumbit_sitemap_to_baidu.py ./_site/sitemaps/www.friesi23.cn.xml "${{ secrets.BAIDU_SITEMAP_SUMBIT_APIURL }}"
+      - name: Submit to Bing - friesi23.cn
+        run: python3 ci/sumbit_sitemap_to_bing.py ./_site/sitemaps/friesi23.cn.xml http://api.indexnow.org/IndexNow "${{ secrets.BING_SITEMAP_SUMBIT_TOKEN_LOCATION }}"
+      - name: Submit to Bing - www.friesi23.cn
+        run: python3 ci/sumbit_sitemap_to_bing.py ./_site/sitemaps/www.friesi23.cn.xml http://api.indexnow.org/IndexNow "${{ secrets.BING_SITEMAP_SUMBIT_TOKEN_LOCATION }}" www.friesi23.cn
+      - name: Submit to Bing - play4fun.friesi23.cn
+        run: python3 ci/sumbit_sitemap_to_bing.py ./_site/sitemap.xml http://api.indexnow.org/IndexNow "${{ secrets.BING_SITEMAP_SUMBIT_TOKEN_LOCATION }}" play4fun.friesi23.cn
 
   # Deployment job
   deploy:

@@ -14,7 +14,7 @@ def submit_to_baidu(api_url, submit_urls):
         "Accept-Language": "zh-CN,zh;q=0.9",
         "Content-Length": str(len(submit_urls)),
     }
-    res = requests.post(api_url, headers=headers, data=submit_urls)
+    res = requests.post(api_url, headers=headers, data=submit_urls, timeout=10)
     return res.text
 
 
