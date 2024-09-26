@@ -36,7 +36,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.1'
+          ruby-version: "3.1"
           bundler-cache: true
           # Increment this number if you need to re-download cached gems
           cache-version: 1
@@ -52,6 +52,14 @@ jobs:
         # Automatically uploads an artifact from the './_site' directory by default
         uses: actions/upload-pages-artifact@v3
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests lxml
+      - name: Submit to Baidu
+        run: python3 ci/sumbit_sitemap_to_baidu.py ./_site/sitemaps/www.friesi23.cn.xml "${{ secrets.BAIDU_SITEMAP_SUMBIT_APIURL }}"
+
   # Deployment job
   deploy:
     environment:
@@ -63,16 +71,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-  sumbit-baidu:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Install Dependencies
-        run: pip install requests lxml
-      - name: Submit
-        run: python3 ci/sumbit_sitemap_to_baidu.py ./_site/sitemaps/www.friesi23.cn.xml "${{ secrets.BAIDU_SITEMAP_SUMBIT_APIURL }}"
