@@ -44,4 +44,6 @@ if __name__ == "__main__":
         sys.argv[1], sys.argv[3], host=None if len(sys.argv) <= 4 else sys.argv[4]
     )
     print(should_sumbited_urls)
-    print(submit_to_bing(sys.argv[2], should_sumbited_urls))
+    result = submit_to_bing(sys.argv[2], should_sumbited_urls)
+    print(result)
+    print(result.text)
