@@ -2,7 +2,7 @@
 # see: https://myth.cx/p/hugo-auto-submit-baidu/
 
 import sys, re, json
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urlunparse
 import requests
 import lxml.etree
 
@@ -29,7 +29,11 @@ def get_urls(sitemap_path, key_location, host=None):
     data = {
         "host": urlparse(key_location).netloc if host is None else host,
         "key": re.search(r"/([^/]+)\.txt$", key_location).group(1),
-        "keyLocation": key_location,
+        "keyLocation": (
+            key_location
+            if host is None
+            else urlunparse(urlparse(key_location)._replace(netloc=host))
+        ),
         "urlList": url_list,
     }
     return json.dumps(data)
