@@ -42,9 +42,9 @@ tags:
 `2-3 树` 是一种自平衡查找树，起结合了二叉树和三叉树的特性, 具有以下性质:
 
 1. `2-Node`, 即一个节点只包含一个 Key, 同时只能为叶子节点或者**同时**存在左右孩子.
-  左子树上的任一节点 l 都需要满足: `x > l`, 右子树上的任一节点 y 都需要满足: `x <= z`;
+   左子树上的任一节点 l 都需要满足: `x > l`, 右子树上的任一节点 y 都需要满足: `x <= z`;
 2. `3-Node`, 即一个节点包含两个 Key, 同时只能为叶子节点或者**同时**存在三个孩子.
-  节点与子树之间需要满足: `l < x <= c < y <= r | l∈{左子树}, c∈{中间子树}, r∈{右子树}`
+   节点与子树之间需要满足: `l < x <= c < y <= r | l∈{左子树}, c∈{中间子树}, r∈{右子树}`
 3. 所有节点都是 `2-Node` 或是 `3-Node`
 4. 所有叶子节点都在同一个 layer, 也就是说任意 layer 的子树高度都是相同.
 
@@ -78,14 +78,14 @@ tags:
 2. 插入到一个 `2-Node` 上
 3. 插入到一个 `3-Node` 上
 
-针对情况1, 直接插入一个 `2-Node` 即可.
+针对情况 1, 直接插入一个 `2-Node` 即可.
 
-针对情况2, 直接将 `2-Node` 变为一个 `3-Node` 即可.
+针对情况 2, 直接将 `2-Node` 变为一个 `3-Node` 即可.
 
-针对情况3则比较复杂, 因为 `3-Node` 已经不能继续插入 Key, 而直接插入为子树则会违反性质4.
+针对情况 3 则比较复杂, 因为 `3-Node` 已经不能继续插入 Key, 而直接插入为子树则会违反性质 4.
 因此我们需要在保证性质的前提下将节点进行一定拆分重组, 已完成整个插座操作.
 
-首先考察树中只有一个 `3-Node` 的情况, 此时插入数据会使节点变为一个 `4-Node`, 这将违反性质3.
+首先考察树中只有一个 `3-Node` 的情况, 此时插入数据会使节点变为一个 `4-Node`, 这将违反性质 3.
 因此我们需要将这个节点拆为一个 `2-Node`, 这个很简单, 将左右两个 Key 作为中间 Key 的左右子树即可.
 
 ```text
@@ -96,13 +96,13 @@ x y  (insert z)  ->  x y z   -->   / \
 
 完成后满足 `2-3 树` 的所有性质.
 
-现在考察在一个 `3-Node` 的非 root 节点进行上述操作, 会违反性质4, 因为拆分节点引入了新的一层.
+现在考察在一个 `3-Node` 的非 root 节点进行上述操作, 会违反性质 4, 因为拆分节点引入了新的一层.
 不过好在我们的每个节点可以容纳最多 2 个 Key, 因此可以考虑将该节点与父节点进行合并, 此时又分为两种情况:
 
 1. 父节点 p 为 `2-Node`
 2. 父节点 p 为 `3-Node`
 
-针对情况3.1, 我们可以直接将节点合并到父节点, 如下:
+针对情况 3.1, 我们可以直接将节点合并到父节点, 如下:
 
 ```text
 // 只给出右子树合并, 左子树镜像操作即可.
@@ -114,7 +114,7 @@ pl   xyz      -->    p1   x    z
 
 合并后所有性质都满足.
 
-针对情况3.2, 我们可以递归的继续完成 `拆分节点 -> 向上合并` 的流程, 直到 root 节点被拆分.
+针对情况 3.2, 我们可以递归的继续完成 `拆分节点 -> 向上合并` 的流程, 直到 root 节点被拆分.
 
 ```text
     p1  p2               p1   p2  [y]                 [p2]
@@ -190,8 +190,8 @@ FUNCTION INSERT_AND_SPLIT(Node z, Key k)
 1. 删除节点为叶子节点
 2. 删除节点为路径上的节点
 
-针对情况1, 我们可以直接删除节点, 然后尝试自下而上对树的性质进行修复;
-对于情况2, 我们想办法将其转变为情况1.
+针对情况 1, 我们可以直接删除节点, 然后尝试自下而上对树的性质进行修复;
+对于情况 2, 我们想办法将其转变为情况 1.
 
 查找 k(z) 的中序后驱节点 k(x), 根据中序后驱节点的性质, k(x) 只可能为叶子节点且替换 k(z) 后不会引起 k(z) 所在节点的顺序性质.
 将 k(x) 替换 k(z), 然后删除原来位置的 k(x), 这样我们就将情况转变为第一种:
@@ -215,11 +215,11 @@ z            -->    x
 1. 叶子节点变为 `2-Node`
 2. 叶子节点变为 `Null`
 
-针对情况1, 我们什么都不需要做, 已经满足树的所有性质.
+针对情况 1, 我们什么都不需要做, 已经满足树的所有性质.
 
-针对情况2, 我们破坏了性质3, 因为存在一个为 `Null` 的空节点.
+针对情况 2, 我们破坏了性质 3, 因为存在一个为 `Null` 的空节点.
 此时需要引入一种新的操作 `Key Rotation` 来修复性质, 该操作将考察删除节点的兄弟节点中的 key 值,
-并尝试将多余的 Key 通过旋转的方式旋转到 `Null` 节点上, 以重新满足性质3. 此时存在以下两种情况:
+并尝试将多余的 Key 通过旋转的方式旋转到 `Null` 节点上, 以重新满足性质 3. 此时存在以下两种情况:
 
 - 兄弟节点 b 为 `2-Node`
 - 兄弟节点 b wei `3-Node`
@@ -289,12 +289,12 @@ FUNCTION DELETE_AND_FIXED(Node z, Key k)
 
 ## 参考资料
 
-[OI Wiki - 2-3 树](https://oi-wiki.org/ds/2-3-tree/)
-[多路查找树---2-3树和2-3-4树的深入理解](https://www.cnblogs.com/lishanlei/p/10707791.html)
-[二叉树与多叉树](https://blog.csdn.net/wangzilong_2019/article/details/106036911)
-[2-3 Trees | (Search, Insert and Deletion)](https://www.geeksforgeeks.org/2-3-trees-search-and-insert/)
-[CMSC 420: Lecture 6 - 2-3 Trees](https://www.cs.umd.edu/class/fall2020/cmsc420-0201/Lects/lect06-23tree.pdf)
-[Wiki - 2–3 tree](https://en.wikipedia.org/wiki/2%E2%80%933_tree)
+1. [OI Wiki - 2-3 树](https://oi-wiki.org/ds/2-3-tree/)
+2. [多路查找树---2-3 树和 2-3-4 树的深入理解](https://www.cnblogs.com/lishanlei/p/10707791.html)
+3. [二叉树与多叉树](https://blog.csdn.net/wangzilong_2019/article/details/106036911)
+4. [2-3 Trees \| (Search, Insert and Deletion)](https://www.geeksforgeeks.org/2-3-trees-search-and-insert/)
+5. [CMSC 420: Lecture 6 - 2-3 Trees](https://www.cs.umd.edu/class/fall2020/cmsc420-0201/Lects/lect06-23tree.pdf)
+6. [Wiki - 2–3 tree](https://en.wikipedia.org/wiki/2%E2%80%933_tree)
 <!-- refs -->
 
 [b-tree-ssd]: https://softwareengineering.stackexchange.com/a/114934
