@@ -6,7 +6,7 @@
 #
 #  You should have received a copy of the license along with this
 #  work. If not, see <http://creativecommons.org/licenses/by-sa/4.0/>.
-title: 算法学习 - 多叉树树 (Multi-Way Tree) 与 2-3 树 (2-3 Tree)
+title: 算法学习 - 多叉树 (Multi-Way Tree) 与 2-3 树 (2-3 Tree)
 excerpt: |
   提供了个人对于 2-3 树的一些入门学习笔记, 以及对其与多叉树相关概念的理解.
   里面包含了 2-3 树插入与删除操作的详细说明与个人理解写出的渣渣伪码.
