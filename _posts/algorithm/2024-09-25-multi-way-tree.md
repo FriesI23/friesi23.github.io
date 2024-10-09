@@ -184,7 +184,9 @@ FUNCTION INSERT_AND_SPLIT(Node z, Key k)
 我们先按照删除节点 k(z) 是否为叶子节点将情况分为以下两种:
 
 > 这里令 k(x) 为 x 节点上任一个 Key. x 上可能有 1-2 个 Key.
+>
 > a -- k(x) -- b 中的 k(x) 表示与 a,b 两个子树的 parent.
+>
 > e.g. 10 -- [12 (13) 14] -- 15 中, 14 为 13,15 的 parent, 12 为 10,13 的 parent.
 
 1. 删除节点为叶子节点
@@ -287,6 +289,11 @@ FUNCTION DELETE_AND_FIXED(Node z, Key k)
   RETURN z  // 确保返回当前节点的状态
 ```
 
+## 2-3-4 树
+
+`2-3-4 树` 为 `2-3 树` 的扩展节点, 将节点可容纳值得数量增加到 3 个, 这可以显著降低树的高度, 具体可以在
+[算法学习 - 2-3-4 树 (2-3-4 Tree)][blog-2-3-4-tree] 中找到相关内容.
+
 ## 参考资料
 
 1. [OI Wiki - 2-3 树](https://oi-wiki.org/ds/2-3-tree/)
@@ -299,3 +306,4 @@ FUNCTION DELETE_AND_FIXED(Node z, Key k)
 
 [b-tree-ssd]: https://softwareengineering.stackexchange.com/a/114934
 [blog-binary-search-tree]: /post/202409/binary-search-tree
+[blog-2-3-4-tree]: /post/202410/multi-way-tree-2
