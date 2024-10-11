@@ -17,6 +17,9 @@ tags:
   - blog
   - nginx
   - nginx-cache
+  - nginx-cache-purge
+  - docker
+  - docker-compose
 ---
 
 在 [**使用 Nginx 代理 Github Page 并实现 HTTPS 访问**][blog-github-page-proxy] 中,
