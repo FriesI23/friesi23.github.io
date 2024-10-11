@@ -6,7 +6,7 @@
 #
 #  You should have received a copy of the license along with this
 #  work. If not, see <http://creativecommons.org/licenses/by-sa/4.0/>.
-title: 为 Nginx 反向代理配置缓存并在 Docker 中使用 ngx_cache_purge 模块.
+title: 为 Nginx 反向代理配置缓存并在 Docker 中使用 ngx_cache_purge 模块
 excerpt: |
   最近优化了一波博客的反代配置, 这里总结了一下. 主要为三个部分: 首先是更细致的 Nginx 缓存配置;
   中间主要为如何构建带有第三方 Module 的 Docker 镜像并进行配置; 最后简要说明了一下 ngx_cache_purge 的使用方法.
