@@ -7,7 +7,8 @@
 #  You should have received a copy of the license along with this
 #  work. If not, see <http://creativecommons.org/licenses/by-sa/4.0/>.
 title: 算法学习 - 2-3-4 树 (2-3-4 Tree)
-excerpt:
+excerpt: |
+  包含 2-3-4 树相关操作的简要描述, 并将其扩展到 n 路平衡树中.
 author: FriesI23
 date: 2024-10-09 16:00:00 +0800
 category: algorithm
