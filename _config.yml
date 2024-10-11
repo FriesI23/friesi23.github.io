@@ -82,7 +82,7 @@ category_archive:
 tag_archive:
   type: liquid
   path: /tags/
-paginate: 16
+paginate: 10
 paginate_path: /page:num/
 search: true
 # Tutorial: https://jekyllrb.com/docs/configuration/front-matter-defaults/
