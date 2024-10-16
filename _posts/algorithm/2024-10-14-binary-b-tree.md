@@ -392,36 +392,31 @@ x0    x2           x0   x2
 证明见论文 [SYMMETRIC BINARY B-TREES][paper-sbbtree] 中 "Number of Nodes and Height of a B-tree" 部分.
 
 在[上一节 (二叉 b-树)](#二叉-b-树-binary-b-tree)中, 我们将其与一个 `k=1` 的 `B-Tree` 进行等价,
-这其实就是 [`2-3 树`][blog-multi-way-tree]. 而 `对称二叉 B-树` 由于允许 `σ-pointer` 向左右两边扩展,
-因此我们将其与 `k=2` 的 `B-Tree` 进行等价, 其实就是 [`2-3-4 树`][blog-multi-way-tree-2].
+这其实就是 [`2-3 树`][blog-multi-way-tree]. `对称二叉 B-树` 虽然允许 `σ-pointer` 向左右两边扩展,
+但由于 `性质2` 约束 (除 `δ-level` 最低一层的节点 (叶子节点) 外, 所有节点都有两个子节点),
+因此我们继续将其与 `k=1` 的 `B-Tree` 进行等价, 即 [`2-3 树`][blog-multi-way-tree].
 
 ```text
 // 同时加入 Red-Black Tree 对应的比较
 //
 //                      Symmetric
-//                      Binary B-tree         B-tree           Red-Black tree
+//                      Binary B-tree    B-tree (2-3 Tree)      Red-Black tree
 
-// 2-Node                   x                                        x(B)
+// 2-Node                   x                                       x(R/B)
 //                         / \              [p1 x p2]               /   \
 //                        p1  p2                                  p1(B) p2(B)
 
-// 3-Node(1)             x -> y                                     x(B)
+// 3-Node(1)             x -> y                                    x(R/B)
 //                      /    / \          [p1 x p2 y p3]           /   \
 //                     p1   p2 p3                                p1(B)  y(R)
 //                                                                     /  \
 //                                                                  p2(B) p3(B)
 //
-// 3-Node(2)             x <- y                                    y(B)
+// 3-Node(2)             x <- y                                    y(R/B)
 //                      / \    \          [p1 x p2 y p3]           /   \
 //                     p1 p2    p3                               x(R)  p3(B)
 //                                                               /  \
 //                                                             p1(B) p2(B)
-
-// 4-Node(3)          x <- y -> z                                     y(B)
-//                   / \       / \     [p1 x p2 y p3 z p4]          /       \
-//                  p1 p2     p3 p4                             x(R)         z(R)
-//                                                             /   \         /   \
-//                                                           p1(B)  p2(B)  p3(B)  p4(B)
 ```
 
 下面概述插入和删除操作.
@@ -593,4 +588,3 @@ x1 <- x2       d     =>       x1 <- x2 <- x4    => 执行一次 SPLIT_LL => (DON
 [paper-rbtree]: https://sedgewick.io/wp-content/themes/sedgewick/papers/1978Dichromatic.pdf
 [wiki-single-level-store]: https://en.wikipedia.org/wiki/Single-level_store
 [blog-multi-way-tree]: /post/202409/multi-way-tree
-[blog-multi-way-tree-2]: /post/202409/multi-way-tree-2
