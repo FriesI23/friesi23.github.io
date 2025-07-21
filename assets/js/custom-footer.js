@@ -1,8 +1,3 @@
-function onThemeChanged(theme) {
-  setBackToTopOptions(theme);
-  setGithubButton(theme);
-}
-
 function setBackToTopOptions(theme) {
   var options = { diameter: 60 };
 

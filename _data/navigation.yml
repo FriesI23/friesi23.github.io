@@ -14,3 +14,5 @@ projects:
         url: https://github.com/FriesI23/mhabit
       - title: 2️⃣ RFC4918 中文翻译
         url: /rfc4918-cn/
+      - title: 3️⃣ Openwrt DDNS Script - 腾讯云 Tencent Cloud (原 DNSPod)
+        url: https://github.com/FriesI23/ddns-scripts_tencent_cloud
