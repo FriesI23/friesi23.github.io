@@ -6,7 +6,7 @@
 #
 #  You should have received a copy of the license along with this
 #  work. If not, see <http://creativecommons.org/licenses/by-sa/4.0/>.
-title: 为 Flutter 应用打包为 Flatpak 并以正确的姿势上架到 Flathub
+title: 为 Flutter 应用打包为 Flatpak 并以正确的姿势上架到 Flathub (上)
 excerpt: |
   写在 Table Habit 上架到 Flathub 后，主要作为记录和供其他有需要者进行参考。
   共分为两个部分，本文为上半部分：既如何打包自己的 Single-file bundles。
@@ -26,7 +26,9 @@ tags:
 便准备采用其中提到的的 flatpak 方案对应用进行打包.
 这篇博客写在上架到 Flathub 后（你可以在[这里][flathub-mhabit]找到我的应用信息），主要作为记录和供其他有需要者进行参考。
 
-准备大体上拆分为两个部分：如何打包自己的 `.Flatpak` Bundle 与上架 Flathub 的正确姿势。本文将介绍上半部分。
+准备大体上拆分为两个部分：如何打包自己的 `.Flatpak` Bundle 与上架 Flathub 的正确姿势。本文将介绍上半部分,
+如想直接查看 Flathub 上架流程请移步：
+[为 Flutter 应用打包为 Flatpak 并以正确的姿势上架到 Flathub (下)][post-flutter-flatpak-and-flathub-2]。
 
 ## 什么是 Flatpak
 
@@ -507,8 +509,11 @@ jobs:
 不过 `Flathub` 建议由上游自行维护 `metainfo.xml` 文件，
 因此建议从一开始就保持自己发布的 `metainfo.xml` 与 `Flathub` 要求兼容，具体 lint 检查放在下篇文章中。
 
+- [为 Flutter 应用打包为 Flatpak 并以正确的姿势上架到 Flathub (下)][post-flutter-flatpak-and-flathub-2]
+
 <!-- refs -->
 
+[post-flutter-flatpak-and-flathub-2]: /post/202507/flutter-flatpak-and-flathub-2
 [mhabit]: https://github.com/FriesI23/mhabit
 [mhabit-issue-290]: https://github.com/FriesI23/mhabit/issues/289
 [mhabit-gen-flatpak-info]: https://github.com/FriesI23/mhabit/blob/main/scripts/gen_flatpak_info.sh
