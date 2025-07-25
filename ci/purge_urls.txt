@@ -7,9 +7,10 @@ https://friesi23.cn/categories/
 https://friesi23.cn/tags/
 https://friesi23.cn/about/
 https://friesi23.cn/monitor/
-https://friesi23.cn/assets/js/init-theme.js
-https://friesi23.cn/assets/js/custom-head.js
-https://friesi23.cn/assets/js/custom-footer.js
+https://friesi23.cn/post/202507/omv-6-to-7
+# https://friesi23.cn/assets/js/init-theme.js
+# https://friesi23.cn/assets/js/custom-head.js
+# https://friesi23.cn/assets/js/custom-footer.js
 # https://friesi23.cn/assets/css/main.css
 # https://friesi23.cn/assets/css/main_dark.css
 # https://friesi23.cn/assets/js/main.min.js
