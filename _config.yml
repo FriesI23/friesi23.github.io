@@ -65,11 +65,15 @@ minimal_mistakes_skin_dark: "dark"
 repository: FriesI23/friesi23.github.io
 copyright: FriesI23
 copyright_url: https://creativecommons.org/licenses/by-sa/4.0/
-google_site_verifications:
-  - RY3mdgt-hVa17vDvoNX0dXcy-V0xpEj8gzRXbtQk7Rw # https://friesi23.github.io
-  - uHjDL019v87su5npUUQg7tswRAFU_YVumsmvmwkOl6A # https://play4fun.friesi23.cn
-bing_site_verification: 0DF1AC6A81C62171FD53F59652680877
-baidu_site_verification: codeva-Hq4f8TsbkO
+site_verifications:
+  - header: google-site-verification
+    content: RY3mdgt-hVa17vDvoNX0dXcy-V0xpEj8gzRXbtQk7Rw # https://friesi23.github.io
+  - header: google-site-verification
+    content: uHjDL019v87su5npUUQg7tswRAFU_YVumsmvmwkOl6A # https://play4fun.friesi23.cn
+  - header: msvalidate.01
+    content: 0DF1AC6A81C62171FD53F59652680877
+  - header: baidu-site-verification
+    content: codeva-Hq4f8TsbkO  # https://play4fun.friesi23.cn
 comments:
   provider: custom
 analytics:
