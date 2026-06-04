@@ -162,8 +162,7 @@ after_footer_scripts:
 show_only:
   - id: sid-cn-record-info
     only:
-      - friesi23.cn
-      - www.friesi23.cn
+      - play4fun.friesi23.cn
 
 # Plugin: Gitment
 gitment:

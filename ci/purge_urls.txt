@@ -1,19 +1,19 @@
 # purge urls
-https://friesi23.cn/
-https://friesi23.cn/page1/
-https://friesi23.cn/page2/
-https://friesi23.cn/page3/
-https://friesi23.cn/categories/
-https://friesi23.cn/tags/
-https://friesi23.cn/about/
-https://friesi23.cn/monitor/
-# https://friesi23.cn/assets/js/init-theme.js
-# https://friesi23.cn/assets/js/custom-head.js
-# https://friesi23.cn/assets/js/custom-footer.js
-# https://friesi23.cn/assets/css/main.css
-# https://friesi23.cn/assets/css/main_dark.css
-# https://friesi23.cn/assets/js/main.min.js
-# https://friesi23.cn/assets/js/lunr/lunr.min.js
-# https://friesi23.cn/assets/js/lunr/lunr-store.js
-# https://friesi23.cn/assets/js/lunr/lunr-en.js
-# https://friesi23.cn/assets/js/vendor/jquery/jquery-3.6.0.js
+https://play4fun.friesi23.cn/
+https://play4fun.friesi23.cn/page1/
+https://play4fun.friesi23.cn/page2/
+https://play4fun.friesi23.cn/page3/
+https://play4fun.friesi23.cn/categories/
+https://play4fun.friesi23.cn/tags/
+https://play4fun.friesi23.cn/about/
+https://play4fun.friesi23.cn/monitor/
+# https://play4fun.friesi23.cn/assets/js/init-theme.js
+# https://play4fun.friesi23.cn/assets/js/custom-head.js
+# https://play4fun.friesi23.cn/assets/js/custom-footer.js
+# https://play4fun.friesi23.cn/assets/css/main.css
+# https://play4fun.friesi23.cn/assets/css/main_dark.css
+# https://play4fun.friesi23.cn/assets/js/main.min.js
+# https://play4fun.friesi23.cn/assets/js/lunr/lunr.min.js
+# https://play4fun.friesi23.cn/assets/js/lunr/lunr-store.js
+# https://play4fun.friesi23.cn/assets/js/lunr/lunr-en.js
+# https://play4fun.friesi23.cn/assets/js/vendor/jquery/jquery-3.6.0.js
