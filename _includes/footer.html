@@ -3,48 +3,54 @@
   https://github.com/mmistakes/minimal-mistakes/blob/4.25.0/_includes/footer.html
 {% endcomment %}
 
-<div class="page__footer-follow">
-  <ul class="social-icons">
-    {% if site.data.ui-text[site.locale].follow_label %}
-      <li>
-        <strong>{{ site.data.ui-text[site.locale].follow_label }}</strong>
-      </li>
-    {% endif %}
+{% assign locale = page.locale | default: include.locale | default: site.locale %}
+{% assign show_github_btn = page.show_gh_btn | default: layout.show_gh_btn %}
+{% unless site.atom_feed.hide %}
+  {% assign show_atom = true %}
+{% endunless %}
+{% if site.footer.links or show_atom or show_github_btn %}
+  <div class="page__footer-follow">
+    <ul class="social-icons">
+      {% if site.data.ui-text[locale].follow_label %}
+        <li>
+          <strong>{{ site.data.ui-text[locale].follow_label }}</strong>
+        </li>
+      {% endif %}
 
-    {% if site.footer.links %}
-      {% for link in site.footer.links %}
-        {% if link.label and link.url %}
-          <li>
-            <a href="{{ link.url }}" rel="nofollow noopener noreferrer">
-              <i class="{{ link.icon | default: 'fas fa-link' }}" aria-hidden="true"></i>
-              {{ link.label }}</a>
-          </li>
-        {% endif %}
-      {% endfor %}
-    {% endif %}
+      {% if site.footer.links %}
+        {% for link in site.footer.links %}
+          {% if link.label and link.url %}
+            <li>
+              <a href="{{ link.url }}" rel="nofollow noopener noreferrer{% if link.rel %} {{ link.rel }}{% endif %}">
+                <i class="{{ link.icon | default: 'fas fa-link' }}" aria-hidden="true"></i>
+                {{ link.label | escape_once | strip }}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
 
-    {% unless site.atom_feed.hide %}
-      <li>
-        <a href="{% if site.atom_feed.path %}{{ site.atom_feed.path }}{% else %}{{ '/feed.xml' | relative_url }}{% endif %}">
-          <i class="fas fa-fw fa-rss-square" aria-hidden="true"></i>
-          {{ site.data.ui-text[site.locale].feed_label | default: "Feed" }}</a>
-      </li>
-    {% endunless %}
+      {% unless site.atom_feed.hide %}
+        <li>
+          <a href="{% if site.atom_feed.path %}{{ site.atom_feed.path }}{% else %}{{ '/feed.xml' | relative_url }}{% endif %}">
+            <i class="fas fa-fw fa-square-rss" aria-hidden="true"></i>
+            {{ site.data.ui-text[locale].feed_label | default: "Feed" }}</a>
+        </li>
+      {% endunless %}
 
-    {% if page.show_gh_btn or layout.show_gh_btn %}
-      {% include /other-providers/github.html %}
-    {% endif %}
-  </ul>
-</div>
+      {% if show_github_btn %}
+        {% include /other-providers/github.html %}
+      {% endif %}
+    </ul>
+  </div>
+{% endif %}
 
-
-<div class="page__footer-copyright">&copy; {{ site.time | date: '%Y' }}
-  <a href="{{ site.copyright_url | default: site.url }}">{{ site.copyright | default: site.title }}</a>
+<div class="page__footer-copyright">&copy; {% assign site_time = site.time | date: '%Y' %}{% if site.footer.since and site_time != site.footer.since %}{{ site.footer.since }} - {% endif %}{{ site_time }}
+  <a href="{{ site.copyright_url | default: site.url }}">{{ site.copyright | default: site.title | escape_once | strip }}</a>
   .
-  {{ site.data.ui-text[site.locale].powered_by | default: "Powered by" }}
+  {{ site.data.ui-text[locale].powered_by | default: "Powered by" }}
   <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a>
   &amp;
-  <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>
+  <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>
   .
 </div>
 
@@ -53,11 +59,11 @@
     {% for link in site.footer.bottom_links %}
       {% if link.label and (link.url or link.path) %}
         <li id="{{ link.id }}">
-          <a href="{% if link.url %}{{ link.url }}{% else %}{{ link.path | relative_url }}{% endif %}" rel="nofollow noopener noreferrer">
+          <a href="{% if link.url %}{{ link.url }}{% else %}{{ link.path | relative_url }}{% endif %}" rel="nofollow noopener noreferrer{% if link.rel %} {{ link.rel }}{% endif %}">
             {% if link.icon %}
               <i class="{{ link.icon | default: 'fas fa-link' }}" aria-hidden="true"></i>
             {% endif %}
-            {{ link.label }}
+            {{ link.label | escape_once | strip }}
           </a>
         </li>
       {% endif %}

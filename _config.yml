@@ -55,12 +55,14 @@ jekyll-archives:
 # theme: minima
 # github_username: FriesI23
 
-# Theme: minimal-mistakes:4.25.0
+# Theme: minimal-mistakes:4.28.0
 # Layout: https://mmistakes.github.io/minimal-mistakes/docs/layouts/
 # Config: https://mmistakes.github.io/minimal-mistakes/docs/configuration/
-# Exmaple: https://github.com/mmistakes/minimal-mistakes/blob/4.25.0/_config.yml
-remote_theme: mmistakes/minimal-mistakes@4.25.0
+# Exmaple: https://github.com/mmistakes/minimal-mistakes/blob/4.28.0/_config.yml
+remote_theme: mmistakes/minimal-mistakes@4.28.0
 minimal_mistakes_skin: "dirt"
+show_taxonomy: true
+og_image_alt: ""
 minimal_mistakes_skin_dark: "dark"
 repository: FriesI23/friesi23.github.io
 copyright: FriesI23
@@ -158,7 +160,7 @@ head_scripts:
   - https://buttons.github.io/buttons.js
   - /assets/js/vendor/jquery/jquery-3.6.0.js
   - /assets/js/custom-head.js
-after_footer_scripts:
+footer_scripts:
   - https://unpkg.com/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js
   - /assets/js/custom-footer.js
 
