@@ -160,7 +160,7 @@ head_scripts:
   - https://buttons.github.io/buttons.js
   - /assets/js/vendor/jquery/jquery-3.6.0.js
   - /assets/js/custom-head.js
-footer_scripts:
+after_footer_scripts:
   - https://unpkg.com/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js
   - /assets/js/custom-footer.js
 
