@@ -1,19 +1,12 @@
 SHELL := /bin/bash
 
 JEKYLL_SERVE := bundle exec jekyll serve
-JEKYLL_FLAGS :=
 LOCAL_CONFIG := _config.yml,_config.local.yml
 PROD_CONFIG := _config.yml
-JEKYLL_CONFIG := $(LOCAL_CONFIG)
-
-ifeq ($(DRAFT),1)
-JEKYLL_FLAGS += --drafts
-endif
-
-ifeq ($(PROD),1)
-export JEKYLL_ENV := production
-JEKYLL_CONFIG := $(PROD_CONFIG)
-endif
+JEKYLL_FLAGS = $(if $(filter 1,$(DRAFT)),--drafts,)
+JEKYLL_CONFIG = $(if $(filter 1,$(PROD)),$(PROD_CONFIG),$(LOCAL_CONFIG))
+JEKYLL_ENV = $(if $(filter 1,$(PROD)),production,)
+export JEKYLL_ENV
 
 .PHONY: help serve serve-prod serve-drafts serve-prod-drafts
 
