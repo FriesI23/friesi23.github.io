@@ -75,7 +75,9 @@ site_verifications:
   - header: msvalidate.01
     content: 0DF1AC6A81C62171FD53F59652680877
   - header: baidu-site-verification
-    content: codeva-Hq4f8TsbkO  # https://play4fun.friesi23.cn
+    content: codeva-Hq4f8TsbkO # https://play4fun.friesi23.cn
+  - header: baidu-site-verification
+    content: codeva-S8psaWyrJK # https://friesi23.icu
 comments:
   provider: custom
 analytics:
