@@ -80,15 +80,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
       - name: Setup Python
         uses: actions/setup-python@v6
         with:
           python-version: "3.12"
       - run: pip install requests lxml
-      # - name: Download sitemap.xml
-      #   run: |
-      #     curl -o sitemap.xml https://friesi23.icu/sitemap.xml
-      # - name: Purge All Pages
-      #   run: python3 ci/purge_all.py sitemap.xml "${{ secrets.PURGE_SEGEMENT }}"
+      - name: Generate Purge URLs
+        run: |
+          python3 ci/generate_purge_urls.py \
+            "${{ github.event.before || '0000000000000000000000000000000000000000' }}" \
+            "${{ github.sha }}" \
+            --site-url "https://friesi23.icu" \
+            --output /tmp/purge_urls.generated.txt
       - name: Purge Pages
-        run: python3 ci/purge_all.py ci/purge_urls.txt "${{ secrets.PURGE_SEGEMENT }}"
+        run: python3 ci/purge_all.py /tmp/purge_urls.generated.txt "${{ secrets.PURGE_SEGEMENT }}"

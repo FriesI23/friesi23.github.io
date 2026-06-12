@@ -16,3 +16,8 @@ vendor
 !/.vscode/search/
 !/.vscode/search/*.code-search
 /*.code-workspace
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[codz]
+*$py.class

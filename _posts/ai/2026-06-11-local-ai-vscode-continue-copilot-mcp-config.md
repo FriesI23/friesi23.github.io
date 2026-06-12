@@ -253,7 +253,7 @@ models:
 
 几个配置细节值得说明：
 
-- **`roles: [chat]`**：明确声明该模型用于对话角色。Continue 支持 `chat`、`edit`、`apply`、`autocomplete`、`embed`、`rerank` 等角色，一个模型可以兼任多个角色。
+- **`roles: [chat]`**：明确声明该模型用于对话角色。Continue 支持 `chat` / `edit` / `apply` / `autocomplete` / `embed` / `rerank` 等角色，一个模型可以兼任多个角色。
 - **`capabilities`**：`tool_use` 表示模型支持工具调用（即 MCP 工具），`image_input` 表示支持图片输入。
   不是所有模型都支持这些能力，配置时根据模型实际能力勾选即可。
 - **`contextLength`**：上下文窗口大小。qwen3.6 系列原生支持 65536 的上下文，而 gemma4 26b 我设为 32768——
