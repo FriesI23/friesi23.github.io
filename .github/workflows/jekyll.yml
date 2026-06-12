@@ -59,8 +59,8 @@ jobs:
       - run: pip install requests lxml
       - name: Submit to Baidu
         run: python3 ci/sumbit_sitemap_to_baidu.py ./_site/sitemap.xml "${{ secrets.BAIDU_SITEMAP_SUMBIT_APIURL }}"
-      - name: Submit to Bing - play4fun.friesi23.cn
-        run: python3 ci/sumbit_sitemap_to_bing.py ./_site/sitemap.xml http://api.indexnow.org/IndexNow "${{ secrets.BING_SITEMAP_SUMBIT_KEY_LOCATION_P4F }}"
+      - name: Submit to Bing - friesi23.icu
+        run: python3 ci/sumbit_sitemap_to_bing.py ./_site/sitemap.xml http://api.indexnow.org/IndexNow "${{ secrets.BING_SITEMAP_SUMBIT_KEY_LOCATION_P4F }}" friesi23.icu
 
   # Deployment job
   deploy:
@@ -87,7 +87,7 @@ jobs:
       - run: pip install requests lxml
       # - name: Download sitemap.xml
       #   run: |
-      #     curl -o sitemap.xml https://play4fun.friesi23.cn/sitemap.xml
+      #     curl -o sitemap.xml https://friesi23.icu/sitemap.xml
       # - name: Purge All Pages
       #   run: python3 ci/purge_all.py sitemap.xml "${{ secrets.PURGE_SEGEMENT }}"
       - name: Purge Pages
