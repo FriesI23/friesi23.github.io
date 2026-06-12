@@ -474,6 +474,9 @@ Copilot 的模型配置现在可以通过 VS Code 内置的 UI 界面完成，�
 
 1. 点开 Copilot Chat 聊天输入框底部的模型选择下拉菜单，在列表最下方的 "Other" 选项旁点击 **齿轮图标**（Manage Language Models）。
 2. 在打开的界面中点击右上角的 **"Add Models"** 按钮，并在下拉菜单中选择 **"Custom Endpoint"**。
+
+   ![copilot-custom-model](https://cdn.jsdelivr.net/gh/FriesI23/blog-image@master/img/2026-06-11-local-ai-vscode-continue-copilot-mcp-config-pic-01.png){: width="600"}
+
 3. 输入模型的群组名称（Group Name，如 LM-Studio）并回车。
 4. 随后输入该端点的显示名称（Display Name）并回车，接着系统会提示输入 API Key（由于是本地 LM Studio，这里可以随便输入任意非空字符串，比如 "lm-studio" 或 "not-needed"）并回车。
 5. 接着选择 API 类型，本地 LM Studio 通常选择 **"Chat Completions"**。
