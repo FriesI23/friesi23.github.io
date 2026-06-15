@@ -1,0 +1,15 @@
+---
+layout: single
+---
+{% capture prompt_content %}{% include {{ page.prompt_file }} %}{% endcapture %}
+<div class="notice prompts-content">
+  <h4>Prompt 原文</h4>
+  <hr>
+  {{ prompt_content | markdownify }}
+</div>
+
+{{ content }}
+
+<div class="prompts-download">
+  {% include prompt-download-link.html %}
+</div>

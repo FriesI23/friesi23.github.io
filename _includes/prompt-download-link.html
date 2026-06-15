@@ -1,0 +1,3 @@
+{% assign post = include.post | default: page %}
+{% assign filename = post.prompt_file | split: '/' | last %}
+<a href="{{ '/assets/' | append: post.prompt_file | relative_url }}" class="btn btn--small prompts-download-link" download="{{ filename }}">⬇ 下载原文件</a>

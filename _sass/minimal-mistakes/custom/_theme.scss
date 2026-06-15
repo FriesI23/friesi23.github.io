@@ -57,3 +57,29 @@
 .prompts-entries-grid {
   @include clearfix();
 }
+
+/* keep 2-column cards down to a narrower width before .grid__item
+   collapses to a single column (theme default is $small = 600px) */
+@media (min-width: 320px) and (max-width: ($small - 1px)) {
+  .prompts-entries-grid .grid__item {
+    float: left;
+    width: 48%;
+
+    &:nth-child(odd) {
+      clear: both;
+      margin-inline-end: 4%;
+    }
+
+    &:nth-child(even) {
+      clear: none;
+    }
+  }
+}
+
+.prompts-download-link {
+  margin-top: 0.5em;
+}
+
+.prompts-download {
+  margin-top: 2em;
+}

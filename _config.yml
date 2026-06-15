@@ -37,7 +37,7 @@ collections:
     permalink: /post/:year:month/:slug
   prompts:
     output: true
-    permalink: /prompts/:path/
+    permalink: /prompts/:path
 
 # Plugin: Archives
 jekyll-archives:
@@ -133,9 +133,15 @@ defaults:
       path: ""
       type: prompts
     values:
-      layout: single
+      layout: prompt-single
       author_profile: false
       comments: false
+      sitemap: false
+  # assets/prompts: raw source files served for download
+  - scope:
+      path: "assets/prompts"
+    values:
+      layout: prompt-raw
       sitemap: false
   # _posts
   - scope:
