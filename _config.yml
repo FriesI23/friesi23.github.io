@@ -35,6 +35,9 @@ url: https://friesi23.icu
 collections:
   posts:
     permalink: /post/:year:month/:slug
+  prompts:
+    output: true
+    permalink: /prompts/:path/
 
 # Plugin: Archives
 jekyll-archives:
@@ -125,6 +128,15 @@ defaults:
       layout: single
       author_profile: false
       show_gh_btn: true
+  # _prompts
+  - scope:
+      path: ""
+      type: prompts
+    values:
+      layout: single
+      author_profile: false
+      comments: false
+      sitemap: false
   # _posts
   - scope:
       path: ""
