@@ -1,0 +1,99 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Jekyll: stop",
+            "type": "shell",
+            "command": "lsof -ti tcp:4000 | xargs kill 2>/dev/null || true",
+            "presentation": {
+                "reveal": "silent",
+                "panel": "dedicated",
+                "group": "jekyll-serve"
+            }
+        },
+        {
+            "label": "Jekyll: serve",
+            "type": "shell",
+            "command": "chruby \"$(cat .ruby-version)\" && bundle config set --local path vendor/bundle && bundle install --quiet && make serve",
+            "isBackground": true,
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "group": "jekyll-serve"
+            },
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^never_match_anything^"
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "^Configuration file:",
+                    "endsPattern": "^\\s*Server running\\.\\.\\."
+                }
+            }
+        },
+        {
+            "label": "Jekyll: serve (drafts)",
+            "type": "shell",
+            "command": "chruby \"$(cat .ruby-version)\" && bundle config set --local path vendor/bundle && bundle install --quiet && make serve-drafts",
+            "isBackground": true,
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "group": "jekyll-serve"
+            },
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^never_match_anything^"
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "^Configuration file:",
+                    "endsPattern": "^\\s*Server running\\.\\.\\."
+                }
+            }
+        },
+        {
+            "label": "Jekyll: serve (prod)",
+            "type": "shell",
+            "command": "chruby \"$(cat .ruby-version)\" && bundle config set --local path vendor/bundle && bundle install --quiet && make serve-prod",
+            "isBackground": true,
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "group": "jekyll-serve"
+            },
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^never_match_anything^"
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "^Configuration file:",
+                    "endsPattern": "^\\s*Server running\\.\\.\\."
+                }
+            }
+        },
+        {
+            "label": "Jekyll: serve (prod + drafts)",
+            "type": "shell",
+            "command": "chruby \"$(cat .ruby-version)\" && bundle config set --local path vendor/bundle && bundle install --quiet && make serve-prod-drafts",
+            "isBackground": true,
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "group": "jekyll-serve"
+            },
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^never_match_anything^"
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "^Configuration file:",
+                    "endsPattern": "^\\s*Server running\\.\\.\\."
+                }
+            }
+        }
+    ]
+}

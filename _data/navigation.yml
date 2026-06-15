@@ -1,6 +1,8 @@
 main:
   - title: 标签
     url: /tags/
+  - title: Prompts
+    url: /prompts/
   - title: 关于
     url: /about/
   - title: 监控

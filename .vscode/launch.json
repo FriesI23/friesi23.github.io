@@ -1,0 +1,45 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Jekyll: serve + open browser",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://127.0.0.1:4000/",
+            "webRoot": "${workspaceFolder}",
+            "browserLaunchLocation": "workspace",
+            "preLaunchTask": "Jekyll: serve",
+            "postDebugTask": "Jekyll: stop"
+        },
+        {
+            "name": "Jekyll: serve (drafts) + open browser",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://127.0.0.1:4000/",
+            "webRoot": "${workspaceFolder}",
+            "browserLaunchLocation": "workspace",
+            "preLaunchTask": "Jekyll: serve (drafts)",
+            "postDebugTask": "Jekyll: stop"
+        },
+        {
+            "name": "Jekyll: serve (prod) + open browser",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://127.0.0.1:4000/",
+            "webRoot": "${workspaceFolder}",
+            "browserLaunchLocation": "workspace",
+            "preLaunchTask": "Jekyll: serve (prod)",
+            "postDebugTask": "Jekyll: stop"
+        },
+        {
+            "name": "Jekyll: serve (prod + drafts) + open browser",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://127.0.0.1:4000/",
+            "webRoot": "${workspaceFolder}",
+            "browserLaunchLocation": "workspace",
+            "preLaunchTask": "Jekyll: serve (prod + drafts)",
+            "postDebugTask": "Jekyll: stop"
+        }
+    ]
+}
