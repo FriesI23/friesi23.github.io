@@ -36,7 +36,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.1"
+          ruby-version: "3.4"
           bundler-cache: true
           # Increment this number if you need to re-download cached gems
           cache-version: 1
