@@ -1,0 +1,38 @@
+{% comment %}
+  Like the theme's posts-taxonomy.html, but groups entries from
+  `site.posts` and `site.prompts` together by `include.attr`
+  ("tags" or "categories"), so collections other than `posts` that opt
+  into `tags`/`categories` (e.g. `_prompts`) show up on /tags/ and
+  /categories/.
+{% endcomment %}
+{% assign locale = include.locale | default: site.locale %}
+{% assign attr = include.attr %}
+{% assign all_docs = site.posts | concat: site.prompts %}
+
+{% capture raw_values %}{% for doc in all_docs %}{% for value in doc[attr] %}{{ value }}|{% endfor %}{% endfor %}{% endcapture %}
+{% assign all_values = raw_values | split: "|" | uniq | sort %}
+
+<ul class="taxonomy__index">
+  {% for value in all_values %}
+    {% assign matched = all_docs | where_exp: "doc", "doc[attr] contains value" %}
+    <li>
+      <a href="#{{ value | slugify }}">
+        <strong>{{ value }}</strong> <span class="taxonomy__count">{{ matched.size }}</span>
+      </a>
+    </li>
+  {% endfor %}
+</ul>
+
+{% assign entries_layout = page.entries_layout | default: 'list' %}
+{% for value in all_values %}
+  {% assign matched = all_docs | where_exp: "doc", "doc[attr] contains value" %}
+  <section id="{{ value | slugify }}" class="taxonomy__section">
+    <h2 class="archive__subtitle">{{ value }}</h2>
+    <div class="entries-{{ entries_layout }}">
+      {% for post in matched %}
+        {% include archive-single.html locale=locale type=entries_layout %}
+      {% endfor %}
+    </div>
+    <a href="#page-title" class="back-to-top">{{ site.data.ui-text[locale].back_to_top | default: 'Back to Top' }} &uarr;</a>
+  </section>
+{% endfor %}

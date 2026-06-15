@@ -1,0 +1,11 @@
+---
+# Forked from:
+# https://github.com/mmistakes/minimal-mistakes/blob/4.28.0/_layouts/categories.html
+# to also include `_prompts` entries in the category index.
+layout: archive
+---
+{%- assign locale = page.locale | default: layout.locale | default: site.locale %}
+
+{{ content }}
+
+{% include posts-taxonomy-merged.html locale=locale attr="categories" %}
