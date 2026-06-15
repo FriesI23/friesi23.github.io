@@ -24,7 +24,7 @@ title: 薯条与123
 title_separator: "-"
 subtitle: 温暖的小窝
 name: Fries_I23
-email: FriesI23@outlook.com
+email: friesi23@disroot.org
 description: |
   随便写写, 随便玩玩, 随便搞搞
 
@@ -35,6 +35,9 @@ url: https://friesi23.icu
 collections:
   posts:
     permalink: /post/:year:month/:slug
+  prompts:
+    output: true
+    permalink: /prompts/:path
 
 # Plugin: Archives
 jekyll-archives:
@@ -125,6 +128,21 @@ defaults:
       layout: single
       author_profile: false
       show_gh_btn: true
+  # _prompts
+  - scope:
+      path: ""
+      type: prompts
+    values:
+      layout: prompt-single
+      author_profile: false
+      comments: false
+      sitemap: false
+  # assets/prompts: raw source files served for download
+  - scope:
+      path: "assets/prompts"
+    values:
+      layout: prompt-raw
+      sitemap: false
   # _posts
   - scope:
       path: ""

@@ -1,0 +1,9 @@
+{% assign post = include.post | default: page %}
+{% assign filename = post.prompt_file | split: '/' | last %}
+{% if include.icon_only %}
+<a href="{{ '/assets/' | append: post.prompt_file | relative_url }}" class="prompts-download-icon" download="{{ filename }}" title="下载原文件" aria-label="下载原文件">
+  <i class="fas fa-download" aria-hidden="true"></i>
+</a>
+{% else %}
+<a href="{{ '/assets/' | append: post.prompt_file | relative_url }}" class="btn btn--small prompts-download-link" download="{{ filename }}">⬇ 下载原文件</a>
+{% endif %}

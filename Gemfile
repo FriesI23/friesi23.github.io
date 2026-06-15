@@ -13,6 +13,8 @@ source "https://rubygems.org"
 # If you want to use GitHub Pages, remove the "gem "jekyll"" above and
 # uncomment the line below. To upgrade, run `bundle update github-pages`.
 
+gem "csv", "~> 3.3"
+
 gem "github-pages", "~> 231", group: :jekyll_plugins
 gem "jekyll-include-cache", "~> 0.2.1", group: :jekyll_plugins
 gem "minimal-mistakes-jekyll", "~> 4.28"

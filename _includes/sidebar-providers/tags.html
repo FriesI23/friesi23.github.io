@@ -6,16 +6,21 @@
 {% endcase %}
 
 {% if site.tag_archive.path %}
+  {% assign all_docs = site.posts | concat: site.prompts %}
+  {% capture raw_tags %}{% for doc in all_docs %}{% for tag in doc.tags %}{{ tag }}|{% endfor %}{% endfor %}{% endcapture %}
+  {% assign all_tags = raw_tags | split: "|" | uniq | sort %}
+
   <strong class="taxonomy__title_tagcat">
     <i class="fas fa-fw fa-tags" aria-hidden="true"></i>
     {{ site.data.ui-text[site.locale].tags_label | default: "Tags:" }}
   </strong>
   <ul class="taxonomy__index_tagcat">
-    {% for tag in site.tags %}
+    {% for tag in all_tags %}
+      {% assign matched = all_docs | where_exp: "doc", "doc.tags contains tag" %}
       <li>
-        <a href="{{ tag[0] | slugify | prepend: path_type | prepend: site.tag_archive.path | relative_url }}">
-          <strong>{{ tag[0] }}</strong>
-          <span class="taxonomy__count">{{ tag[1].size }}</span>
+        <a href="{{ tag | slugify | prepend: path_type | prepend: site.tag_archive.path | relative_url }}">
+          <strong>{{ tag }}</strong>
+          <span class="taxonomy__count">{{ matched.size }}</span>
         </a>
       </li>
     {% endfor %}

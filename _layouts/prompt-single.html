@@ -1,0 +1,24 @@
+---
+layout: single
+---
+{% assign prompt_include = page.prompt_file | replace: '.txt', '.md' %}
+{% capture prompt_content %}{% include {{ prompt_include }} %}{% endcapture %}
+{% if page.excerpt %}
+<div class="prompts-excerpt">
+  {{ page.excerpt | markdownify }}
+</div>
+{% endif %}
+
+<div class="notice prompts-content">
+  {{ prompt_content | markdownify }}
+</div>
+
+{{ content }}
+
+<div class="prompts-download">
+  <textarea id="prompt-copy-source" class="prompts-copy-source" aria-hidden="true" tabindex="-1" hidden>{{ prompt_content | escape }}</textarea>
+  <button type="button" class="btn btn--small btn--primary prompts-copy-btn" data-copy-target="prompt-copy-source">📋 复制 Prompt</button>
+  {% include prompt-download-link.html %}
+</div>
+
+<script src="{{ '/assets/js/prompt-copy.js' | relative_url }}"></script>

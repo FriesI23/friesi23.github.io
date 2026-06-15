@@ -1,0 +1,31 @@
+---
+layout: single
+title: Prompts
+permalink: /prompts/
+---
+
+<div class="prompts-view">
+  <input type="radio" name="prompts-view" id="prompts-view-grid" value="grid" checked class="prompts-view-toggle__input">
+  <input type="radio" name="prompts-view" id="prompts-view-list" value="list" class="prompts-view-toggle__input">
+
+  <div class="prompts-view-toggle" role="group" aria-label="切换视图">
+    <label for="prompts-view-grid" class="prompts-view-toggle__label">▦ 卡片</label>
+    <label for="prompts-view-list" class="prompts-view-toggle__label">☰ 列表</label>
+  </div>
+
+  <div class="prompts-entries-grid grid__wrapper">
+    {% for doc in site.prompts %}
+      {% assign post = doc %}
+      {% include archive-single.html type="grid" %}
+    {% endfor %}
+  </div>
+
+  <div class="prompts-entries-list">
+    {% for doc in site.prompts %}
+      {% assign post = doc %}
+      {% include archive-single.html type="list" %}
+    {% endfor %}
+  </div>
+</div>
+
+<script src="{{ '/assets/js/prompts-view.js' | relative_url }}"></script>

@@ -6,16 +6,21 @@
 {% endcase %}
 
 {% if site.category_archive.path %}
+  {% assign all_docs = site.posts | concat: site.prompts %}
+  {% capture raw_categories %}{% for doc in all_docs %}{% for category in doc.categories %}{{ category }}|{% endfor %}{% endfor %}{% endcapture %}
+  {% assign all_categories = raw_categories | split: "|" | uniq | sort %}
+
   <strong class="taxonomy__title_tagcat">
     <i class="fas fa-fw fa-folder-open" aria-hidden="true"></i>
     {{ site.data.ui-text[site.locale].categories_label | default: "Categories:" }}
   </strong>
   <ul class="taxonomy__index_tagcat">
-    {% for category in site.categories %}
+    {% for category in all_categories %}
+      {% assign matched = all_docs | where_exp: "doc", "doc.categories contains category" %}
       <li>
-        <a href="{{ category[0] | slugify | prepend: path_type | prepend: site.category_archive.path | relative_url }}">
-          <strong>{{ category[0] }}</strong>
-          <span class="taxonomy__count">{{ category[1].size }}</span>
+        <a href="{{ category | slugify | prepend: path_type | prepend: site.category_archive.path | relative_url }}">
+          <strong>{{ category }}</strong>
+          <span class="taxonomy__count">{{ matched.size }}</span>
         </a>
       </li>
     {% endfor %}

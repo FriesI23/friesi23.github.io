@@ -14,3 +14,91 @@
     color: mix(#000, $primary-color, 25%);
   }
 }
+
+/* Prompts view toggle */
+.prompts-view-toggle {
+  margin-bottom: 1em;
+
+  &__label {
+    display: inline-block;
+    padding: 0.3em 0.8em;
+    cursor: pointer;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+  }
+}
+
+.prompts-view-toggle__input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+#prompts-view-grid:checked ~ .prompts-view-toggle label[for="prompts-view-grid"],
+#prompts-view-list:checked ~ .prompts-view-toggle label[for="prompts-view-list"] {
+  background-color: $primary-color;
+  color: #fff;
+}
+
+/* default: hide list view, show grid view */
+.prompts-entries-list {
+  display: none;
+}
+
+#prompts-view-list:checked ~ .prompts-entries-grid {
+  display: none;
+}
+
+#prompts-view-list:checked ~ .prompts-entries-list {
+  display: block;
+}
+
+/* clearfix for floated .grid__item */
+.prompts-entries-grid {
+  @include clearfix();
+}
+
+/* keep 2-column cards down to a narrower width before .grid__item
+   collapses to a single column (theme default is $small = 600px) */
+@media (min-width: 320px) and (max-width: ($small - 1px)) {
+  .prompts-entries-grid .grid__item {
+    float: left;
+    width: 48%;
+
+    &:nth-child(odd) {
+      clear: both;
+      margin-inline-end: 4%;
+    }
+
+    &:nth-child(even) {
+      clear: none;
+    }
+  }
+}
+
+.prompts-download-icon {
+  margin-right: 0.5em;
+  color: $muted-text-color;
+
+  &:hover {
+    color: $primary-color;
+  }
+}
+
+.prompts-excerpt {
+  margin-bottom: 1em;
+  color: $gray;
+}
+
+.prompts-download-link {
+  margin-top: 0.5em;
+}
+
+.prompts-copy-btn {
+  margin-top: 0.5em;
+  margin-right: 0.5em;
+}
+
+.prompts-download {
+  margin-top: 2em;
+}
