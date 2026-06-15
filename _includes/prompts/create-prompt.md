@@ -19,7 +19,7 @@ Based on the user's description below, generate:
 
 1. The contract file `prompts/<name>.md` — the full prompt body. Write
    in clear language, be specific about the task, constraints, and
-   expected output format. Use `{{{input}}}` where the user supplies
+  expected output format. Use `{% raw %}{{{input}}}{% endraw %}` where the user supplies
    additional context at invocation time. Keep it focused — one
    prompt, one purpose.
 2. Reference files for each platform actually in use in this workspace

@@ -8,16 +8,27 @@
 
 (function () {
   document.querySelectorAll(".prompts-copy-btn").forEach(function (btn) {
-    var text = btn.dataset.copyText;
-    if (!text) return;
+    var targetId = btn.dataset.copyTarget;
+    if (!targetId) return;
+    var source = document.getElementById(targetId);
+    if (!source) return;
     var original = btn.textContent;
     btn.addEventListener("click", function () {
-      navigator.clipboard.writeText(text).then(function () {
-        btn.textContent = "✅ 已复制";
-        setTimeout(function () {
-          btn.textContent = original;
-        }, 1500);
-      });
+      var text = source.value || source.textContent || "";
+      navigator.clipboard
+        .writeText(text)
+        .then(function () {
+          btn.textContent = "✅ 已复制";
+          setTimeout(function () {
+            btn.textContent = original;
+          }, 1500);
+        })
+        .catch(function () {
+          btn.textContent = "复制失败";
+          setTimeout(function () {
+            btn.textContent = original;
+          }, 1500);
+        });
     });
   });
 })();

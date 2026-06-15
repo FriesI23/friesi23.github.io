@@ -24,8 +24,8 @@ STUB = "---\n---\n"
 
 
 def _prompt_file(md_path: Path) -> str | None:
-    text = md_path.read_text()
-    fm = re.search(r"^---\s*\n(.*?)\n---", text, re.DOTALL)
+    text = md_path.read_text(encoding="utf-8")
+    fm = re.search(r"^---\s*\r?\n(.*?)\r?\n---", text, re.DOTALL)
     if not fm:
         return None
     m = re.search(r"^prompt_file:\s*(\S+)\s*$", fm.group(1), re.MULTILINE)
@@ -53,7 +53,7 @@ def main() -> int:
         asset_path = ASSETS_DIR / prompt_file
         if not asset_path.exists():
             asset_path.parent.mkdir(parents=True, exist_ok=True)
-            asset_path.write_text(STUB)
+            asset_path.write_text(STUB, encoding="utf-8")
             print(f"[sync-prompts] created {asset_path.relative_to(ROOT)}")
 
     prompts_assets_dir = ASSETS_DIR / "prompts"
