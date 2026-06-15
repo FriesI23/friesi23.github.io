@@ -1,3 +1,3 @@
 ---
 ---
-{% assign prompt_file = page.path | remove_first: "assets/" %}{% include {{ prompt_file }} %}
+{% assign prompt_file = page.path | remove_first: "assets/" | replace: '.txt', '.md' %}{% include {{ prompt_file }} %}

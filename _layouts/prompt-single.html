@@ -1,15 +1,23 @@
 ---
 layout: single
 ---
-{% capture prompt_content %}{% include {{ page.prompt_file }} %}{% endcapture %}
+{% assign prompt_include = page.prompt_file | replace: '.txt', '.md' %}
+{% capture prompt_content %}{% include {{ prompt_include }} %}{% endcapture %}
+{% if page.excerpt %}
+<div class="prompts-excerpt">
+  {{ page.excerpt | markdownify }}
+</div>
+{% endif %}
+
 <div class="notice prompts-content">
-  <h4>Prompt 原文</h4>
-  <hr>
   {{ prompt_content | markdownify }}
 </div>
 
 {{ content }}
 
 <div class="prompts-download">
+  <button type="button" class="btn btn--small prompts-copy-btn" data-copy-text="{{ prompt_content | escape }}">📋 复制 Prompt</button>
   {% include prompt-download-link.html %}
 </div>
+
+<script src="{{ '/assets/js/prompt-copy.js' | relative_url }}"></script>

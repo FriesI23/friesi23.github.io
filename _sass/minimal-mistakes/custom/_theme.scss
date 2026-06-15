@@ -76,8 +76,27 @@
   }
 }
 
+.prompts-download-icon {
+  margin-right: 0.5em;
+  color: $muted-text-color;
+
+  &:hover {
+    color: $primary-color;
+  }
+}
+
+.prompts-excerpt {
+  margin-bottom: 1em;
+  color: $gray;
+}
+
 .prompts-download-link {
   margin-top: 0.5em;
+}
+
+.prompts-copy-btn {
+  margin-top: 0.5em;
+  margin-right: 0.5em;
 }
 
 .prompts-download {
