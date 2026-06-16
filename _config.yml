@@ -136,7 +136,6 @@ defaults:
       layout: prompt-single
       author_profile: false
       comments: false
-      sitemap: false
   # assets/prompts: raw source files served for download
   - scope:
       path: "assets/prompts"
