@@ -2,6 +2,7 @@
 # see: https://myth.cx/p/hugo-auto-submit-baidu/
 
 import argparse
+import socket
 import sys
 import requests
 import lxml.etree
@@ -15,6 +16,24 @@ def insert_path_segment(url, segment):
     new_path = f"/{segment}{parsed_url.path}"
     new_url = urlunparse(parsed_url._replace(path=new_path))
     return new_url
+
+
+def patch_dns(hostname: str, ip: str):
+    """Force hostname to resolve to ip (mirrors curl --resolve).
+
+    Patches socket.getaddrinfo so that TCP connects to the given IP while
+    urllib3/requests still sends the original hostname as the TLS SNI and
+    HTTP Host header — exactly what curl --resolve does.
+    """
+    _real = socket.getaddrinfo
+
+    def _patched(host, port, *args, **kwargs):
+        if host == hostname:
+            host = ip
+        return _real(host, port, *args, **kwargs)
+
+    socket.getaddrinfo = _patched
+    print(f"[purge] DNS override: {hostname} -> {ip}", file=sys.stderr)
 
 
 def purge_url(url):
@@ -54,9 +73,25 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser(description="Purge cached URLs via Nginx cache purge segment.")
     p.add_argument("url_source", help="Path to a URL list file or sitemap.xml")
     p.add_argument("segment", help="URL path segment inserted for purge routing (e.g. purge)")
+    p.add_argument(
+        "--resolve-ip",
+        metavar="IP",
+        default=None,
+        help=(
+            "Force the site hostname to resolve to IP (mirrors curl --resolve). "
+            "Use this when DNS geo-routes the domain to a region-specific server "
+            "that is unreachable from the CI runner (e.g. CN_NGINX_IP secret)."
+        ),
+    )
     args = p.parse_args()
 
     urls = get_urls(args.url_source)
+
+    if args.resolve_ip and urls:
+        hostname = urlparse(urls[0]).hostname
+        if hostname:
+            patch_dns(hostname, args.resolve_ip)
+
     urls = handle_urls(urls, args.segment)
     print(urls)
     with ThreadPoolExecutor() as executor:

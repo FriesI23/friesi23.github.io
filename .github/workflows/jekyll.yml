@@ -98,7 +98,14 @@ jobs:
             --static-list "${{ github.workspace }}/ci/purge_urls.txt" \
             --output /tmp/purge_urls.generated.txt
       - name: Purge Pages
-        run: >
-          poetry -C ci run python bin/purge_all.py
-          /tmp/purge_urls.generated.txt
-          "${{ secrets.PURGE_SEGEMENT }}"
+        env:
+          CN_NGINX_IP: ${{ secrets.CN_NGINX_IP }}
+        run: |
+          RESOLVE_ARG=""
+          if [ -n "$CN_NGINX_IP" ]; then
+            RESOLVE_ARG="--resolve-ip $CN_NGINX_IP"
+          fi
+          poetry -C ci run python bin/purge_all.py \
+            /tmp/purge_urls.generated.txt \
+            "${{ secrets.PURGE_SEGEMENT }}" \
+            $RESOLVE_ARG
