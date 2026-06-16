@@ -190,8 +190,8 @@ def _build_parser() -> argparse.ArgumentParser:
     p.add_argument(
         "--static-list",
         metavar="FILE",
-        default=None,
-        help="Fallback URL list (default: purge_urls.txt next to this script)",
+        required=True,
+        help="Fallback URL list used on initial push, no post changes, or bulk edits",
     )
     return p
 
@@ -200,11 +200,7 @@ if __name__ == "__main__":
     args = _build_parser().parse_args()
 
     before_sha = args.before_sha or "0" * 40
-    static_path = (
-        Path(args.static_list)
-        if args.static_list
-        else Path(__file__).parent / "purge_urls.txt"
-    )
+    static_path = Path(args.static_list)
 
     paths = generate(before_sha, args.current_sha)
     if paths is None:

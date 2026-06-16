@@ -1,0 +1,39 @@
+name: Purge Cache
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Purge mode: default (ci/purge_urls.txt) or full (sitemap)'
+        required: true
+        default: 'default'
+        type: choice
+        options:
+          - default
+          - full
+
+jobs:
+  purge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup CI Python
+        uses: ./.github/actions/setup-ci-python
+
+      - name: Prepare URL source
+        id: source
+        run: |
+          if [ "${{ inputs.mode }}" = "full" ]; then
+            curl -fsSL https://friesi23.icu/sitemap.xml -o /tmp/purge_source.xml
+            echo "file=/tmp/purge_source.xml" >> "$GITHUB_OUTPUT"
+          else
+            echo "file=${{ github.workspace }}/ci/purge_urls.txt" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Purge
+        run: >
+          poetry -C ci run python bin/purge_all.py
+          "${{ steps.source.outputs.file }}"
+          "${{ secrets.PURGE_SEGEMENT }}"

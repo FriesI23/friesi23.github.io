@@ -1,7 +1,7 @@
 # Copyright @Myth 2024
 # see: https://myth.cx/p/hugo-auto-submit-baidu/
 
-import sys
+import argparse
 import requests
 import lxml.etree
 
@@ -30,6 +30,11 @@ def get_urls(sitemap_path):
 
 
 if __name__ == "__main__":
-    should_sumbited_urls = get_urls(sys.argv[1])
-    print(should_sumbited_urls)
-    print(submit_to_baidu(sys.argv[2], should_sumbited_urls))
+    p = argparse.ArgumentParser(description="Submit sitemap URLs to Baidu.")
+    p.add_argument("sitemap", help="Path to sitemap.xml")
+    p.add_argument("api_url", help="Baidu sitemap submission API URL (including token)")
+    args = p.parse_args()
+
+    should_submitted_urls = get_urls(args.sitemap)
+    print(should_submitted_urls)
+    print(submit_to_baidu(args.api_url, should_submitted_urls))

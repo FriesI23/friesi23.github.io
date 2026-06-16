@@ -1,0 +1,15 @@
+name: Setup CI Python
+description: Install Python 3.12, Poetry, and blog CI dependencies from ci/
+
+runs:
+  using: composite
+  steps:
+    - name: Setup Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: "3.12"
+    - name: Install Poetry
+      uses: abatilo/actions-poetry@v4
+    - name: Install CI dependencies
+      shell: bash
+      run: poetry -C ci install

@@ -1,7 +1,8 @@
 # Copyright @Myth 2024
 # see: https://myth.cx/p/hugo-auto-submit-baidu/
 
-import sys, os
+import argparse
+import sys
 import requests
 import lxml.etree
 
@@ -28,17 +29,17 @@ def purge_url(url):
             print(f"failed, got exception: {e}", file=sys.stderr)
 
 
-def get_urls(sitemap_path: str):
+def get_urls(url_source: str):
     urls = []
-    if sitemap_path.endswith("xml"):
-        tree = lxml.etree.parse(sitemap_path)
+    if url_source.endswith("xml"):
+        tree = lxml.etree.parse(url_source)
         namespaces = {
             "sitemapindex": "http://www.sitemaps.org/schemas/sitemap/0.9",
         }
         for url in tree.xpath("//sitemapindex:loc/text()", namespaces=namespaces):
             urls.append(url)
     else:
-        with open(sitemap_path) as fd:
+        with open(url_source) as fd:
             urls.extend(
                 i for i in (i.strip() for i in fd.readlines()) if not i.startswith("#")
             )
@@ -46,15 +47,17 @@ def get_urls(sitemap_path: str):
 
 
 def handle_urls(urls: list[str], segment):
-    new_urls = []
-    for url in urls:
-        new_urls.append(insert_path_segment(url, segment))
-    return new_urls
+    return [insert_path_segment(url, segment) for url in urls]
 
 
 if __name__ == "__main__":
-    urls = get_urls(sys.argv[1])
-    urls = handle_urls(urls, sys.argv[2])
+    p = argparse.ArgumentParser(description="Purge cached URLs via Nginx cache purge segment.")
+    p.add_argument("url_source", help="Path to a URL list file or sitemap.xml")
+    p.add_argument("segment", help="URL path segment inserted for purge routing (e.g. purge)")
+    args = p.parse_args()
+
+    urls = get_urls(args.url_source)
+    urls = handle_urls(urls, args.segment)
     print(urls)
     with ThreadPoolExecutor() as executor:
         list(executor.map(purge_url, urls))

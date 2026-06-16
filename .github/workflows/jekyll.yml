@@ -52,15 +52,20 @@ jobs:
         # Automatically uploads an artifact from the './_site' directory by default
         uses: actions/upload-pages-artifact@v3
 
-      - name: Setup Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: "3.12"
-      - run: pip install requests lxml
+      - name: Setup CI Python
+        uses: ./.github/actions/setup-ci-python
       - name: Submit to Baidu
-        run: python3 ci/sumbit_sitemap_to_baidu.py ./_site/sitemap.xml "${{ secrets.BAIDU_SITEMAP_SUMBIT_APIURL }}"
+        run: >
+          poetry -C ci run python bin/sumbit_sitemap_to_baidu.py
+          "${{ github.workspace }}/_site/sitemap.xml"
+          "${{ secrets.BAIDU_SITEMAP_SUMBIT_APIURL }}"
       - name: Submit to Bing - friesi23.icu
-        run: python3 ci/sumbit_sitemap_to_bing.py ./_site/sitemap.xml http://api.indexnow.org/IndexNow "${{ secrets.BING_SITEMAP_SUMBIT_KEY_LOCATION_P4F }}" friesi23.icu
+        run: >
+          poetry -C ci run python bin/sumbit_sitemap_to_bing.py
+          "${{ github.workspace }}/_site/sitemap.xml"
+          http://api.indexnow.org/IndexNow
+          "${{ secrets.BING_SITEMAP_SUMBIT_KEY_LOCATION_P4F }}"
+          friesi23.icu
 
   # Deployment job
   deploy:
@@ -82,17 +87,18 @@ jobs:
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      - name: Setup Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: "3.12"
-      - run: pip install requests lxml
+      - name: Setup CI Python
+        uses: ./.github/actions/setup-ci-python
       - name: Generate Purge URLs
         run: |
-          python3 ci/generate_purge_urls.py \
+          poetry -C ci run python bin/generate_purge_urls.py \
             "${{ github.event.before || '0000000000000000000000000000000000000000' }}" \
             "${{ github.sha }}" \
             --site-url "https://friesi23.icu" \
+            --static-list "${{ github.workspace }}/ci/purge_urls.txt" \
             --output /tmp/purge_urls.generated.txt
       - name: Purge Pages
-        run: python3 ci/purge_all.py /tmp/purge_urls.generated.txt "${{ secrets.PURGE_SEGEMENT }}"
+        run: >
+          poetry -C ci run python bin/purge_all.py
+          /tmp/purge_urls.generated.txt
+          "${{ secrets.PURGE_SEGEMENT }}"

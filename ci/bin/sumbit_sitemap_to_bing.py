@@ -1,7 +1,9 @@
 # Copyright @Myth 2024
 # see: https://myth.cx/p/hugo-auto-submit-baidu/
 
-import sys, re, json
+import argparse
+import json
+import re
 from urllib.parse import urlparse, urlunparse
 import requests
 import lxml.etree
@@ -40,10 +42,15 @@ def get_urls(sitemap_path, key_location, host=None):
 
 
 if __name__ == "__main__":
-    should_sumbited_urls = get_urls(
-        sys.argv[1], sys.argv[3], host=None if len(sys.argv) <= 4 else sys.argv[4]
-    )
-    print(should_sumbited_urls)
-    result = submit_to_bing(sys.argv[2], should_sumbited_urls)
+    p = argparse.ArgumentParser(description="Submit sitemap URLs to Bing via IndexNow.")
+    p.add_argument("sitemap", help="Path to sitemap.xml")
+    p.add_argument("api_url", help="IndexNow API URL (e.g. http://api.indexnow.org/IndexNow)")
+    p.add_argument("key_location", help="Full URL to the IndexNow key file")
+    p.add_argument("host", nargs="?", default=None, help="Override host extracted from key_location (optional)")
+    args = p.parse_args()
+
+    should_submitted_urls = get_urls(args.sitemap, args.key_location, host=args.host)
+    print(should_submitted_urls)
+    result = submit_to_bing(args.api_url, should_submitted_urls)
     print(result)
     print(result.text)
