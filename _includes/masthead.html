@@ -26,14 +26,15 @@
                 {% endif %}>{{ link.title }}</a>
             </li>
           {%- endfor -%}
+          {% if site.minimal_mistakes_skin_dark %}
+            <li class="masthead__menu-item theme-toggle-item">
+              <a href="#" class="theme__toggle" aria-label="{{ site.data.custom-text[locale].theme_label | default: 'Toggle theme' }}">
+                <i class="fas fa-fw fa-adjust"></i>
+                <span class="theme-toggle-label">{{ site.data.custom-text[locale].theme_label | default: "Toggle theme" }}</span>
+              </a>
+            </li>
+          {% endif %}
         </ul>
-
-        {% if site.minimal_mistakes_skin_dark %}
-          <button class="theme__toggle" type="button">
-            <span class="visually-hidden">{{ site.data.ui-text[locale].theme_label | default: "Toggle theme" }}</span>
-            <i class="fas fa-fw fa-adjust"></i>
-          </button>
-        {% endif %}
 
         {% if site.search == true %}
           <button class="search__toggle" type="button">

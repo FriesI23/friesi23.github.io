@@ -1,0 +1,20 @@
+# Custom UI text additions not present in the upstream minimal-mistakes ui-text.yml.
+# Avoids forking the full ui-text.yml just for these entries.
+
+en: &DEFAULT_EN
+  theme_label: "Toggle theme"
+en-US:
+  <<: *DEFAULT_EN
+en-CA:
+  <<: *DEFAULT_EN
+en-GB:
+  <<: *DEFAULT_EN
+en-AU:
+  <<: *DEFAULT_EN
+
+zh: &DEFAULT_ZH_HANS
+  theme_label: "切换主题"
+zh-CN:
+  <<: *DEFAULT_ZH_HANS
+zh-SG:
+  <<: *DEFAULT_ZH_HANS

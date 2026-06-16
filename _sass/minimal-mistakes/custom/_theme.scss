@@ -1,18 +1,28 @@
-.theme__toggle {
-  margin-left: 1rem;
-  margin-right: 1rem;
-  height: $nav-toggle-height;
-  border: 0;
-  outline: none;
-  color: $primary-color;
-  background-color: transparent;
-  cursor: pointer;
-  -webkit-transition: 0.2s;
-  transition: 0.2s;
+// Theme toggle nav item: icon-only when in the visible nav bar,
+// icon + label when collapsed into the dropdown.
+.theme-toggle-item {
+  a.theme__toggle {
+    color: $primary-color;
+    cursor: pointer;
+    -webkit-transition: color 0.2s;
+    transition: color 0.2s;
 
-  &:hover {
-    color: mix(#000, $primary-color, 25%);
+    &:hover {
+      color: mix(#000, $primary-color, 25%);
+    }
+
+    // Suppress the nav-link underline slide animation
+    &::before { display: none !important; }
   }
+
+  // Hide the text label when the item is in the visible nav bar
+  .theme-toggle-label { display: none; }
+}
+
+// Show icon + label when collapsed into the hamburger dropdown
+.hidden-links .theme-toggle-item .theme-toggle-label {
+  display: inline;
+  margin-inline-start: 0.5em;
 }
 
 /* Prompts view toggle */
