@@ -44,3 +44,17 @@ jobs:
             "${{ steps.source.outputs.file }}" \
             "${{ secrets.PURGE_SEGEMENT }}" \
             $RESOLVE_ARG
+
+      - name: Purge static assets
+        if: inputs.mode == 'full'
+        env:
+          CN_NGINX_IP: ${{ secrets.CN_NGINX_IP }}
+        run: |
+          RESOLVE_ARG=""
+          if [ -n "$CN_NGINX_IP" ]; then
+            RESOLVE_ARG="--resolve-ip $CN_NGINX_IP"
+          fi
+          poetry -C ci run python bin/purge_all.py \
+            "${{ github.workspace }}/ci/asset_purge_urls.txt" \
+            "${{ secrets.PURGE_SEGEMENT }}" \
+            $RESOLVE_ARG

@@ -8,7 +8,7 @@ JEKYLL_CONFIG = $(if $(filter 1,$(PROD)),$(PROD_CONFIG),$(LOCAL_CONFIG))
 JEKYLL_ENV = $(if $(filter 1,$(PROD)),production,)
 export JEKYLL_ENV
 
-.PHONY: help serve serve-prod serve-drafts serve-prod-drafts ci-install sync-prompts
+.PHONY: help serve serve-prod serve-drafts serve-prod-drafts ci-install sync-prompts gen-asset-purge-urls
 
 help:
 	@echo "Usage:"
@@ -18,6 +18,7 @@ help:
 	@echo "  make serve PROD=1 DRAFT=1"
 	@echo "  make ci-install                # install CI Python dependencies via Poetry"
 	@echo "  make sync-prompts              # sync assets/prompts/ stubs with _prompts/*.md"
+	@echo "  make gen-asset-purge-urls      # regenerate ci/asset_purge_urls.txt from _site/assets (requires prior build)"
 
 serve:
 	@$(JEKYLL_SERVE) --config $(JEKYLL_CONFIG) $(JEKYLL_FLAGS)
@@ -37,3 +38,8 @@ ci-install:
 
 sync-prompts: ci-install
 	@poetry -C ci run python bin/sync_prompt_assets.py --root "$(CURDIR)"
+
+gen-asset-purge-urls: ci-install
+	@poetry -C ci run python bin/generate_asset_purge_urls.py \
+		--site-dir "$(CURDIR)/_site" \
+		--output "$(CURDIR)/ci/asset_purge_urls.txt"

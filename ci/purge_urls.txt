@@ -1,4 +1,5 @@
-# purge urls
+# purge urls - fallback list for default mode and non-post CI deploys
+# static assets are managed in asset_purge_urls.txt (used by full mode only)
 https://friesi23.icu/
 https://friesi23.icu/page1/
 https://friesi23.icu/page2/
@@ -7,13 +8,3 @@ https://friesi23.icu/categories/
 https://friesi23.icu/tags/
 https://friesi23.icu/about/
 https://friesi23.icu/monitor/
-# https://friesi23.icu/assets/js/init-theme.js
-# https://friesi23.icu/assets/js/custom-head.js
-# https://friesi23.icu/assets/js/custom-footer.js
-# https://friesi23.icu/assets/css/main.css
-# https://friesi23.icu/assets/css/main_dark.css
-# https://friesi23.icu/assets/js/main.min.js
-# https://friesi23.icu/assets/js/lunr/lunr.min.js
-# https://friesi23.icu/assets/js/lunr/lunr-store.js
-# https://friesi23.icu/assets/js/lunr/lunr-en.js
-# https://friesi23.icu/assets/js/vendor/jquery/jquery-3.6.0.js
