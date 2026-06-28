@@ -13,6 +13,11 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      google_full_backfill:
+        description: "Submit ALL post/prompt URLs to the Google Indexing API (one-time backfill)"
+        type: boolean
+        default: false
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -33,6 +38,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -66,6 +73,17 @@ jobs:
           http://api.indexnow.org/IndexNow
           "${{ secrets.BING_SITEMAP_SUMBIT_KEY_LOCATION_P4F }}"
           friesi23.icu
+      - name: Submit to Google
+        env:
+          GOOGLE_INDEXING_SA_KEY_B64: ${{ secrets.GOOGLE_INDEXING_SA_KEY_B64 }}
+        run: |
+          echo "$GOOGLE_INDEXING_SA_KEY_B64" | base64 -d > /tmp/google-indexing-sa.json
+          poetry -C ci run python bin/submit_sitemap_to_google.py \
+            "${{ github.workspace }}/_site/sitemap.xml" \
+            /tmp/google-indexing-sa.json \
+            --before-sha "${{ github.event.before || '0000000000000000000000000000000000000000' }}" \
+            --after-sha "${{ github.sha }}" \
+            ${{ inputs.google_full_backfill && '--full' || '' }}
 
   # Deployment job
   deploy:
