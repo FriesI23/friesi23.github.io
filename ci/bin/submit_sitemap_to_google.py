@@ -7,74 +7,15 @@ instead, e.g. for a one-time historical backfill.
 """
 
 import argparse
-import re
-import subprocess
 import sys
-from pathlib import Path
-from urllib.parse import urlparse
 
-import lxml.etree
 import requests
 from google.auth.transport.requests import Request
 from google.oauth2 import service_account
+from sitemap_diff import resolve_submit_urls
 
 SCOPE = "https://www.googleapis.com/auth/indexing"
 PUBLISH_URL = "https://indexing.googleapis.com/v3/urlNotifications:publish"
-
-# Mirrors permalink rules in _config.yml
-_POST_PATH = re.compile(r"^/post/\d{6}/[^/]+/?$")
-_PROMPT_PATH = re.compile(r"^/prompts/[^/]+$")  # excludes the bare /prompts/ index
-
-
-def _sitemap_urls(sitemap_path: str) -> list[str]:
-    tree = lxml.etree.parse(sitemap_path)
-    ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
-    return tree.xpath("//s:url/s:loc/text()", namespaces=ns)
-
-
-def _filter_post_prompt_urls(urls: list[str]) -> list[str]:
-    return [u for u in urls if _POST_PATH.match(urlparse(u).path) or _PROMPT_PATH.match(urlparse(u).path)]
-
-
-def _changed_files(before_sha: str, after_sha: str) -> list[str]:
-    if re.fullmatch(r"0+", before_sha):
-        return []
-    # No pathspec here: git resolves pathspecs relative to cwd, which may not
-    # be the repo root (e.g. when invoked via `poetry -C ci run`). Diff
-    # everything and filter the root-relative output paths in Python instead.
-    r = subprocess.run(
-        ["git", "diff", "--name-only", "--diff-filter=ACMR", before_sha, after_sha],
-        capture_output=True,
-        text=True,
-        check=True,
-    )
-    return [line for line in r.stdout.splitlines() if line.strip()]
-
-
-def _post_url(filepath: str, site_url: str) -> str | None:
-    stem = Path(filepath).stem
-    m = re.match(r"^(\d{4})-(\d{2})-\d{2}-(.+)$", stem)
-    if not m:
-        return None
-    year, month, slug = m.groups()
-    return f"{site_url}/post/{year}{month}/{slug}"
-
-
-def _prompt_url(filepath: str, site_url: str) -> str:
-    rel = Path(filepath).relative_to("_prompts").with_suffix("")
-    return f"{site_url}/prompts/{rel}"
-
-
-def _changed_urls(before_sha: str, after_sha: str, site_url: str) -> set[str]:
-    urls: set[str] = set()
-    for f in _changed_files(before_sha, after_sha):
-        if f.startswith("_posts/"):
-            u = _post_url(f, site_url)
-            if u:
-                urls.add(u)
-        elif f.startswith("_prompts/"):
-            urls.add(_prompt_url(f, site_url))
-    return urls
 
 
 def _access_token(key_path: str) -> str:
@@ -106,13 +47,7 @@ if __name__ == "__main__":
     )
     args = p.parse_args()
 
-    post_prompt_urls = _filter_post_prompt_urls(_sitemap_urls(args.sitemap))
-
-    if args.full:
-        submit_urls = post_prompt_urls
-    else:
-        changed = _changed_urls(args.before_sha, args.after_sha, args.site_url)
-        submit_urls = [u for u in post_prompt_urls if u in changed]
+    submit_urls = resolve_submit_urls(args.sitemap, args.before_sha, args.after_sha, args.site_url, args.full)
 
     if not submit_urls:
         print("No post/prompt URLs to submit to Google.")

@@ -14,8 +14,8 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
-      google_full_backfill:
-        description: "Submit ALL post/prompt URLs to the Google Indexing API (one-time backfill)"
+      full_backfill:
+        description: "Submit ALL post/prompt URLs to Baidu/Bing/Google (one-time backfill)"
         type: boolean
         default: false
 
@@ -66,6 +66,9 @@ jobs:
           poetry -C ci run python bin/sumbit_sitemap_to_baidu.py
           "${{ github.workspace }}/_site/sitemap.xml"
           "${{ secrets.BAIDU_SITEMAP_SUMBIT_APIURL }}"
+          --before-sha "${{ github.event.before || '0000000000000000000000000000000000000000' }}"
+          --after-sha "${{ github.sha }}"
+          ${{ inputs.full_backfill && '--full' || '' }}
       - name: Submit to Bing - friesi23.icu
         run: >
           poetry -C ci run python bin/sumbit_sitemap_to_bing.py
@@ -73,6 +76,9 @@ jobs:
           http://api.indexnow.org/IndexNow
           "${{ secrets.BING_SITEMAP_SUMBIT_KEY_LOCATION_P4F }}"
           friesi23.icu
+          --before-sha "${{ github.event.before || '0000000000000000000000000000000000000000' }}"
+          --after-sha "${{ github.sha }}"
+          ${{ inputs.full_backfill && '--full' || '' }}
       - name: Submit to Google
         env:
           GOOGLE_INDEXING_SA_KEY_B64: ${{ secrets.GOOGLE_INDEXING_SA_KEY_B64 }}
@@ -83,7 +89,7 @@ jobs:
             /tmp/google-indexing-sa.json \
             --before-sha "${{ github.event.before || '0000000000000000000000000000000000000000' }}" \
             --after-sha "${{ github.sha }}" \
-            ${{ inputs.google_full_backfill && '--full' || '' }}
+            ${{ inputs.full_backfill && '--full' || '' }}
 
   # Deployment job
   deploy:
