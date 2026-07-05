@@ -1,0 +1,26 @@
+{% comment %}
+  Keep Android Open countdown banner.
+  Source: https://keepandroidopen.org/banner/
+  Config: _config.yml → keep_android_open_banner
+{% endcomment %}
+
+{% if site.keep_android_open_banner %}
+  {% assign banner_size = site.keep_android_open_banner.size | default: 'mini' %}
+  {% assign banner_params = 'size=' | append: banner_size %}
+
+  {% if site.keep_android_open_banner.lang %}
+    {% assign banner_params = banner_params | append: '&lang=' | append: site.keep_android_open_banner.lang %}
+  {% endif %}
+
+  {% if site.keep_android_open_banner.link %}
+    {% assign banner_params = banner_params | append: '&link=' | append: site.keep_android_open_banner.link %}
+  {% endif %}
+  {% if site.keep_android_open_banner.hidebutton == false %}
+    {% assign banner_params = banner_params | append: '&hidebutton=off' %}
+  {% endif %}
+  {% if site.keep_android_open_banner.animation == false %}
+    {% assign banner_params = banner_params | append: '&animation=off' %}
+  {% endif %}
+
+  <script src="https://keepandroidopen.org/banner.js?{{ banner_params }}"></script>
+{% endif %}

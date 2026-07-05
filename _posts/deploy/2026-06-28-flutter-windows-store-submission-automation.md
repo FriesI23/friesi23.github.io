@@ -176,6 +176,8 @@ msstore apps list
 
 **修改 `manual-submit.yml`**：加 `windows` 输入（`skip`/`submit` 二选一，没有 track 概念）和对应 job，直接调用，不需要 `resolve-apple-store-track` 那一套。
 
+{% raw %}
+
 ```yaml
 # _submit-windows-store.yml (part)
 on:
@@ -246,6 +248,8 @@ jobs:
           --env store-submission
           --repo ${{ github.repository }}
 ```
+
+{% endraw %}
 
 ## 坑
 

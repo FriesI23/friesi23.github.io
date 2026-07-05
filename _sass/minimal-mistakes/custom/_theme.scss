@@ -112,3 +112,9 @@
 .prompts-download {
   margin-top: 2em;
 }
+
+@media (prefers-color-scheme: dark) {
+  .kao-banner {
+    filter: brightness(0.85);
+  }
+}

@@ -28,6 +28,14 @@ email: friesi23@disroot.org
 description: |
   随便写写, 随便玩玩, 随便搞搞
 
+# Keep Android Open banner: https://keepandroidopen.org/banner/
+keep_android_open_banner:
+  lang: zh-CN
+  size: minimal # normal | mini | minimal
+  # link: none # custom link URL, or `none` to disable
+  # hidebutton: false # show the close (X) button
+  # animation: false # disable pulsing animation
+
 # Structures
 # Archives: https://github.com/jekyll/jekyll-archives
 # url: https://friesi23.github.io
