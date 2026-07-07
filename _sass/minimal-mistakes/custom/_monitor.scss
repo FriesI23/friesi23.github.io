@@ -1,0 +1,117 @@
+/* ==========================================================================
+   Monitor page — scoped under .monitor-shell
+   ========================================================================== */
+
+.monitor-shell {
+  --monitor-border: rgba(15, 23, 42, 0.08);
+  --monitor-card-bg: rgba(255, 255, 255, 0.9);
+  --monitor-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+  display: grid;
+  gap: 2.25rem;
+  width: min(100%, 980px);
+  margin-top: 1.5rem;
+  margin-inline: auto;
+}
+
+.monitor-section {
+  display: grid;
+  gap: 0.9rem;
+  width: 100%;
+  max-width: 420px;
+  margin-inline: auto;
+
+  h2 {
+    margin-bottom: 0;
+  }
+}
+
+.monitor-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.monitor-card {
+  display: grid;
+  gap: 0.8rem;
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid var(--monitor-border);
+  border-radius: 20px;
+  background: var(--monitor-card-bg);
+  box-shadow: var(--monitor-shadow);
+}
+
+.monitor-card--stacked {
+  flex: 1 1 auto;
+}
+
+.monitor-subsection {
+  display: grid;
+  gap: 0.7rem;
+  padding-top: 0.2rem;
+  border-top: 1px solid var(--monitor-border);
+}
+
+.monitor-media {
+  display: block;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: rgba(248, 250, 252, 0.85);
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  &:hover {
+    box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
+  }
+}
+
+/* ---- responsive: tablet+ tile ---- */
+
+@media (min-width: 768px) {
+  .monitor-shell {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .monitor-section {
+    flex: 0 1 400px;
+    margin-inline: 0;
+  }
+}
+
+/* ---- responsive: phone single column ---- */
+
+@media (max-width: 767px) {
+  .monitor-shell {
+    gap: 2rem;
+  }
+
+  .monitor-section {
+    max-width: none;
+  }
+}
+
+/* ---- dark scheme ---- */
+
+@media (prefers-color-scheme: dark) {
+  .monitor-shell {
+    --monitor-border: rgba(148, 163, 184, 0.16);
+    --monitor-card-bg: rgba(15, 23, 42, 0.72);
+    --monitor-shadow: 0 18px 40px rgba(2, 6, 23, 0.28);
+  }
+
+  .monitor-media {
+    background: rgba(15, 23, 42, 0.6);
+  }
+}
