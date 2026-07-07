@@ -9,7 +9,7 @@
   display: grid;
   gap: 2.25rem;
   width: min(100%, 980px);
-  margin-top: 1.5rem;
+  padding-top: clamp(0.75rem, 1.6vw, 1.25rem);
   margin-inline: auto;
 }
 
