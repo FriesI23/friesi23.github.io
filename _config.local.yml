@@ -3,6 +3,8 @@
 #   bundle exec jekyll serve --config _config.yml,_config.local.yml
 #   bundle exec jekyll build --config _config.yml,_config.local.yml
 
+future: true
+
 theme: minimal-mistakes-jekyll
 remote_theme: false
 
