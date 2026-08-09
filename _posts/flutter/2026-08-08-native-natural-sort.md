@@ -19,6 +19,15 @@ tags:
   - natural-sort
   - native-natural-sort
   - collation
+layout: single-multilang
+locale: zh-CN
+translations:
+  - lang: zh-CN
+    url: /post/202608/native-natural-sort
+    label: 中文
+  - lang: en
+    url: /post/en/202608/native-natural-sort
+    label: English
 ---
 
 最近在维护 [Table Habit][mhabit] 时，发现习惯列表的排序不太对劲——明明是按名称排序，

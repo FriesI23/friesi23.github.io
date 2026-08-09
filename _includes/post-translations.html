@@ -1,8 +1,9 @@
 {%- if page.translations -%}
-<div class="post-translations">
+{%- assign page_lang = page.lang | default: include.locale | default: site.locale -%}
+<div class="post-translations{% if include.modifier %} post-translations--{{ include.modifier }}{% endif %}">
   <span class="post-translations__label">🌐</span>
   {%- for t in page.translations -%}
-    {%- if t.lang == page.lang -%}
+    {%- if t.lang == page_lang -%}
       <span class="post-translations__item post-translations__item--active">{{ t.label }}</span>
     {%- else -%}
       <a class="post-translations__item" href="{{ t.url | relative_url }}">{{ t.label }}</a>

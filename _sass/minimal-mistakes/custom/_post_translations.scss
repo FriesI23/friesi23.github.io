@@ -7,6 +7,12 @@
   font-size: $type-size-6;
 }
 
+.post-translations--bottom {
+  margin: 1.5em 0 0 0;
+  padding-top: 1em;
+  border-top: 1px solid $border-color;
+}
+
 .post-translations__label {
   margin-right: 0.5em;
   vertical-align: middle;
@@ -34,6 +40,26 @@
   background-color: $primary-color;
   color: #fff;
   cursor: default;
+}
+
+/* ==========================================================================
+   Page Meta Uniform Spacing
+   ========================================================================== */
+
+footer.page__meta > p {
+  margin: 0 0 0.25em;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.post-translation-note {
+  margin: 0 0 1em 0;
+  padding: 0.5em 1em;
+  font-size: $type-size-7;
+  color: $muted-text-color;
+  border-inline-start: 3px solid $border-color;
 }
 
 /* ==========================================================================

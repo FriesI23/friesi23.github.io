@@ -116,6 +116,78 @@ tags:   [tag1, tag2]
 
 ---
 
+## 多语言文章
+
+部分文章提供多语言版本（中文原文 + 英文翻译）。使用独立布局 `single-multilang`，
+通过 front matter 一处配置所有语言版本的 URL 和标签。
+
+### 文件命名
+
+- 中文版：`YYYY-MM-DD-slug.md`（默认语言，保持既有命名）
+- 英文版：`YYYY-MM-DD-slug-en.md`（`-en` 后缀）
+
+### URL 约定
+
+- 中文版：走全局 permalink `/post/:year:month/:slug`，不添加 `/zh/` 前缀
+- 英文版：`permalink: /post/en/:year:month/:slug` 覆盖 URL
+
+### Front matter 配置
+
+中文版（默认语言）：
+
+```yaml
+---
+layout: single-multilang
+lang: zh-CN
+locale: zh-CN
+translations:
+  - lang: zh-CN
+    url: /post/202608/slug
+    label: 中文
+  - lang: en
+    url: /post/en/202608/slug
+    label: English
+---
+```
+
+英文版（翻译）：
+
+```yaml
+---
+layout: single-multilang
+lang: en
+locale: en
+permalink: /post/en/202608/slug
+translations:
+  - lang: zh-CN
+    url: /post/202608/slug
+    label: 中文
+  - lang: en
+    url: /post/en/202608/slug
+    label: English
+translation:
+  note: "This article was translated by GitHub Copilot using the DeepSeek V4 Flash model."
+---
+```
+
+- `lang` / `locale` 可省略，回退到 `site.locale`（zh-CN）
+- `translations` 包含所有语言版本，当前语言高亮显示，其他为链接
+- `translation.note`（仅翻译版本需要）：标注 AI 翻译来源，渲染在文章顶部
+
+### 关键文件
+
+| 文件 | 作用 |
+|------|------|
+| `_layouts/single-multilang.html` | 多语言文章布局（fork MM 4.28.0 single.html） |
+| `_layouts/home.html` | 主页过滤非默认语言版本 + 语言指示器 |
+| `_includes/post-translations.html` | 文章顶部语言切换条（pill 按钮） |
+| `_includes/head/custom.html` | hreflang SEO 标签 |
+| `_data/ui-text.yml` | `translations_label` 多语言 UI 文本 |
+| `_sass/.../custom/_post_translations.scss` | 语言切换条 + 主页指示器样式 |
+| `templates/post.md.template` | 含 `lang` / `locale` / `translations` 注释 |
+
+---
+
 ## CI/CD
 
 | 工作流 | 文件 | 触发 |
@@ -137,6 +209,9 @@ tags:   [tag1, tag2]
 | Keep Android Open 横幅 | `_includes/keep-android-open-banner.html` |
 | Prompt 下载链接 | `_includes/prompt-download-link.html` |
 | 自定义侧边栏 | `_includes/sidebar-custom.html` |
+| 多语言切换条 | `_includes/post-translations.html` |
+| 语言指示器（主页） | `_layouts/home.html` |
+| 多语言文章布局 | `_layouts/single-multilang.html` |
 
 ---
 

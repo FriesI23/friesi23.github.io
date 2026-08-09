@@ -32,6 +32,15 @@ layout: default
     {% if page.last_modified_at %}<meta itemprop="dateModified" content="{{ page.last_modified_at | date_to_xmlschema }}">{% endif %}
 
     <div class="page__inner-wrap">
+      {%- assign page_lang = page.lang -%}
+      {%- unless page_lang -%}
+        {%- if page.translations -%}
+          {%- for t in page.translations -%}
+            {%- if page.url contains t.url -%}{% assign page_lang = t.lang %}{% break -%}{% endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+      {%- endunless -%}
+      {%- unless page_lang -%}{% assign page_lang = locale -%}{% endunless -%}
       {% unless page.header.overlay_color or page.header.overlay_image %}
         <header>
           {% if page.title -%}
@@ -43,7 +52,11 @@ layout: default
         </header>
       {% endunless %}
 
-      {% include post-translations.html %}
+      {% include post-translations.html locale=locale %}
+
+      {% if page.translation %}
+        <p class="post-translation-note">{{ page.translation.note }}</p>
+      {% endif %}
 
       <section class="page__content e-content" itemprop="text">
         {% if page.toc %}
@@ -63,6 +76,15 @@ layout: default
           <h4 class="page__meta-title">{{ site.data.ui-text[locale].meta_label }}</h4>
         {% endif %}
         {% include page__taxonomy.html locale=locale %}
+        {% if page.translations %}
+          <p class="page__taxonomy">
+            <strong><i class="fas fa-fw fa-language" aria-hidden="true"></i> {{ site.data.ui-text[locale].translations_label | default: "Also available in:" }}</strong>
+            {%- for t in page.translations -%}
+              {%- if t.lang == page_lang %}{% continue %}{% endif -%}
+              <a class="page__taxonomy-item p-category" href="{{ t.url | relative_url }}">{{ t.label }}</a>
+            {%- endfor -%}
+          </p>
+        {% endif %}
         {% include page__date.html locale=locale %}
       </footer>
 
