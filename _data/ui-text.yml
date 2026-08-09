@@ -1,0 +1,11 @@
+# UI Text overrides & additions for Minimal Mistakes theme.
+# The theme ships with `en` (and `en-US`, `en-GB`) locales built in.
+# Keys added here supplement or override the built-in locale data.
+#
+# See: https://mmistakes.github.io/minimal-mistakes/docs/ui-text/
+
+zh-CN:
+  translations_label: "其他语言版本："
+
+en:
+  translations_label: "Also available in:"

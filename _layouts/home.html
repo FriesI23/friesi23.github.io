@@ -1,0 +1,45 @@
+---
+# Forked from:
+# https://github.com/mmistakes/minimal-mistakes/blob/4.28.0/_layouts/home.html
+# Filter out non-default-lang posts and add per-post language indicators.
+layout: archive
+---
+{%- assign locale = page.locale | default: layout.locale | default: site.locale %}
+
+{{ content }}
+
+<h3 class="archive__subtitle">{{ site.data.ui-text[locale].recent_posts | default: "Recent Posts" }}</h3>
+
+{% if paginator %}
+  {% assign posts = paginator.posts %}
+{% else %}
+  {% assign posts = site.posts %}
+{% endif %}
+
+{% assign default_locale = site.locale | default: 'zh-CN' %}
+{% assign filtered_posts = '' | split: '' %}
+{% for post in posts %}
+  {% unless post.lang and post.lang != default_locale %}
+    {% assign filtered_posts = filtered_posts | push: post %}
+  {% endunless %}
+{% endfor %}
+
+{% assign entries_layout = page.entries_layout | default: 'list' %}
+<div class="entries-{{ entries_layout }}">
+  {% for post in filtered_posts %}
+    {% include archive-single.html locale=locale type=entries_layout %}
+    {% if post.translations %}
+      <p class="archive__item-langs">
+        <em class="archive__item-langs-label">{{ site.data.ui-text[locale].translations_label | default: "Also available in:" }}</em>
+        {%- assign has_other = false -%}
+        {%- for t in post.translations -%}
+          {%- if t.lang == post.lang %}{% continue %}{% endif -%}
+          <a class="archive__item-lang" href="{{ t.url | relative_url }}">{{ t.lang | upcase }}</a>
+          {%- assign has_other = true -%}
+        {%- endfor -%}
+      </p>
+    {% endif %}
+  {% endfor %}
+</div>
+
+{% include paginator.html locale=locale %}

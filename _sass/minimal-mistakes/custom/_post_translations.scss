@@ -1,0 +1,70 @@
+/* ==========================================================================
+   Post Translations (multi-language switcher)
+   ========================================================================== */
+
+.post-translations {
+  margin-bottom: 1em;
+  font-size: $type-size-6;
+}
+
+.post-translations__label {
+  margin-right: 0.5em;
+  vertical-align: middle;
+}
+
+.post-translations__item {
+  display: inline-block;
+  padding: 0.15em 0.5em;
+  margin-right: 0.25em;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  color: $primary-color;
+  text-decoration: none;
+  line-height: inherit;
+
+  &:hover {
+    background-color: $primary-color;
+    color: #fff;
+    text-decoration: none;
+  }
+}
+
+.post-translations__item--active {
+  font-weight: bold;
+  background-color: $primary-color;
+  color: #fff;
+  cursor: default;
+}
+
+/* ==========================================================================
+   Archive Listing Language Indicator
+   ========================================================================== */
+
+.archive__item-langs {
+  margin: 0.25em 0 0 0;
+  font-size: $type-size-7;
+  color: $muted-text-color;
+}
+
+.archive__item-langs-label {
+  margin-right: 0.25em;
+  font-style: italic;
+}
+
+.archive__item-lang {
+  display: inline-block;
+  padding: 0.1em 0.35em;
+  margin-right: 0.15em;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  color: $muted-text-color;
+  text-decoration: none;
+  line-height: inherit;
+
+  &:hover {
+    background-color: $primary-color;
+    border-color: $primary-color;
+    color: #fff;
+    text-decoration: none;
+  }
+}

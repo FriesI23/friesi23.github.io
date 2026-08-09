@@ -26,3 +26,11 @@
     });
   });
 </script>
+
+<!-- post translations hreflang -->
+{% if page.translations %}
+  {% for t in page.translations %}
+    <link rel="alternate" hreflang="{{ t.lang }}" href="{{ t.url | absolute_url }}" />
+  {% endfor %}
+  <link rel="alternate" hreflang="x-default" href="{{ page.translations[0].url | absolute_url }}" />
+{% endif %}
